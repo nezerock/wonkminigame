@@ -2629,12 +2629,54 @@
             btnCases.addEventListener('click', function() {
                 this.style.transform = 'scale(0.96)';
                 setTimeout(() => this.style.transform = '', 200);
-                casesPage.style.display = 'flex';
                 
-                if (!casesSystem) {
-                    casesSystem = new CasesSystem();
-                    window.casesSystem = casesSystem;
-                }
+                // Создаем и показываем предупреждающее модальное окно
+                const warningModal = document.createElement('div');
+                warningModal.className = 'startup-modal';
+                warningModal.style.zIndex = '9998';
+                warningModal.innerHTML = `
+                    <div class="startup-content">
+                        <h2 class="startup-title">ВНИМАНИЕ!</h2>
+                        <div class="startup-text">
+                            Анимация с кейсами и сами кейсы на телефонах могут работать не корректно.
+                            <br><br>
+                            <small>Рекомендуется использовать на устройствах с большим экраном для лучшего опыта.</small>
+                        </div>
+                        <button class="startup-btn" id="continueToCasesBtn">ПРОДОЛЖИТЬ</button>
+                    </div>
+                `;
+                
+                document.body.appendChild(warningModal);
+                
+                // Обработчик для кнопки продолжить
+                document.getElementById('continueToCasesBtn').addEventListener('click', function() {
+                    warningModal.style.opacity = '0';
+                    warningModal.style.transform = 'scale(0.9)';
+                    warningModal.style.transition = 'all 0.3s ease';
+                    
+                    setTimeout(() => {
+                        warningModal.remove();
+                        casesPage.style.display = 'flex';
+                        
+                        if (!casesSystem) {
+                            casesSystem = new CasesSystem();
+                            window.casesSystem = casesSystem;
+                        }
+                    }, 300);
+                });
+                
+                // Закрытие по клику на фон
+                warningModal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.style.opacity = '0';
+                        this.style.transform = 'scale(0.9)';
+                        this.style.transition = 'all 0.3s ease';
+                        
+                        setTimeout(() => {
+                            this.remove();
+                        }, 300);
+                    }
+                });
             });
             
             closeModalBtn.addEventListener('click', function() {
