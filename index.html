@@ -29,6 +29,120 @@
             touch-action: manipulation;
         }
         
+        /* Стартовое окно */
+        .startup-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(15px);
+        }
+        
+        .startup-content {
+            background: linear-gradient(135deg, 
+                rgba(26, 26, 46, 0.95) 0%, 
+                rgba(22, 33, 62, 0.95) 100%);
+            padding: 40px 30px;
+            border-radius: 25px;
+            width: 100%;
+            max-width: 500px;
+            color: white;
+            border: 2px solid rgba(94, 156, 255, 0.4);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        
+        .startup-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                #6a11cb, 
+                #2575fc, 
+                #6a11cb);
+            animation: borderSlide 3s infinite linear;
+        }
+        
+        @keyframes borderSlide {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+        
+        .startup-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            color: #ffcc00;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 204, 0, 0.3);
+        }
+        
+        .startup-text {
+            margin-bottom: 25px;
+            line-height: 1.6;
+            font-size: 1.2rem;
+            color: #94a3ff;
+            padding: 20px;
+            background: rgba(255, 65, 108, 0.15);
+            border-radius: 10px;
+            border-left: 4px solid #ff416c;
+        }
+        
+        .startup-text strong {
+            color: #ffcc00;
+            font-size: 1.3rem;
+        }
+        
+        .startup-btn {
+            background: linear-gradient(45deg, 
+                rgba(255, 65, 108, 0.9) 0%, 
+                rgba(255, 75, 43, 0.9) 100%);
+            border: none;
+            color: white;
+            padding: 20px 40px;
+            border-radius: 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            font-weight: 600;
+            box-shadow: 
+                0 8px 20px rgba(255, 65, 108, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .startup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 12px 25px rgba(255, 65, 108, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        .startup-btn:active {
+            transform: scale(0.98);
+        }
+        
         /* Космический фон с элементами */
         .space-bg {
             position: absolute;
@@ -327,11 +441,6 @@
                 #2575fc, 
                 #6a11cb);
             animation: borderSlide 3s infinite linear;
-        }
-        
-        @keyframes borderSlide {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
         }
         
         .modal-title {
@@ -1154,14 +1263,14 @@
             box-shadow: 0 15px 30px rgba(156, 39, 176, 0.3);
         }
         
-        /* Анимация прокрутки кейса */
+        /* Новая анимация открытия кейса - лента с призами */
         .case-opening-animation {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             z-index: 2000;
             display: none;
             flex-direction: column;
@@ -1170,46 +1279,94 @@
             backdrop-filter: blur(10px);
         }
         
-        .case-wheel {
-            width: 300px;
-            height: 300px;
+        .prize-strip-container {
+            width: 90%;
+            max-width: 800px;
+            height: 200px;
             position: relative;
-            margin-bottom: 40px;
+            margin: 40px 0;
+            overflow: hidden;
+            border-radius: 20px;
+            background: rgba(20, 20, 40, 0.6);
+            border: 3px solid rgba(94, 156, 255, 0.3);
+            box-shadow: 
+                0 0 30px rgba(94, 156, 255, 0.2),
+                inset 0 0 30px rgba(0, 0, 0, 0.5);
         }
         
-        .wheel-inner {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: conic-gradient(
-                from 0deg,
-                #ff6b6b 0deg 90deg,
-                #4ecdc4 90deg 180deg,
-                #45b7d1 180deg 270deg,
-                #96ceb4 270deg 360deg
-            );
-            position: relative;
-            animation: wheelSpin 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            transform: rotate(0deg);
-        }
-        
-        @keyframes wheelSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(1080deg); }
-        }
-        
-        .wheel-pointer {
+        .prize-strip {
+            display: flex;
             position: absolute;
-            top: -20px;
+            top: 0;
+            left: 0;
+            height: 100%;
+            transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .prize-item {
+            min-width: 200px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(30, 30, 60, 0.8);
+            border-right: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .prize-item.highlighted {
+            background: rgba(50, 50, 100, 0.9);
+            box-shadow: inset 0 0 20px rgba(94, 156, 255, 0.3);
+        }
+        
+        .prize-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .prize-amount {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px currentColor;
+        }
+        
+        .prize-name {
+            font-size: 0.9rem;
+            color: #94a3ff;
+            opacity: 0.9;
+        }
+        
+        .center-line {
+            position: absolute;
+            top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-bottom: 30px solid #ffcc00;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                transparent,
+                #ffcc00,
+                #ffcc00,
+                transparent);
+            box-shadow: 
+                0 0 15px #ffcc00,
+                0 0 30px #ffcc00;
             z-index: 10;
-            filter: drop-shadow(0 0 10px #ffcc00);
+        }
+        
+        .center-line::before {
+            content: '▼';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            color: #ffcc00;
+            text-shadow: 0 0 10px #ffcc00;
         }
         
         .case-reward {
@@ -1222,7 +1379,8 @@
             max-width: 400px;
             width: 90%;
             display: none;
-            animation: rewardAppear 0.5s ease-out 2.1s forwards;
+            animation: rewardAppear 0.5s ease-out forwards;
+            margin-top: 20px;
         }
         
         @keyframes rewardAppear {
@@ -1408,9 +1566,20 @@
                 font-size: 1.8rem;
             }
             
-            .case-wheel {
-                width: 250px;
-                height: 250px;
+            .prize-strip-container {
+                height: 150px;
+            }
+            
+            .prize-item {
+                min-width: 150px;
+            }
+            
+            .prize-icon {
+                font-size: 2.5rem;
+            }
+            
+            .prize-amount {
+                font-size: 1.4rem;
             }
         }
         
@@ -1438,67 +1607,72 @@
             .cases-page {
                 padding: 15px;
             }
+            
+            .prize-strip-container {
+                height: 120px;
+                margin: 20px 0;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Космический фон с элементами -->
+    <!-- Стартовое окно -->
+    <div class="startup-modal" id="startupModal">
+        <div class="startup-content">
+            <h2 class="startup-title">ВНИМАНИЕ!</h2>
+            <div class="startup-text">
+                Чтобы возобновить свой баланс до <strong>1000 ₽</strong>,<br>
+                перезапустите бота!
+                <br><br>
+                <small>При первом запуске баланс установлен на 1000 ₽</small>
+            </div>
+            <button class="startup-btn" id="startupBtn">ПРОДОЛЖИТЬ</button>
+        </div>
+    </div>
+
+    <!-- Остальной интерфейс -->
     <div class="space-bg" id="spaceBg"></div>
-    
-    <!-- Звёздное небо -->
     <div class="stars" id="stars"></div>
     
-    <!-- Заголовок сверху -->
     <div class="header-container">
         <h1 class="title">
             НОВОСТИ <span class="wonk">WONK</span> <span class="minigame">MINIGAME</span>
         </h1>
     </div>
     
-    <!-- Центральный контейнер с кнопками -->
     <div class="main-container">
         <button class="btn btn-what" id="whatBtn">ЧТО БУДЕТ</button>
         <button class="btn btn-play" id="playBtn">ИГРАТЬ</button>
         <button class="btn btn-cases" id="casesBtn">КЕЙСЫ</button>
     </div>
     
-    <!-- Модальное окно -->
     <div class="modal" id="infoModal">
         <div class="modal-content">
             <h2 class="modal-title">ОБНОВЛЕНИЯ В WONK MINIGAME</h2>
-            
             <div class="bad-news modal-text">
                 В скором времени нам готовят новое казино, возможно обнуление ваших балансов :(
             </div>
-            
             <div class="good-news modal-text">
                 Также есть хорошие новости: WONK MINIGAME станет гораздо лучше.
             </div>
-            
             <div class="changes modal-text">
                 Что точно изменится:<br>
                 1. Как работает ракетка (будет сложнее зарабатывать)<br>
                 2. А так же изменятся иные игры.
             </div>
-            
             <button class="close-modal" id="closeModalBtn">ПОНЯТНО</button>
         </div>
     </div>
     
-    <!-- Игра Ракетка -->
     <div class="rocket-game" id="rocketGame">
         <div class="game-header">
             <div class="balance" id="balance">Баланс: 1000 ₽</div>
             <div class="balance" id="multiplierDisplay">Макс: 1.10x</div>
         </div>
-        
         <div class="game-container">
             <div class="rocket-display" id="rocketDisplay">
-                <!-- Облака и звёзды -->
                 <div id="clouds"></div>
                 <div id="gameStars"></div>
-                
-                <!-- Реалистичная ракета ПРЯМАЯ -->
                 <div class="rocket" id="rocket">
                     <div class="rocket-nose"></div>
                     <div class="rocket-body"></div>
@@ -1513,37 +1687,30 @@
                         <div class="rocket-exhaust"></div>
                     </div>
                 </div>
-                
                 <div class="multiplier" id="currentMultiplier">1.00x</div>
                 <div class="explosion" id="explosion"></div>
             </div>
-            
             <div class="controls">
                 <div class="bet-controls">
                     <button class="bet-btn" id="decreaseBet">-100</button>
                     <div class="bet-amount" id="betAmount">100 ₽</div>
                     <button class="bet-btn" id="increaseBet">+100</button>
                 </div>
-                
                 <div class="game-buttons">
                     <button class="launch-btn" id="launchBtn">🚀 ЗАПУСТИТЬ</button>
                     <button class="cashout-btn" id="cashoutBtn">💰 ЗАБРАТЬ</button>
                 </div>
-                
                 <div class="result" id="resultMessage"></div>
-                
                 <button class="back-btn" id="backBtn">← НАЗАД</button>
             </div>
         </div>
     </div>
     
-    <!-- Страница кейсов -->
     <div class="cases-page" id="casesPage">
         <div class="cases-header">
             <h2 class="cases-title">КОСМИЧЕСКИЕ КЕЙСЫ</h2>
             <p class="cases-subtitle">Откройте кейсы и получите уникальные награды!</p>
         </div>
-        
         <div class="cases-grid">
             <div class="case-item case-basic" data-case="earth">
                 <span class="case-icon">🌍</span>
@@ -1551,21 +1718,18 @@
                 <div class="case-price">50 ₽</div>
                 <div class="case-chance">Награды: 10-100 ₽</div>
             </div>
-            
             <div class="case-item case-gold" data-case="gold">
                 <span class="case-icon">🥇</span>
                 <h3 class="case-name">Золотой кейс</h3>
                 <div class="case-price">200 ₽</div>
                 <div class="case-chance">Награды: 100-500 ₽</div>
             </div>
-            
             <div class="case-item case-diamond" data-case="diamond">
                 <span class="case-icon">💎</span>
                 <h3 class="case-name">Алмазный кейс</h3>
                 <div class="case-price">500 ₽</div>
                 <div class="case-chance">Награды: 300-1000 ₽</div>
             </div>
-            
             <div class="case-item case-special" data-case="special">
                 <span class="case-icon">🎁</span>
                 <h3 class="case-name">Особый кейс</h3>
@@ -1573,19 +1737,15 @@
                 <div class="case-chance">Награды: 500-2000 ₽</div>
             </div>
         </div>
-        
         <button class="case-open-btn" id="openCaseBtn">ВЫБЕРИТЕ КЕЙС</button>
-        
         <button class="back-btn" id="backFromCasesBtn">← НАЗАД</button>
     </div>
     
-    <!-- Анимация открытия кейса -->
     <div class="case-opening-animation" id="caseOpeningAnimation">
-        <div class="case-wheel">
-            <div class="wheel-inner" id="wheelInner"></div>
-            <div class="wheel-pointer"></div>
+        <div class="prize-strip-container">
+            <div class="center-line"></div>
+            <div class="prize-strip" id="prizeStrip"></div>
         </div>
-        
         <div class="case-reward" id="caseReward">
             <span class="reward-icon" id="rewardIcon">💰</span>
             <div class="reward-amount" id="rewardAmount">+0 ₽</div>
@@ -1593,8 +1753,33 @@
             <button class="close-reward" id="closeRewardBtn">ЗАБРАТЬ НАГРАДУ</button>
         </div>
     </div>
-    
+
     <script>
+        // Показываем стартовое окно при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            const startupModal = document.getElementById('startupModal');
+            const startupBtn = document.getElementById('startupBtn');
+            
+            startupModal.style.display = 'flex';
+            
+            startupBtn.addEventListener('click', function() {
+                startupModal.style.opacity = '0';
+                startupModal.style.transform = 'scale(0.9)';
+                startupModal.style.transition = 'all 0.3s ease';
+                
+                setTimeout(() => {
+                    startupModal.style.display = 'none';
+                    initGame();
+                }, 300);
+            });
+        });
+        
+        function initGame() {
+            createSpaceBackground();
+            createStars();
+            setupButtons();
+        }
+        
         // Глобальный объект для управления балансом
         const GlobalBalance = {
             balance: 1000,
@@ -1724,12 +1909,12 @@
                 
                 // Шансы
                 this.multiplierRanges = [
-                    { min: 1.00, max: 1.10, chance: 50 },    // 50% - 1.00-1.10x
-                    { min: 1.11, max: 2.00, chance: 20 },    // 20% - 1.11-2.00x
-                    { min: 2.01, max: 3.00, chance: 10 },    // 10% - 2.01-3.00x
-                    { min: 3.01, max: 4.00, chance: 8 },     // 8% - 3.01-4.00x
-                    { min: 4.01, max: 5.00, chance: 7 },     // 7% - 4.01-5.00x
-                    { min: 5.01, max: 6.00, chance: 5 }      // 5% - 5.01-6.00x
+                    { min: 1.00, max: 1.10, chance: 50 },
+                    { min: 1.11, max: 2.00, chance: 20 },
+                    { min: 2.01, max: 3.00, chance: 10 },
+                    { min: 3.01, max: 4.00, chance: 8 },
+                    { min: 4.01, max: 5.00, chance: 7 },
+                    { min: 5.01, max: 6.00, chance: 5 }
                 ];
                 
                 this.totalChance = this.multiplierRanges.reduce((sum, item) => sum + item.chance, 0);
@@ -1830,7 +2015,6 @@
             initGame() {
                 this.updateDisplay();
                 
-                // Ставки - ИСПРАВЛЕННЫЙ БАГ: теперь можно уменьшать ставку даже если была выбрана слишком большая
                 this.decreaseBetBtn.addEventListener('click', () => this.changeBet(-100, true));
                 this.increaseBetBtn.addEventListener('click', () => this.changeBet(100, false));
                 
@@ -1844,7 +2028,6 @@
                 
                 const newBet = this.bet + amount;
                 
-                // ИСПРАВЛЕНИЕ БАГА: при уменьшении ставки всегда разрешаем, если новая ставка >= 100
                 if (isDecrease) {
                     if (newBet >= 100) {
                         this.bet = newBet;
@@ -1852,7 +2035,6 @@
                         this.clearError();
                     }
                 } else {
-                    // При увеличении ставки проверяем баланс
                     if (newBet >= 100 && newBet <= GlobalBalance.balance) {
                         this.bet = newBet;
                         this.updateDisplay();
@@ -1904,9 +2086,7 @@
                 this.targetMultiplier = this.generateTargetMultiplier();
                 this.rocketSpeed = 0.35;
                 
-                // Скрываем кнопку "Назад"
                 this.backBtn.classList.add('hidden');
-                
                 this.resultMessageElement.style.display = 'none';
                 this.rocketElement.style.bottom = '40px';
                 this.explosionElement.style.display = 'none';
@@ -1914,10 +2094,7 @@
                 this.launchBtn.style.display = 'none';
                 this.cashoutBtn.style.display = 'block';
                 
-                // Запускаем искры
                 this.sparkInterval = setInterval(() => this.createSpark(), 25);
-                
-                // Запускаем игру
                 this.gameInterval = setInterval(() => this.updateGame(), 50);
             }
             
@@ -1928,8 +2105,7 @@
                 this.currentMultiplierElement.textContent = `${displayedMultiplier.toFixed(2)}x`;
                 
                 const rocketHeight = 40 + (this.currentMultiplier - 1) * 16;
-                // Исправление: ограничиваем высоту ракеты, чтобы она не залезала на множитель
-                const maxHeight = window.innerHeight * 0.6; // Максимум 60% высоты экрана
+                const maxHeight = window.innerHeight * 0.6;
                 const actualHeight = Math.min(rocketHeight, maxHeight);
                 this.rocketElement.style.bottom = `${actualHeight}px`;
                 
@@ -1953,14 +2129,12 @@
                 const winAmount = Math.floor(this.bet * currentMultiplierRounded);
                 GlobalBalance.add(winAmount - this.bet);
                 
-                // Показываем кнопку "Назад"
                 this.backBtn.classList.remove('hidden');
                 
+                // ИСПРАВЛЕНО: возвращены проценты в результатах
                 this.showResult(true, winAmount, currentMultiplierRounded);
                 this.resetButtons();
                 this.updateDisplay();
-                
-                // Исправление: сбрасываем позицию ракеты после вывода
                 this.resetRocketPosition();
             }
             
@@ -1972,15 +2146,14 @@
                 this.createExplosionParticles();
                 GlobalBalance.subtract(this.bet);
                 
-                // Показываем кнопку "Назад"
                 this.backBtn.classList.remove('hidden');
                 
                 const currentMultiplierRounded = Math.round(this.currentMultiplier * 100) / 100;
+                // ИСПРАВЛЕНО: возвращены проценты в результатах
                 this.showResult(false, 0, currentMultiplierRounded);
                 this.resetButtons();
                 this.updateDisplay();
                 
-                // Исправление: сбрасываем позицию ракеты после взрыва
                 setTimeout(() => {
                     this.resetRocketPosition();
                 }, 1000);
@@ -1992,7 +2165,6 @@
             }
             
             resetRocketPosition() {
-                // Сбрасываем ракету в начальную позицию
                 this.rocketElement.style.bottom = '40px';
             }
             
@@ -2037,9 +2209,11 @@
                 this.resultMessageElement.style.display = 'block';
                 
                 if (isWin) {
+                    // ВЕРНУЛ: отображение множителя
                     this.resultMessageElement.textContent = `✅ +${amount - this.bet} ₽ (${multiplier.toFixed(2)}x)`;
                     this.resultMessageElement.className = 'result win';
                 } else {
+                    // ВЕРНУЛ: отображение множителя
                     this.resultMessageElement.textContent = `💥 Взорвалось на ${multiplier.toFixed(2)}x! -${this.bet} ₽`;
                     this.resultMessageElement.className = 'result lose';
                 }
@@ -2063,18 +2237,17 @@
             backToMain() {
                 this.stopGame();
                 if (this.explosionTimeout) clearTimeout(this.explosionTimeout);
-                // Исправление: сбрасываем позицию ракеты при выходе
                 this.resetRocketPosition();
                 document.getElementById('rocketGame').style.display = 'none';
             }
         }
         
-        // Система кейсов с анимацией
+        // Система кейсов с исправленным багом минимальных сумм
         class CasesSystem {
             constructor() {
                 this.selectedCase = null;
                 this.caseOpeningAnimation = document.getElementById('caseOpeningAnimation');
-                this.wheelInner = document.getElementById('wheelInner');
+                this.prizeStrip = document.getElementById('prizeStrip');
                 this.caseReward = document.getElementById('caseReward');
                 this.rewardIcon = document.getElementById('rewardIcon');
                 this.rewardAmount = document.getElementById('rewardAmount');
@@ -2084,40 +2257,106 @@
                 this.backFromCasesBtn = document.getElementById('backFromCasesBtn');
                 this.casesPage = document.getElementById('casesPage');
                 
+                this.prizes = [];
+                this.selectedPrizeIndex = 0;
+                this.stripAnimation = null;
+                
                 this.initCases();
+                this.generatePrizes();
             }
             
             initCases() {
-                // Обработчики для выбора кейса
                 const caseItems = document.querySelectorAll('.case-item');
                 caseItems.forEach(item => {
                     item.addEventListener('click', () => {
-                        // Снимаем выделение со всех кейсов
                         caseItems.forEach(i => i.classList.remove('selected'));
-                        
-                        // Выделяем выбранный кейс
                         item.classList.add('selected');
                         this.selectedCase = item.dataset.case;
                         
-                        // Обновляем текст кнопки
-                        const caseName = item.querySelector('.case-name').textContent;
                         const casePrice = item.querySelector('.case-price').textContent;
                         this.openCaseBtn.textContent = `ОТКРЫТЬ ЗА ${casePrice}`;
                         this.openCaseBtn.disabled = false;
                     });
                 });
                 
-                // Обработчик открытия кейса
                 this.openCaseBtn.addEventListener('click', () => this.openCase());
-                
-                // Кнопка закрытия награды
                 this.closeRewardBtn.addEventListener('click', () => {
                     this.closeAnimation();
                 });
-                
-                // Кнопка назад
                 this.backFromCasesBtn.addEventListener('click', () => {
                     this.casesPage.style.display = 'none';
+                });
+            }
+            
+            generatePrizes() {
+                this.prizes = [];
+                
+                // ИСПРАВЛЕНИЕ БАГА: Правильные диапазоны для каждого кейса
+                const prizeRanges = {
+                    'earth': { min: 10, max: 100 },      // Земляной: 10-100 ₽
+                    'gold': { min: 100, max: 500 },      // Золотой: 100-500 ₽
+                    'diamond': { min: 300, max: 1000 },  // Алмазный: 300-1000 ₽
+                    'special': { min: 500, max: 2000 }   // Особый: 500-2000 ₽
+                };
+                
+                // Создаем 50 призов для ленты
+                for (let i = 0; i < 50; i++) {
+                    let amount, icon, color;
+                    
+                    // Распределяем призы с разными шансами
+                    const rand = Math.random();
+                    if (rand < 0.4) {
+                        // 40% - маленькие призы (в пределах каждого кейса)
+                        amount = Math.floor(Math.random() * 50) + 10;
+                        icon = '💰';
+                        color = '#FFD700';
+                    } else if (rand < 0.7) {
+                        // 30% - средние призы
+                        amount = Math.floor(Math.random() * 100) + 50;
+                        icon = '💎';
+                        color = '#00C8FF';
+                    } else if (rand < 0.9) {
+                        // 20% - большие призы
+                        amount = Math.floor(Math.random() * 200) + 100;
+                        icon = '🏆';
+                        color = '#FF6B6B';
+                    } else {
+                        // 10% - огромные призы
+                        amount = Math.floor(Math.random() * 500) + 200;
+                        icon = '👑';
+                        color = '#9C27B0';
+                    }
+                    
+                    // Для красоты добавляем названия призов
+                    let name = '';
+                    if (amount < 50) name = '';
+                    else if (amount < 100) name = '';
+                    else if (amount < 200) name = '';
+                    else if (amount < 500) name = '';
+                    else name = 'МЕГА ПРИЗ!';
+                    
+                    this.prizes.push({
+                        amount,
+                        icon,
+                        color,
+                        name
+                    });
+                }
+                
+                this.prizeStrip.innerHTML = '';
+                
+                this.prizes.forEach((prize, index) => {
+                    const prizeItem = document.createElement('div');
+                    prizeItem.className = 'prize-item';
+                    prizeItem.dataset.index = index;
+                    
+                    prizeItem.innerHTML = `
+                        <div class="prize-icon">${prize.icon}</div>
+                        <div class="prize-amount" style="color: ${prize.color}">${prize.amount} ₽</div>
+                        <div class="prize-name">${prize.name}</div>
+                    `;
+                    
+                    this.prizeStrip.appendChild(prizeItem);
                 });
             }
             
@@ -2138,97 +2377,193 @@
                     return;
                 }
                 
-                // Блокируем кнопку на время анимации
                 this.openCaseBtn.disabled = true;
-                
-                // Вычитаем стоимость кейса
                 GlobalBalance.subtract(casePrice);
                 
-                // Показываем анимацию
-                this.showOpeningAnimation();
+                // ИСПРАВЛЕНИЕ БАГА: Генерация суммы в правильном диапазоне для выбранного кейса
+                let minAmount, maxAmount;
                 
-                // Через 2 секунды (после анимации прокрутки) показываем награду
-                setTimeout(() => {
-                    this.showReward();
-                }, 2000);
+                switch(this.selectedCase) {
+                    case 'earth':
+                        minAmount = 10;
+                        maxAmount = 100;
+                        break;
+                    case 'gold':
+                        minAmount = 100;
+                        maxAmount = 500;
+                        break;
+                    case 'diamond':
+                        minAmount = 300;
+                        maxAmount = 1000;
+                        break;
+                    case 'special':
+                        minAmount = 500;
+                        maxAmount = 2000;
+                        break;
+                    default:
+                        minAmount = 10;
+                        maxAmount = 100;
+                }
+                
+                // Генерируем случайную сумму в правильном диапазоне
+                const winAmount = Math.floor(Math.random() * (maxAmount - minAmount + 1)) + minAmount;
+                
+                // Создаем приз с правильной суммой
+                const winPrize = {
+                    amount: winAmount,
+                    icon: this.getIconForAmount(winAmount),
+                    color: this.getColorForAmount(winAmount),
+                    name: this.getPrizeName(winAmount)
+                };
+                
+                // Заменяем один из призов в ленте на выигранный
+                this.selectedPrizeIndex = Math.floor(Math.random() * this.prizes.length);
+                this.prizes[this.selectedPrizeIndex] = winPrize;
+                
+                // Обновляем отображение приза в ленте
+                const prizeItem = this.prizeStrip.children[this.selectedPrizeIndex];
+                prizeItem.innerHTML = `
+                    <div class="prize-icon">${winPrize.icon}</div>
+                    <div class="prize-amount" style="color: ${winPrize.color}">${winPrize.amount} ₽</div>
+                    <div class="prize-name">${winPrize.name}</div>
+                `;
+                
+                this.showOpeningAnimation();
+            }
+            
+            getIconForAmount(amount) {
+                if (amount < 50) return '💰';
+                if (amount < 100) return '💎';
+                if (amount < 200) return '🏆';
+                if (amount < 500) return '👑';
+                return '🚀';
+            }
+            
+            getColorForAmount(amount) {
+                if (amount < 50) return '#FFD700';
+                if (amount < 100) return '#00C8FF';
+                if (amount < 200) return '#FF6B6B';
+                if (amount < 500) return '#9C27B0';
+                return '#FF0000';
+            }
+            
+            getPrizeName(amount) {
+                if (amount < 50) return 'Малый приз';
+                if (amount < 100) return 'Средний приз';
+                if (amount < 200) return 'Большой приз';
+                if (amount < 500) return 'Огромный приз';
+                return 'МЕГА ПРИЗ!';
             }
             
             showOpeningAnimation() {
                 this.caseOpeningAnimation.style.display = 'flex';
                 this.caseReward.style.display = 'none';
+                this.prizeStrip.style.left = '0px';
                 
-                // Сбрасываем анимацию колеса
-                this.wheelInner.style.animation = 'none';
-                void this.wheelInner.offsetWidth; // Принудительный reflow
-                this.wheelInner.style.animation = 'wheelSpin 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+                document.querySelectorAll('.prize-item').forEach(item => {
+                    item.classList.remove('highlighted');
+                });
+                
+                const prizeWidth = 200;
+                const containerWidth = document.querySelector('.prize-strip-container').offsetWidth;
+                const centerPosition = containerWidth / 2 - prizeWidth / 2;
+                const targetPosition = centerPosition - (this.selectedPrizeIndex * prizeWidth);
+                
+                let startTime = null;
+                const duration = 3000;
+                const startPosition = 0;
+                
+                const animateStrip = (timestamp) => {
+                    if (!startTime) startTime = timestamp;
+                    const progress = (timestamp - startTime) / duration;
+                    
+                    const easing = 1 - Math.pow(1 - progress, 3);
+                    
+                    let currentPosition;
+                    if (progress < 0.7) {
+                        const fastProgress = progress / 0.7;
+                        currentPosition = startPosition + (targetPosition * 1.5) * fastProgress;
+                    } else {
+                        const slowProgress = (progress - 0.7) / 0.3;
+                        const bounceProgress = 1 - Math.pow(1 - slowProgress, 4);
+                        currentPosition = targetPosition * 1.5 + (targetPosition - targetPosition * 1.5) * bounceProgress;
+                    }
+                    
+                    this.prizeStrip.style.left = currentPosition + 'px';
+                    this.highlightCurrentPrize(currentPosition);
+                    
+                    if (progress < 1) {
+                        this.stripAnimation = requestAnimationFrame(animateStrip);
+                    } else {
+                        setTimeout(() => {
+                            this.showReward();
+                        }, 500);
+                    }
+                };
+                
+                this.stripAnimation = requestAnimationFrame(animateStrip);
+            }
+            
+            highlightCurrentPrize(position) {
+                const prizeWidth = 200;
+                const containerWidth = document.querySelector('.prize-strip-container').offsetWidth;
+                const centerPosition = containerWidth / 2;
+                
+                const prizeIndex = Math.floor(Math.abs(position - centerPosition) / prizeWidth);
+                
+                document.querySelectorAll('.prize-item').forEach(item => {
+                    item.classList.remove('highlighted');
+                });
+                
+                const currentPrize = document.querySelector(`.prize-item[data-index="${prizeIndex}"]`);
+                if (currentPrize) {
+                    currentPrize.classList.add('highlighted');
+                }
             }
             
             showReward() {
-                // Генерируем награду в зависимости от типа кейса
-                let reward;
-                let caseName;
-                let icon;
+                const prize = this.prizes[this.selectedPrizeIndex];
                 
-                switch (this.selectedCase) {
-                    case 'earth':
-                        reward = this.getRandomReward(10, 100);
-                        caseName = 'Земляной кейс';
-                        icon = '🌍';
-                        break;
-                    case 'gold':
-                        reward = this.getRandomReward(100, 500);
-                        caseName = 'Золотой кейс';
-                        icon = '🥇';
-                        break;
-                    case 'diamond':
-                        reward = this.getRandomReward(300, 1000);
-                        caseName = 'Алмазный кейс';
-                        icon = '💎';
-                        break;
-                    case 'special':
-                        reward = this.getRandomReward(500, 2000);
-                        caseName = 'Особый кейс';
-                        icon = '🎁';
-                        break;
+                GlobalBalance.add(prize.amount);
+                
+                this.rewardIcon.textContent = prize.icon;
+                this.rewardAmount.textContent = `+${prize.amount} ₽`;
+                this.rewardAmount.style.color = prize.color;
+                this.rewardText.textContent = `Вы выиграли ${prize.name}! (${prize.amount} ₽)`;
+                
+                document.querySelectorAll('.prize-item').forEach(item => {
+                    item.classList.remove('highlighted');
+                });
+                const winningPrize = document.querySelector(`.prize-item[data-index="${this.selectedPrizeIndex}"]`);
+                if (winningPrize) {
+                    winningPrize.classList.add('highlighted');
+                    winningPrize.style.animation = 'rewardIconPulse 0.5s infinite alternate';
                 }
                 
-                // Добавляем награду к балансу
-                GlobalBalance.add(reward);
-                
-                // Обновляем отображение награды
-                this.rewardIcon.textContent = icon;
-                this.rewardAmount.textContent = `+${reward} ₽`;
-                this.rewardText.textContent = `Вы открыли ${caseName}!`;
-                
-                // Показываем награду
                 this.caseReward.style.display = 'block';
             }
             
-            getRandomReward(min, max) {
-                // Генерируем награду с шансами на разные величины
-                const rand = Math.random();
-                if (rand < 0.6) {
-                    // 60% шанс на минимальную-среднюю награду
-                    return Math.floor(Math.random() * (max * 0.5 - min) + min);
-                } else if (rand < 0.9) {
-                    // 30% шанс на среднюю-высокую награду
-                    return Math.floor(Math.random() * (max * 0.8 - max * 0.5) + max * 0.5);
-                } else {
-                    // 10% шанс на максимальную награду
-                    return Math.floor(Math.random() * (max - max * 0.8) + max * 0.8);
-                }
-            }
-            
             closeAnimation() {
+                if (this.stripAnimation) {
+                    cancelAnimationFrame(this.stripAnimation);
+                }
+                
                 this.caseOpeningAnimation.style.display = 'none';
-                // Разблокируем кнопку открытия кейса
                 this.openCaseBtn.disabled = false;
-                // Снимаем выделение с выбранного кейса
+                
                 document.querySelectorAll('.case-item').forEach(item => {
                     item.classList.remove('selected');
                 });
                 this.selectedCase = null;
                 this.openCaseBtn.textContent = 'ВЫБЕРИТЕ КЕЙС';
+                
+                document.querySelectorAll('.prize-item').forEach(item => {
+                    item.classList.remove('highlighted');
+                    item.style.animation = '';
+                });
+                
+                // Регенерируем призы для следующего открытия
+                this.generatePrizes();
             }
         }
         
@@ -2287,13 +2622,6 @@
                 }
             });
         }
-        
-        // Инициализация
-        document.addEventListener('DOMContentLoaded', () => {
-            createSpaceBackground();
-            createStars();
-            setupButtons();
-        });
         
         // Предотвращаем масштабирование
         document.addEventListener('touchmove', function(e) {
