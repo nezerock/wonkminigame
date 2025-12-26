@@ -1335,9 +1335,11 @@
         }
         
         .prize-name {
-            font-size: 0.9rem;
-            color: #94a3ff;
-            opacity: 0.9;
+            font-size: 0; /* Скрываем названия призов */
+            height: 0;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
         }
         
         .center-line {
@@ -1356,6 +1358,22 @@
                 0 0 15px #ffcc00,
                 0 0 30px #ffcc00;
             z-index: 10;
+            animation: linePulse 1s infinite alternate;
+        }
+        
+        @keyframes linePulse {
+            0% { 
+                opacity: 0.7;
+                box-shadow: 
+                    0 0 10px #ffcc00,
+                    0 0 20px #ffcc00;
+            }
+            100% { 
+                opacity: 1;
+                box-shadow: 
+                    0 0 20px #ffcc00,
+                    0 0 40px #ffcc00;
+            }
         }
         
         .center-line::before {
@@ -1367,6 +1385,12 @@
             font-size: 2rem;
             color: #ffcc00;
             text-shadow: 0 0 10px #ffcc00;
+            animation: arrowPulse 1s infinite alternate;
+        }
+        
+        @keyframes arrowPulse {
+            0% { transform: translateX(-50%) scale(0.9); }
+            100% { transform: translateX(-50%) scale(1.1); }
         }
         
         .case-reward {
@@ -1708,7 +1732,7 @@
     
     <div class="cases-page" id="casesPage">
         <div class="cases-header">
-            <h2 class="cases-title">КОСМИЧЕСКИЕ КЕЙСЫ</h2>
+            <h2 class="cases-title">КЕЙСЫ</h2>
             <p class="cases-subtitle">Откройте кейсы и получите уникальные награды!</p>
         </div>
         <div class="cases-grid">
@@ -2131,7 +2155,7 @@
                 
                 this.backBtn.classList.remove('hidden');
                 
-                // ИСПРАВЛЕНО: возвращены проценты в результатах
+                // Возвращены проценты в результатах
                 this.showResult(true, winAmount, currentMultiplierRounded);
                 this.resetButtons();
                 this.updateDisplay();
@@ -2149,7 +2173,7 @@
                 this.backBtn.classList.remove('hidden');
                 
                 const currentMultiplierRounded = Math.round(this.currentMultiplier * 100) / 100;
-                // ИСПРАВЛЕНО: возвращены проценты в результатах
+                // Возвращены проценты в результатах
                 this.showResult(false, 0, currentMultiplierRounded);
                 this.resetButtons();
                 this.updateDisplay();
@@ -2209,11 +2233,11 @@
                 this.resultMessageElement.style.display = 'block';
                 
                 if (isWin) {
-                    // ВЕРНУЛ: отображение множителя
+                    // Возвращены проценты в результатах
                     this.resultMessageElement.textContent = `✅ +${amount - this.bet} ₽ (${multiplier.toFixed(2)}x)`;
                     this.resultMessageElement.className = 'result win';
                 } else {
-                    // ВЕРНУЛ: отображение множителя
+                    // Возвращены проценты в результатах
                     this.resultMessageElement.textContent = `💥 Взорвалось на ${multiplier.toFixed(2)}x! -${this.bet} ₽`;
                     this.resultMessageElement.className = 'result lose';
                 }
@@ -2303,37 +2327,33 @@
                 for (let i = 0; i < 50; i++) {
                     let amount, icon, color;
                     
-                    // Распределяем призы с разными шансами
+                    // ИЗМЕНЕНИЕ: уменьшил шансы на большие выигрыши
                     const rand = Math.random();
-                    if (rand < 0.4) {
-                        // 40% - маленькие призы (в пределах каждого кейса)
+                    if (rand < 0.5) {
+                        // 50% - маленькие призы (в пределах каждого кейса)
                         amount = Math.floor(Math.random() * 50) + 10;
                         icon = '💰';
                         color = '#FFD700';
-                    } else if (rand < 0.7) {
+                    } else if (rand < 0.8) {
                         // 30% - средние призы
                         amount = Math.floor(Math.random() * 100) + 50;
                         icon = '💎';
                         color = '#00C8FF';
-                    } else if (rand < 0.9) {
-                        // 20% - большие призы
+                    } else if (rand < 0.95) {
+                        // 15% - большие призы
                         amount = Math.floor(Math.random() * 200) + 100;
                         icon = '🏆';
                         color = '#FF6B6B';
                     } else {
-                        // 10% - огромные призы
+                        // 5% - огромные призы (уменьшенный шанс)
                         amount = Math.floor(Math.random() * 500) + 200;
                         icon = '👑';
                         color = '#9C27B0';
                     }
                     
-                    // Для красоты добавляем названия призов
-                    let name = '';
-                    if (amount < 50) name = '';
-                    else if (amount < 100) name = '';
-                    else if (amount < 200) name = '';
-                    else if (amount < 500) name = '';
-                    else name = '';
+                    // УБРАНО: названия призов (Малый приз, МЕГА ПРИЗ и т.д.)
+                    // Вместо этого пустая строка
+                    const name = '';
                     
                     this.prizes.push({
                         amount,
@@ -2405,15 +2425,30 @@
                         maxAmount = 100;
                 }
                 
-                // Генерируем случайную сумму в правильном диапазоне
-                const winAmount = Math.floor(Math.random() * (maxAmount - minAmount + 1)) + minAmount;
+                // ИЗМЕНЕНИЕ: уменьшил шанс на выпадение суммы больше стоимости кейса
+                let winAmount;
+                const rand = Math.random();
+                
+                // Шансы на разные размеры выигрыша
+                if (rand < 0.6) {
+                    // 60% - сумма меньше стоимости кейса (но в пределах диапазона)
+                    winAmount = Math.floor(Math.random() * (Math.min(casePrice, maxAmount) - minAmount + 1)) + minAmount;
+                } else if (rand < 0.9) {
+                    // 30% - сумма примерно равна стоимости кейса
+                    winAmount = Math.floor(Math.random() * (casePrice * 1.2 - casePrice * 0.8 + 1)) + casePrice * 0.8;
+                    winAmount = Math.min(Math.max(winAmount, minAmount), maxAmount);
+                } else {
+                    // 10% - большая сумма (уменьшенный шанс)
+                    winAmount = Math.floor(Math.random() * (maxAmount - casePrice * 1.5 + 1)) + casePrice * 1.5;
+                    winAmount = Math.min(Math.max(winAmount, minAmount), maxAmount);
+                }
                 
                 // Создаем приз с правильной суммой
                 const winPrize = {
                     amount: winAmount,
                     icon: this.getIconForAmount(winAmount),
                     color: this.getColorForAmount(winAmount),
-                    name: this.getPrizeName(winAmount)
+                    name: '' // Пустое имя приза
                 };
                 
                 // Заменяем один из призов в ленте на выигранный
@@ -2445,14 +2480,6 @@
                 if (amount < 200) return '#FF6B6B';
                 if (amount < 500) return '#9C27B0';
                 return '#FF0000';
-            }
-            
-            getPrizeName(amount) {
-                if (amount < 50) return '';
-                if (amount < 100) return '';
-                if (amount < 200) return '';
-                if (amount < 500) return '';
-                return '';
             }
             
             showOpeningAnimation() {
@@ -2529,7 +2556,7 @@
                 this.rewardIcon.textContent = prize.icon;
                 this.rewardAmount.textContent = `+${prize.amount} ₽`;
                 this.rewardAmount.style.color = prize.color;
-                this.rewardText.textContent = `Вы выиграли ${prize.name}! (${prize.amount} ₽)`;
+                this.rewardText.textContent = `Вы выиграли ${prize.amount} ₽!`;
                 
                 document.querySelectorAll('.prize-item').forEach(item => {
                     item.classList.remove('highlighted');
