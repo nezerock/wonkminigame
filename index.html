@@ -6,7 +6,7 @@
     <title>WONK MINIGAME</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <style>
-        * { 
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -15,7 +15,7 @@
         
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            background: linear-gradient(135deg, #0a081f 0%, #1a173a 50%, #0f0d25 100%);
             overflow: hidden;
             position: relative;
             display: flex;
@@ -27,6 +27,76 @@
             width: 100%;
             height: 100vh;
             touch-action: manipulation;
+        }
+        
+        /* Космический фон с элементами */
+        .space-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        /* Планета */
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(106, 17, 203, 0.4), rgba(37, 117, 252, 0.2));
+            filter: blur(15px);
+            animation: planetFloat 25s infinite alternate ease-in-out;
+        }
+        
+        @keyframes planetFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, -20px) scale(1.05); }
+        }
+        
+        /* Плавающие кристаллы */
+        .floating-crystal {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, rgba(94, 156, 255, 0.3), rgba(148, 163, 255, 0.5));
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+            animation: crystalFloat 20s infinite linear;
+            opacity: 0.3;
+        }
+        
+        @keyframes crystalFloat {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+        
+        /* Парящие частицы */
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: particleFloat 15s infinite linear;
+        }
+        
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) translateX(0) scale(0.5); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100px) translateX(var(--particle-x)) scale(1); opacity: 0; }
+        }
+        
+        /* Космические линии */
+        .space-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(94, 156, 255, 0.3), transparent);
+            animation: lineFlow 10s infinite linear;
+        }
+        
+        @keyframes lineFlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100vw); }
         }
         
         /* Компактный заголовок сверху */
@@ -45,90 +115,169 @@
             font-weight: 900;
             font-size: 1.8rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             color: white;
-            text-shadow: 0 0 10px rgba(94, 156, 255, 0.8);
-            padding: 12px 24px;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 12px;
-            border: 2px solid rgba(94, 156, 255, 0.3);
+            text-shadow: 
+                0 0 10px rgba(94, 156, 255, 0.8),
+                0 0 20px rgba(94, 156, 255, 0.5),
+                0 0 30px rgba(94, 156, 255, 0.3);
+            padding: 15px 30px;
+            background: rgba(10, 10, 25, 0.7);
+            border-radius: 20px;
+            border: 2px solid rgba(94, 156, 255, 0.4);
             display: inline-block;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .title::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                rgba(94, 156, 255, 0.2),
+                rgba(148, 163, 255, 0.1),
+                rgba(94, 156, 255, 0.2));
+            border-radius: 20px;
+            z-index: -1;
+            animation: borderGlow 3s infinite alternate;
+        }
+        
+        @keyframes borderGlow {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
         }
         
         .wonk { 
             color: #ffcc00;
-            text-shadow: 0 0 5px rgba(255, 204, 0, 0.8);
+            text-shadow: 
+                0 0 10px rgba(255, 204, 0, 0.8),
+                0 0 20px rgba(255, 204, 0, 0.4);
+            animation: textPulse 2s infinite alternate;
         }
         
         .minigame { 
             color: #00ffcc;
-            text-shadow: 0 0 5px rgba(0, 255, 204, 0.8);
+            text-shadow: 
+                0 0 10px rgba(0, 255, 204, 0.8),
+                0 0 20px rgba(0, 255, 204, 0.4);
+            animation: textPulse 2s infinite alternate-reverse;
         }
         
-        /* Центральный контейнер для кнопок */
+        @keyframes textPulse {
+            0% { opacity: 0.9; }
+            100% { opacity: 1; }
+        }
+        
+        /* Центральный контейнер с кнопками */
         .main-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 25px;
+            gap: 30px;
             width: 100%;
-            max-width: 320px;
+            max-width: 360px;
             z-index: 10;
             margin-top: 40px;
+            position: relative;
         }
         
-        /* Кнопки по центру */
+        /* Кнопки с улучшенным дизайном */
         .btn {
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
             font-size: 1.4rem;
             text-transform: uppercase;
             color: white;
-            padding: 20px 40px;
+            padding: 22px 45px;
             border: none;
-            border-radius: 30px;
+            border-radius: 35px;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             width: 100%;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: 
+                0 10px 25px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
             position: relative;
             overflow: hidden;
-            letter-spacing: 1.5px;
-            min-height: 70px;
+            letter-spacing: 2px;
+            min-height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(5px);
         }
         
-        .btn:active {
-            transform: scale(0.96);
-        }
-        
-        .btn::after {
+        .btn::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
             transition: 0.5s;
         }
         
-        .btn:active::after {
+        .btn:hover::before {
             left: 100%;
         }
         
+        .btn:active {
+            transform: scale(0.96);
+            box-shadow: 
+                0 5px 15px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        
         .btn-what {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            border: 3px solid rgba(106, 17, 203, 0.6);
+            background: linear-gradient(135deg, 
+                rgba(106, 17, 203, 0.9) 0%, 
+                rgba(37, 117, 252, 0.9) 100%);
+            border: 2px solid rgba(106, 17, 203, 0.5);
+        }
+        
+        .btn-what::after {
+            content: '🚀';
+            position: absolute;
+            right: 20px;
+            font-size: 1.8rem;
+            opacity: 0.8;
         }
         
         .btn-play {
-            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
-            border: 3px solid rgba(255, 65, 108, 0.6);
+            background: linear-gradient(135deg, 
+                rgba(255, 65, 108, 0.9) 0%, 
+                rgba(255, 75, 43, 0.9) 100%);
+            border: 2px solid rgba(255, 65, 108, 0.5);
+        }
+        
+        .btn-play::after {
+            content: '💎';
+            position: absolute;
+            right: 20px;
+            font-size: 1.8rem;
+            opacity: 0.8;
+        }
+        
+        .btn-cases {
+            background: linear-gradient(135deg, 
+                rgba(255, 193, 7, 0.9) 0%, 
+                rgba(255, 152, 0, 0.9) 100%);
+            border: 2px solid rgba(255, 193, 7, 0.5);
+        }
+        
+        .btn-cases::after {
+            content: '🎁';
+            position: absolute;
+            right: 20px;
+            font-size: 1.8rem;
+            opacity: 0.8;
         }
         
         /* Мини-модальное окно */
@@ -139,79 +288,128 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.85);
             z-index: 1000;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(15px);
         }
         
         .modal-content {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            padding: 25px;
-            border-radius: 20px;
+            background: linear-gradient(135deg, 
+                rgba(26, 26, 46, 0.95) 0%, 
+                rgba(22, 33, 62, 0.95) 100%);
+            padding: 30px;
+            border-radius: 25px;
             width: 100%;
             color: white;
-            border: 3px solid rgba(94, 156, 255, 0.5);
-            max-width: 400px;
-            font-size: 0.95rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(94, 156, 255, 0.4);
+            max-width: 420px;
+            font-size: 1rem;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                #6a11cb, 
+                #2575fc, 
+                #6a11cb);
+            animation: borderSlide 3s infinite linear;
+        }
+        
+        @keyframes borderSlide {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
         }
         
         .modal-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             color: #ffcc00;
             text-align: center;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+            margin-bottom: 25px;
+            text-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 204, 0, 0.3);
         }
         
         .modal-text {
-            margin-bottom: 12px;
-            line-height: 1.5;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            padding-left: 15px;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-text:hover {
+            transform: translateX(5px);
         }
         
         .bad-news { 
             color: #ff6b6b;
             background: rgba(255, 107, 107, 0.15);
-            padding: 12px;
-            border-radius: 8px;
+            padding: 15px;
+            border-radius: 10px;
             border-left: 4px solid #ff6b6b;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         
         .good-news { 
             color: #00ffcc;
             background: rgba(0, 255, 204, 0.15);
-            padding: 12px;
-            border-radius: 8px;
+            padding: 15px;
+            border-radius: 10px;
             border-left: 4px solid #00ffcc;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         
         .changes { 
             color: #94a3ff;
             background: rgba(148, 163, 255, 0.15);
-            padding: 12px;
-            border-radius: 8px;
+            padding: 15px;
+            border-radius: 10px;
             border-left: 4px solid #94a3ff;
         }
         
         .close-modal {
-            background: linear-gradient(45deg, #ff416c 0%, #ff4b2b 100%);
+            background: linear-gradient(45deg, 
+                rgba(255, 65, 108, 0.9) 0%, 
+                rgba(255, 75, 43, 0.9) 100%);
             border: none;
             color: white;
-            padding: 14px 28px;
+            padding: 16px 32px;
             border-radius: 25px;
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             cursor: pointer;
             width: 100%;
-            margin-top: 20px;
+            margin-top: 25px;
             font-weight: 600;
-            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+            box-shadow: 
+                0 8px 20px rgba(255, 65, 108, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .close-modal:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 12px 25px rgba(255, 65, 108, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
         
         .close-modal:active {
@@ -226,7 +424,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, #0a0a1a 0%, #151530 100%);
+            background: linear-gradient(180deg, 
+                #050510 0%, 
+                #0a0a20 30%, 
+                #101030 100%);
             z-index: 1000;
             flex-direction: column;
             align-items: center;
@@ -239,19 +440,28 @@
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            padding: 15px;
-            background: rgba(10, 10, 30, 0.8);
-            border-radius: 15px;
-            margin-bottom: 15px;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            backdrop-filter: blur(5px);
+            padding: 18px 25px;
+            background: rgba(10, 10, 30, 0.85);
+            border-radius: 20px;
+            margin-bottom: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 10px 20px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
         
         .balance {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: #00ff00;
-            text-shadow: 0 0 5px #00ff00;
+            text-shadow: 
+                0 0 10px #00ff00,
+                0 0 20px #00ff00;
+            padding: 8px 16px;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 0, 0.3);
         }
         
         .game-container {
@@ -263,74 +473,99 @@
         
         .rocket-display {
             flex: 1;
-            background: linear-gradient(180deg, #000510 0%, #001525 100%);
-            border-radius: 15px;
+            background: linear-gradient(180deg, 
+                #000510 0%, 
+                #001525 50%, 
+                #002040 100%);
+            border-radius: 20px;
             position: relative;
             overflow: hidden;
-            margin-bottom: 15px;
-            border: 2px solid rgba(100, 150, 255, 0.3);
-            box-shadow: inset 0 0 30px rgba(0, 50, 150, 0.2);
+            margin-bottom: 20px;
+            border: 2px solid rgba(100, 150, 255, 0.4);
+            box-shadow: 
+                inset 0 0 40px rgba(0, 50, 150, 0.3),
+                0 10px 20px rgba(0, 0, 0, 0.4);
         }
         
-        /* Реалистичная ракета */
+        /* Реалистичная ракета ПРЯМАЯ (без наклона) */
         .rocket {
             position: absolute;
             bottom: 40px;
             left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 140px;
+            transform: translateX(-50%) rotate(0deg);
+            width: 65px;
+            height: 150px;
             transition: bottom 0.05s cubic-bezier(0.33, 1, 0.68, 1);
             z-index: 10;
+            transform-origin: center bottom;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
         }
         
         .rocket-body {
             position: absolute;
-            width: 50px;
-            height: 100px;
+            width: 55px;
+            height: 110px;
             background: linear-gradient(90deg, 
-                #888888 0%, 
-                #cccccc 25%, 
+                #666666 0%, 
+                #aaaaaa 25%, 
                 #ffffff 50%, 
-                #cccccc 75%, 
-                #888888 100%);
-            border-radius: 8px 8px 4px 4px;
+                #aaaaaa 75%, 
+                #666666 100%);
+            border-radius: 10px 10px 6px 6px;
             left: 50%;
             transform: translateX(-50%);
             box-shadow: 
-                0 0 15px rgba(255, 255, 255, 0.4),
-                inset 0 0 20px rgba(0, 0, 0, 0.3);
+                0 0 20px rgba(255, 255, 255, 0.5),
+                inset 0 0 25px rgba(0, 0, 0, 0.4);
             z-index: 11;
         }
         
         .rocket-nose {
             position: absolute;
-            top: -30px;
+            top: -35px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
             height: 0;
-            border-left: 25px solid transparent;
-            border-right: 25px solid transparent;
-            border-bottom: 30px solid #ff3333;
-            filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.7));
+            border-left: 28px solid transparent;
+            border-right: 28px solid transparent;
+            border-bottom: 35px solid #ff3333;
+            filter: 
+                drop-shadow(0 0 10px rgba(255, 0, 0, 0.8))
+                drop-shadow(0 0 20px rgba(255, 100, 0, 0.5));
             z-index: 12;
         }
         
         .rocket-window {
             position: absolute;
-            top: 30px;
+            top: 35px;
             left: 50%;
             transform: translateX(-50%);
-            width: 22px;
-            height: 22px;
-            background: radial-gradient(circle at 30% 30%, #00ccff 0%, #0066ff 100%);
+            width: 25px;
+            height: 25px;
+            background: radial-gradient(circle at 30% 30%, 
+                #00ccff 0%, 
+                #0066ff 70%, 
+                #0044aa 100%);
             border-radius: 50%;
             box-shadow: 
-                inset 0 0 8px rgba(255, 255, 255, 0.6),
-                0 0 10px rgba(0, 200, 255, 0.8);
-            border: 2px solid #ffffff;
+                inset 0 0 10px rgba(255, 255, 255, 0.8),
+                0 0 15px rgba(0, 200, 255, 0.9),
+                0 0 30px rgba(0, 150, 255, 0.6);
+            border: 3px solid #ffffff;
             z-index: 12;
+            animation: windowGlow 2s infinite alternate;
+        }
+        
+        @keyframes windowGlow {
+            0% { box-shadow: 
+                inset 0 0 10px rgba(255, 255, 255, 0.8),
+                0 0 15px rgba(0, 200, 255, 0.9),
+                0 0 30px rgba(0, 150, 255, 0.6); }
+            100% { box-shadow: 
+                inset 0 0 10px rgba(255, 255, 255, 0.8),
+                0 0 20px rgba(0, 200, 255, 1),
+                0 0 40px rgba(0, 150, 255, 0.8); }
         }
         
         .rocket-fins {
@@ -338,50 +573,55 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 70px;
-            height: 35px;
+            width: 80px;
+            height: 40px;
             z-index: 11;
         }
         
         .fin {
             position: absolute;
             bottom: 0;
-            width: 18px;
-            height: 35px;
-            background: linear-gradient(45deg, #555555 0%, #777777 100%);
-            border-radius: 0 0 4px 4px;
+            width: 20px;
+            height: 40px;
+            background: linear-gradient(45deg, 
+                #444444 0%, 
+                #666666 50%, 
+                #888888 100%);
+            border-radius: 0 0 6px 6px;
         }
         
         .fin-left {
             left: 0;
-            transform: rotate(-10deg);
+            transform: rotate(-12deg);
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
         }
         
         .fin-right {
             right: 0;
-            transform: rotate(10deg);
+            transform: rotate(12deg);
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
         }
         
-        /* Пламя из ракеты */
+        /* Пламя из ракеты ПРЯМОЕ */
         .rocket-engine {
             position: absolute;
-            bottom: -5px;
+            bottom: -8px;
             left: 50%;
             transform: translateX(-50%);
-            width: 40px;
-            height: 15px;
-            background: #333333;
-            border-radius: 0 0 8px 8px;
+            width: 45px;
+            height: 18px;
+            background: #222222;
+            border-radius: 0 0 10px 10px;
             z-index: 10;
         }
         
         .rocket-flame-container {
             position: absolute;
-            bottom: -60px;
+            bottom: -70px;
             left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 80px;
+            transform: translateX(-50%) rotate(0deg);
+            width: 90px;
+            height: 90px;
             z-index: 9;
         }
         
@@ -390,35 +630,35 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 30px;
-            height: 60px;
+            width: 35px;
+            height: 70px;
             background: linear-gradient(to bottom, 
                 #ffff00 0%,
                 #ff9900 20%,
                 #ff5500 40%,
                 #ff0000 60%,
-                transparent 90%);
-            border-radius: 50% 50% 15% 15%;
+                transparent 95%);
+            border-radius: 50% 50% 20% 20%;
             animation: flamePulse 0.05s infinite alternate;
-            filter: blur(3px);
+            filter: blur(4px);
             z-index: 8;
         }
         
         @keyframes flamePulse {
             0% { 
-                height: 50px; 
-                width: 25px;
-                filter: blur(2px) brightness(1);
+                height: 60px; 
+                width: 30px;
+                filter: blur(3px) brightness(1);
             }
             50% { 
-                height: 65px; 
-                width: 32px;
-                filter: blur(3px) brightness(1.2);
+                height: 80px; 
+                width: 38px;
+                filter: blur(4px) brightness(1.3);
             }
             100% { 
-                height: 60px; 
-                width: 28px;
-                filter: blur(3px) brightness(1.1);
+                height: 70px; 
+                width: 35px;
+                filter: blur(4px) brightness(1.2);
             }
         }
         
@@ -428,6 +668,7 @@
             border-radius: 50%;
             animation: sparkFloat 0.8s infinite linear;
             z-index: 7;
+            filter: blur(1px);
         }
         
         @keyframes sparkFloat {
@@ -436,69 +677,74 @@
                 opacity: 1;
             }
             100% { 
-                transform: translateY(-80px) translateX(var(--spark-x)) scale(0);
+                transform: translateY(-100px) translateX(var(--spark-x)) scale(0);
                 opacity: 0;
             }
         }
         
         .rocket-exhaust {
             position: absolute;
-            bottom: -20px;
+            bottom: -25px;
             left: 50%;
             transform: translateX(-50%);
-            width: 50px;
-            height: 25px;
+            width: 60px;
+            height: 30px;
             background: linear-gradient(to bottom, 
-                rgba(255, 200, 0, 0.5) 0%,
-                rgba(255, 100, 0, 0.3) 50%,
-                rgba(255, 50, 0, 0.1) 100%);
+                rgba(255, 220, 0, 0.6) 0%,
+                rgba(255, 120, 0, 0.4) 50%,
+                rgba(255, 60, 0, 0.2) 100%);
             border-radius: 50%;
-            filter: blur(8px);
+            filter: blur(10px);
             animation: exhaustPulse 0.1s infinite alternate;
             z-index: 6;
         }
         
         @keyframes exhaustPulse {
             0% { 
-                width: 40px;
-                height: 20px;
-                opacity: 0.7;
+                width: 50px;
+                height: 25px;
+                opacity: 0.8;
             }
             100% { 
-                width: 60px;
-                height: 30px;
-                opacity: 0.9;
+                width: 70px;
+                height: 35px;
+                opacity: 1;
             }
         }
         
         .multiplier {
             position: absolute;
-            top: 15px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.8rem;
+            font-size: 3.2rem;
             color: #00ff00;
             text-shadow: 
-                0 0 10px #00ff00,
-                0 0 20px #00ff00,
-                0 0 30px #00ff00;
+                0 0 15px #00ff00,
+                0 0 30px #00ff00,
+                0 0 45px #00ff00;
             font-weight: bold;
             z-index: 5;
             animation: multiplierGlow 0.8s infinite alternate;
+            padding: 10px 25px;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 15px;
+            border: 2px solid rgba(0, 255, 0, 0.3);
+            backdrop-filter: blur(5px);
         }
         
         @keyframes multiplierGlow {
             0% { 
                 text-shadow: 
-                    0 0 5px #00ff00,
-                    0 0 10px #00ff00;
+                    0 0 10px #00ff00,
+                    0 0 20px #00ff00;
             }
             100% { 
                 text-shadow: 
-                    0 0 15px #00ff00,
-                    0 0 30px #00ff00,
-                    0 0 45px #00ff00;
+                    0 0 20px #00ff00,
+                    0 0 40px #00ff00,
+                    0 0 60px #00ff00;
             }
         }
         
@@ -507,17 +753,17 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 200px;
-            height: 200px;
+            width: 250px;
+            height: 250px;
             background: radial-gradient(circle, 
-                rgba(255, 100, 0, 0.9) 0%,
-                rgba(255, 50, 0, 0.7) 30%,
-                rgba(255, 0, 0, 0.5) 60%,
+                rgba(255, 150, 0, 0.95) 0%,
+                rgba(255, 80, 0, 0.8) 30%,
+                rgba(255, 0, 0, 0.6) 60%,
                 transparent 80%);
             border-radius: 50%;
             display: none;
-            animation: explode 0.8s ease-out;
-            filter: blur(10px);
+            animation: explode 1s ease-out;
+            filter: blur(15px);
             z-index: 20;
         }
         
@@ -527,22 +773,23 @@
                 opacity: 0;
             }
             20% { 
-                transform: translate(-50%, -50%) scale(1.2); 
+                transform: translate(-50%, -50%) scale(1.3); 
                 opacity: 1;
             }
             100% { 
-                transform: translate(-50%, -50%) scale(2); 
+                transform: translate(-50%, -50%) scale(2.5); 
                 opacity: 0;
             }
         }
         
         .explosion-particle {
             position: absolute;
-            width: 8px;
-            height: 8px;
+            width: 10px;
+            height: 10px;
             background: #ff5500;
             border-radius: 50%;
-            animation: particleFly 0.8s ease-out forwards;
+            animation: particleFly 1s ease-out forwards;
+            filter: blur(1px);
         }
         
         @keyframes particleFly {
@@ -559,7 +806,7 @@
         .controls {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 15px;
         }
         
         .bet-controls {
@@ -567,77 +814,121 @@
             justify-content: space-between;
             align-items: center;
             background: rgba(255, 255, 255, 0.1);
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            box-shadow: 
+                0 5px 15px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
         
         .bet-amount {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: #00ffff;
-            text-shadow: 0 0 5px #00ffff;
+            text-shadow: 
+                0 0 10px #00ffff,
+                0 0 20px #00ffff;
+            padding: 8px 20px;
+            background: rgba(0, 255, 255, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
         }
         
         .bet-btn {
             background: linear-gradient(45deg, #4CAF50, #8BC34A);
             border: none;
             color: white;
-            padding: 10px 18px;
-            border-radius: 6px;
+            padding: 12px 22px;
+            border-radius: 8px;
             cursor: pointer;
             font-family: 'Montserrat', sans-serif;
             font-weight: bold;
-            font-size: 1rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            font-size: 1.1rem;
+            box-shadow: 
+                0 5px 10px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.2s ease;
         }
         
         .bet-btn:active {
             transform: scale(0.95);
+            box-shadow: 
+                0 2px 5px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
         
         .game-buttons {
             display: flex;
-            gap: 10px;
+            gap: 12px;
         }
         
         .launch-btn, .cashout-btn {
             flex: 1;
-            background: linear-gradient(45deg, #FF5722, #FF9800);
+            background: linear-gradient(45deg, 
+                rgba(255, 87, 34, 0.9), 
+                rgba(255, 152, 0, 0.9));
             border: none;
             color: white;
-            padding: 16px;
-            border-radius: 10px;
+            padding: 18px;
+            border-radius: 15px;
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 6px 12px rgba(255, 87, 34, 0.4);
-            letter-spacing: 1px;
+            box-shadow: 
+                0 8px 15px rgba(255, 87, 34, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
         
         .cashout-btn {
-            background: linear-gradient(45deg, #2196F3, #03A9F4);
+            background: linear-gradient(45deg, 
+                rgba(33, 150, 243, 0.9), 
+                rgba(3, 169, 244, 0.9));
             display: none;
-            box-shadow: 0 6px 12px rgba(33, 150, 243, 0.4);
+            box-shadow: 
+                0 8px 15px rgba(33, 150, 243, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
         
         .launch-btn:active, .cashout-btn:active {
             transform: scale(0.97);
         }
         
+        .launch-btn:hover, .cashout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 12px 20px rgba(255, 87, 34, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        .cashout-btn:hover {
+            box-shadow: 
+                0 12px 20px rgba(33, 150, 243, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
         .back-btn {
-            background: linear-gradient(45deg, #9C27B0, #673AB7);
+            background: linear-gradient(45deg, 
+                rgba(156, 39, 176, 0.9), 
+                rgba(103, 58, 183, 0.9));
             border: none;
             color: white;
-            padding: 14px;
-            border-radius: 10px;
+            padding: 16px;
+            border-radius: 15px;
             font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
+            font-size: 1.1rem;
             cursor: pointer;
             width: 100%;
             margin-top: 10px;
-            box-shadow: 0 4px 10px rgba(156, 39, 176, 0.4);
+            box-shadow: 
+                0 5px 15px rgba(156, 39, 176, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
         }
         
@@ -649,48 +940,376 @@
             transform: scale(0.98);
         }
         
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 10px 20px rgba(156, 39, 176, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
         .result {
-            margin-top: 12px;
-            padding: 12px;
+            margin-top: 15px;
+            padding: 15px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+            border-radius: 15px;
             text-align: center;
-            font-size: 1rem;
+            font-size: 1.1rem;
             display: none;
             border-left: 4px solid transparent;
-            animation: resultAppear 0.3s ease;
+            animation: resultAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(5px);
         }
         
         @keyframes resultAppear {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(20px) scale(0.9);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
         
         .win {
             color: #00ff00;
-            text-shadow: 0 0 5px #00ff00;
+            text-shadow: 0 0 10px #00ff00;
             border-left-color: #00ff00;
-            background: rgba(0, 255, 0, 0.1);
+            background: rgba(0, 255, 0, 0.15);
+            box-shadow: 
+                0 5px 15px rgba(0, 255, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
         
         .lose {
             color: #ff0000;
-            text-shadow: 0 0 5px #ff0000;
+            text-shadow: 0 0 10px #ff0000;
             border-left-color: #ff0000;
-            background: rgba(255, 0, 0, 0.1);
+            background: rgba(255, 0, 0, 0.15);
+            box-shadow: 
+                0 5px 15px rgba(255, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
         
         .error {
             color: #ffcc00;
-            text-shadow: 0 0 5px #ffcc00;
+            text-shadow: 0 0 10px #ffcc00;
             border-left-color: #ffcc00;
-            background: rgba(255, 204, 0, 0.1);
+            background: rgba(255, 204, 0, 0.15);
+            box-shadow: 
+                0 5px 15px rgba(255, 204, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Страница кейсов */
+        .cases-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a081f 0%, #1a173a 50%, #0f0d25 100%);
+            z-index: 1000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .cases-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-top: 20px;
+        }
+        
+        .cases-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            color: #ffcc00;
+            text-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
+            margin-bottom: 10px;
+        }
+        
+        .cases-subtitle {
+            color: #94a3ff;
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+        
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 30px;
+        }
+        
+        .case-item {
+            background: rgba(20, 20, 40, 0.8);
+            border-radius: 20px;
+            padding: 25px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .case-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .case-item:active {
+            transform: translateY(-2px);
+        }
+        
+        .case-item.selected {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            z-index: 2;
+        }
+        
+        .case-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .case-item.selected .case-icon {
+            animation: caseIconGlow 1s infinite alternate;
+        }
+        
+        @keyframes caseIconGlow {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        
+        .case-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 10px;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+        
+        .case-price {
+            font-size: 1.1rem;
+            color: #00ffcc;
+            text-shadow: 0 0 5px #00ffcc;
+            font-weight: bold;
+        }
+        
+        .case-chance {
+            font-size: 0.9rem;
+            color: #94a3ff;
+            margin-top: 5px;
+        }
+        
+        /* Особые стили для каждого кейса */
+        .case-basic {
+            border-color: rgba(139, 69, 19, 0.6);
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.3), rgba(160, 82, 45, 0.2));
+        }
+        
+        .case-basic:hover, .case-basic.selected {
+            border-color: rgba(139, 69, 19, 0.9);
+            box-shadow: 0 15px 30px rgba(139, 69, 19, 0.3);
+        }
+        
+        .case-gold {
+            border-color: rgba(255, 215, 0, 0.6);
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 193, 7, 0.2));
+        }
+        
+        .case-gold:hover, .case-gold.selected {
+            border-color: rgba(255, 215, 0, 0.9);
+            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.3);
+        }
+        
+        .case-diamond {
+            border-color: rgba(0, 200, 255, 0.6);
+            background: linear-gradient(135deg, rgba(0, 200, 255, 0.3), rgba(30, 144, 255, 0.2));
+        }
+        
+        .case-diamond:hover, .case-diamond.selected {
+            border-color: rgba(0, 200, 255, 0.9);
+            box-shadow: 0 15px 30px rgba(0, 200, 255, 0.3);
+        }
+        
+        .case-special {
+            border-color: rgba(156, 39, 176, 0.6);
+            background: linear-gradient(135deg, rgba(156, 39, 176, 0.3), rgba(103, 58, 183, 0.2));
+        }
+        
+        .case-special:hover, .case-special.selected {
+            border-color: rgba(156, 39, 176, 0.9);
+            box-shadow: 0 15px 30px rgba(156, 39, 176, 0.3);
+        }
+        
+        /* Анимация прокрутки кейса */
+        .case-opening-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .case-wheel {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            margin-bottom: 40px;
+        }
+        
+        .wheel-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                #ff6b6b 0deg 90deg,
+                #4ecdc4 90deg 180deg,
+                #45b7d1 180deg 270deg,
+                #96ceb4 270deg 360deg
+            );
+            position: relative;
+            animation: wheelSpin 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            transform: rotate(0deg);
+        }
+        
+        @keyframes wheelSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(1080deg); }
+        }
+        
+        .wheel-pointer {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 30px solid #ffcc00;
+            z-index: 10;
+            filter: drop-shadow(0 0 10px #ffcc00);
+        }
+        
+        .case-reward {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 2px solid #ffcc00;
+            max-width: 400px;
+            width: 90%;
+            display: none;
+            animation: rewardAppear 0.5s ease-out 2.1s forwards;
+        }
+        
+        @keyframes rewardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .reward-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+            animation: rewardIconPulse 1s infinite alternate;
+        }
+        
+        @keyframes rewardIconPulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
+        }
+        
+        .reward-amount {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: #00ff00;
+            text-shadow: 0 0 15px #00ff00;
+            margin-bottom: 10px;
+        }
+        
+        .reward-text {
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .close-reward {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(255, 65, 108, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .close-reward:active {
+            transform: scale(0.98);
+        }
+        
+        .case-open-btn {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            border: none;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 200px;
+            margin: 20px auto;
+            display: block;
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(255, 65, 108, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .case-open-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .case-open-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(255, 65, 108, 0.5);
+        }
+        
+        .case-open-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
         }
         
         /* Звёзды на фоне */
@@ -712,8 +1331,8 @@
         }
         
         @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 1; }
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
         
         /* Облака на фоне игры */
@@ -722,6 +1341,7 @@
             background: rgba(255, 255, 255, 0.05);
             border-radius: 50%;
             animation: cloudMove 40s linear infinite;
+            filter: blur(5px);
         }
         
         @keyframes cloudMove {
@@ -734,65 +1354,97 @@
             position: absolute;
             background: white;
             border-radius: 50%;
-            animation: starTwinkle 2s infinite alternate;
+            animation: starTwinkle 3s infinite alternate;
         }
         
         @keyframes starTwinkle {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
         
         /* Адаптация */
         @media (max-width: 400px) {
             .title {
                 font-size: 1.5rem;
-                padding: 10px 20px;
+                padding: 12px 25px;
             }
             
             .btn {
                 font-size: 1.2rem;
                 padding: 18px 36px;
-                min-height: 65px;
+                min-height: 70px;
             }
             
             .main-container {
-                gap: 20px;
+                gap: 25px;
+                max-width: 320px;
             }
             
             .rocket {
-                width: 50px;
-                height: 120px;
+                width: 55px;
+                height: 130px;
             }
             
             .rocket-body {
-                width: 40px;
-                height: 85px;
+                width: 45px;
+                height: 95px;
             }
             
             .multiplier {
-                font-size: 2.2rem;
+                font-size: 2.5rem;
+                padding: 8px 20px;
+            }
+            
+            .modal-content {
+                padding: 25px;
+            }
+            
+            .cases-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .cases-title {
+                font-size: 1.8rem;
+            }
+            
+            .case-wheel {
+                width: 250px;
+                height: 250px;
             }
         }
         
         @media (max-height: 600px) {
             .main-container {
-                margin-top: 20px;
-                gap: 15px;
+                margin-top: 30px;
+                gap: 20px;
             }
             
             .btn {
-                padding: 15px 30px;
-                min-height: 60px;
+                padding: 16px 32px;
+                min-height: 65px;
                 font-size: 1.1rem;
             }
             
             .rocket-display {
-                margin-bottom: 10px;
+                margin-bottom: 15px;
+            }
+            
+            .title {
+                font-size: 1.5rem;
+                padding: 10px 20px;
+            }
+            
+            .cases-page {
+                padding: 15px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Космический фон с элементами -->
+    <div class="space-bg" id="spaceBg"></div>
+    
     <!-- Звёздное небо -->
     <div class="stars" id="stars"></div>
     
@@ -807,6 +1459,7 @@
     <div class="main-container">
         <button class="btn btn-what" id="whatBtn">ЧТО БУДЕТ</button>
         <button class="btn btn-play" id="playBtn">ИГРАТЬ</button>
+        <button class="btn btn-cases" id="casesBtn">КЕЙСЫ</button>
     </div>
     
     <!-- Модальное окно -->
@@ -845,7 +1498,7 @@
                 <div id="clouds"></div>
                 <div id="gameStars"></div>
                 
-                <!-- Реалистичная ракета -->
+                <!-- Реалистичная ракета ПРЯМАЯ -->
                 <div class="rocket" id="rocket">
                     <div class="rocket-nose"></div>
                     <div class="rocket-body"></div>
@@ -884,50 +1537,192 @@
         </div>
     </div>
     
+    <!-- Страница кейсов -->
+    <div class="cases-page" id="casesPage">
+        <div class="cases-header">
+            <h2 class="cases-title">КОСМИЧЕСКИЕ КЕЙСЫ</h2>
+            <p class="cases-subtitle">Откройте кейсы и получите уникальные награды!</p>
+        </div>
+        
+        <div class="cases-grid">
+            <div class="case-item case-basic" data-case="earth">
+                <span class="case-icon">🌍</span>
+                <h3 class="case-name">Земляной кейс</h3>
+                <div class="case-price">50 ₽</div>
+                <div class="case-chance">Награды: 10-100 ₽</div>
+            </div>
+            
+            <div class="case-item case-gold" data-case="gold">
+                <span class="case-icon">🥇</span>
+                <h3 class="case-name">Золотой кейс</h3>
+                <div class="case-price">200 ₽</div>
+                <div class="case-chance">Награды: 100-500 ₽</div>
+            </div>
+            
+            <div class="case-item case-diamond" data-case="diamond">
+                <span class="case-icon">💎</span>
+                <h3 class="case-name">Алмазный кейс</h3>
+                <div class="case-price">500 ₽</div>
+                <div class="case-chance">Награды: 300-1000 ₽</div>
+            </div>
+            
+            <div class="case-item case-special" data-case="special">
+                <span class="case-icon">🎁</span>
+                <h3 class="case-name">Особый кейс</h3>
+                <div class="case-price">1000 ₽</div>
+                <div class="case-chance">Награды: 500-2000 ₽</div>
+            </div>
+        </div>
+        
+        <button class="case-open-btn" id="openCaseBtn">ВЫБЕРИТЕ КЕЙС</button>
+        
+        <button class="back-btn" id="backFromCasesBtn">← НАЗАД</button>
+    </div>
+    
+    <!-- Анимация открытия кейса -->
+    <div class="case-opening-animation" id="caseOpeningAnimation">
+        <div class="case-wheel">
+            <div class="wheel-inner" id="wheelInner"></div>
+            <div class="wheel-pointer"></div>
+        </div>
+        
+        <div class="case-reward" id="caseReward">
+            <span class="reward-icon" id="rewardIcon">💰</span>
+            <div class="reward-amount" id="rewardAmount">+0 ₽</div>
+            <div class="reward-text" id="rewardText">Поздравляем с выигрышем!</div>
+            <button class="close-reward" id="closeRewardBtn">ЗАБРАТЬ НАГРАДУ</button>
+        </div>
+    </div>
+    
     <script>
+        // Глобальный объект для управления балансом
+        const GlobalBalance = {
+            balance: 1000,
+            
+            updateAllDisplays() {
+                // Обновляем баланс в игре ракетки
+                if (window.gameInstance) {
+                    window.gameInstance.balance = this.balance;
+                    window.gameInstance.updateDisplay();
+                }
+                
+                // Обновляем баланс в системе кейсов
+                if (window.casesSystem) {
+                    window.casesSystem.balance = this.balance;
+                }
+                
+                // Обновляем баланс в заголовке кейсов
+                const balanceElements = document.querySelectorAll('.balance');
+                balanceElements.forEach(el => {
+                    if (el.id === 'balance' || el.textContent.includes('Баланс')) {
+                        el.textContent = `Баланс: ${this.balance} ₽`;
+                    }
+                });
+            },
+            
+            add(amount) {
+                this.balance += amount;
+                this.updateAllDisplays();
+            },
+            
+            subtract(amount) {
+                this.balance -= amount;
+                this.updateAllDisplays();
+            },
+            
+            set(newBalance) {
+                this.balance = newBalance;
+                this.updateAllDisplays();
+            }
+        };
+        
+        // Создание космического фона с элементами
+        function createSpaceBackground() {
+            const spaceBg = document.getElementById('spaceBg');
+            
+            // Создаем планету
+            const planet = document.createElement('div');
+            planet.classList.add('planet');
+            planet.style.width = '300px';
+            planet.style.height = '300px';
+            planet.style.top = '10%';
+            planet.style.left = '70%';
+            spaceBg.appendChild(planet);
+            
+            // Создаем кристаллы
+            for (let i = 0; i < 8; i++) {
+                const crystal = document.createElement('div');
+                crystal.classList.add('floating-crystal');
+                crystal.style.left = `${Math.random() * 100}%`;
+                crystal.style.animationDelay = `${Math.random() * 20}s`;
+                crystal.style.opacity = Math.random() * 0.3 + 0.1;
+                crystal.style.transform = `scale(${Math.random() * 0.8 + 0.5})`;
+                spaceBg.appendChild(crystal);
+            }
+            
+            // Создаем парящие частицы
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                const size = Math.random() * 8 + 3;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.setProperty('--particle-x', `${Math.random() * 200 - 100}px`);
+                particle.style.animationDelay = `${Math.random() * 15}s`;
+                particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                particle.style.background = Math.random() > 0.5 
+                    ? 'rgba(94, 156, 255, 0.2)' 
+                    : 'rgba(255, 204, 0, 0.2)';
+                spaceBg.appendChild(particle);
+            }
+            
+            // Создаем космические линии
+            for (let i = 0; i < 3; i++) {
+                const line = document.createElement('div');
+                line.classList.add('space-line');
+                line.style.top = `${Math.random() * 100}%`;
+                line.style.width = `${Math.random() * 200 + 100}px`;
+                line.style.animationDelay = `${Math.random() * 10}s`;
+                line.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                spaceBg.appendChild(line);
+            }
+        }
+        
         // Создание звёзд
         function createStars() {
             const starsContainer = document.getElementById('stars');
-            const starCount = 80;
+            const starCount = 120;
             
             for (let i = 0; i < starCount; i++) {
                 const star = document.createElement('div');
                 star.classList.add('star');
                 
-                const size = Math.random() * 2 + 1;
+                const size = Math.random() * 3 + 1;
                 star.style.width = star.style.height = `${size}px`;
                 star.style.left = `${Math.random() * 100}%`;
                 star.style.top = `${Math.random() * 100}%`;
                 star.style.animationDelay = `${Math.random() * 3}s`;
                 star.style.animationDuration = `${Math.random() * 2 + 2}s`;
-                star.style.opacity = Math.random() * 0.5 + 0.2;
+                star.style.opacity = Math.random() * 0.6 + 0.2;
                 
                 starsContainer.appendChild(star);
             }
         }
         
-        // ИГРА Ракетка с ОБНОВЛЕННЫМИ шансами и МЕНЬШЕЙ скоростью роста
+        // ИГРА Ракетка с общим балансом
         class RocketGame {
             constructor() {
-                this.balance = 1000;
                 this.bet = 100;
                 this.isPlaying = false;
                 this.currentMultiplier = 1.00;
                 this.targetMultiplier = 1.10;
-                this.rocketSpeed = 0.35; // УМЕНЬШЕНА скорость роста
+                this.rocketSpeed = 0.35;
                 this.gameInterval = null;
                 this.explosionTimeout = null;
                 this.sparkInterval = null;
                 
-                // ОБНОВЛЁННЫЕ ШАНСЫ согласно требованиям:
-                // 1x - 1.10x = 50%
-                // 1.10x - 2x = 20%
-                // 2x - 3x = 10%
-                // 3x - 4x = 8%
-                // 4x - 5x = 7%
-                // 5x - 6x = 5%
-                // Сумма: 50 + 20 + 10 + 8 + 7 + 5 = 100%
-                
+                // Шансы
                 this.multiplierRanges = [
                     { min: 1.00, max: 1.10, chance: 50 },    // 50% - 1.00-1.10x
                     { min: 1.11, max: 2.00, chance: 20 },    // 20% - 1.11-2.00x
@@ -957,37 +1752,46 @@
                 
                 this.initGame();
                 this.createGameBackground();
+                this.updateDisplay();
             }
             
             createGameBackground() {
                 // Облака
                 const cloudsContainer = document.getElementById('clouds');
-                for (let i = 0; i < 5; i++) {
+                for (let i = 0; i < 6; i++) {
                     const cloud = document.createElement('div');
                     cloud.classList.add('cloud');
                     
-                    const size = Math.random() * 60 + 30;
+                    const size = Math.random() * 80 + 40;
                     cloud.style.width = `${size}px`;
-                    cloud.style.height = `${size / 2}px`;
+                    cloud.style.height = `${size / 3}px`;
                     cloud.style.left = `${Math.random() * 100}%`;
-                    cloud.style.opacity = Math.random() * 0.08 + 0.02;
+                    cloud.style.opacity = Math.random() * 0.1 + 0.03;
                     cloud.style.animationDelay = `${Math.random() * 40}s`;
+                    cloud.style.background = Math.random() > 0.5 
+                        ? 'rgba(94, 156, 255, 0.05)' 
+                        : 'rgba(255, 204, 0, 0.05)';
                     
                     cloudsContainer.appendChild(cloud);
                 }
                 
                 // Звёзды в игре
                 const starsContainer = document.getElementById('gameStars');
-                for (let i = 0; i < 40; i++) {
+                for (let i = 0; i < 50; i++) {
                     const star = document.createElement('div');
                     star.classList.add('game-star');
                     
-                    const size = Math.random() * 2 + 1;
+                    const size = Math.random() * 3 + 1;
                     star.style.width = star.style.height = `${size}px`;
                     star.style.left = `${Math.random() * 100}%`;
                     star.style.top = `${Math.random() * 100}%`;
-                    star.style.animationDelay = `${Math.random() * 2}s`;
-                    star.style.opacity = Math.random() * 0.4 + 0.1;
+                    star.style.animationDelay = `${Math.random() * 3}s`;
+                    star.style.opacity = Math.random() * 0.5 + 0.2;
+                    star.style.background = Math.random() > 0.7 
+                        ? '#94a3ff' 
+                        : Math.random() > 0.5 
+                        ? '#ffcc00' 
+                        : '#ffffff';
                     
                     starsContainer.appendChild(star);
                 }
@@ -999,16 +1803,20 @@
                 const spark = document.createElement('div');
                 spark.classList.add('flame-spark');
                 
-                const size = Math.random() * 4 + 2;
-                const startX = (Math.random() - 0.5) * 30;
-                const sparkX = (Math.random() - 0.5) * 60;
+                const size = Math.random() * 5 + 3;
+                const startX = (Math.random() - 0.5) * 40;
+                const sparkX = (Math.random() - 0.5) * 80;
                 
                 spark.style.width = `${size}px`;
                 spark.style.height = `${size}px`;
                 spark.style.setProperty('--spark-x', `${sparkX}px`);
                 spark.style.left = `calc(50% + ${startX}px)`;
-                spark.style.animationDuration = `${Math.random() * 0.5 + 0.5}s`;
-                spark.style.background = Math.random() > 0.5 ? '#ffff00' : '#ff9900';
+                spark.style.animationDuration = `${Math.random() * 0.6 + 0.4}s`;
+                spark.style.background = Math.random() > 0.5 
+                    ? '#ffff00' 
+                    : Math.random() > 0.5 
+                    ? '#ff9900' 
+                    : '#ff5500';
                 
                 this.flameContainer.appendChild(spark);
                 
@@ -1022,27 +1830,48 @@
             initGame() {
                 this.updateDisplay();
                 
-                this.decreaseBetBtn.addEventListener('click', () => this.changeBet(-100));
-                this.increaseBetBtn.addEventListener('click', () => this.changeBet(100));
+                // Ставки - ИСПРАВЛЕННЫЙ БАГ: теперь можно уменьшать ставку даже если была выбрана слишком большая
+                this.decreaseBetBtn.addEventListener('click', () => this.changeBet(-100, true));
+                this.increaseBetBtn.addEventListener('click', () => this.changeBet(100, false));
+                
                 this.launchBtn.addEventListener('click', () => this.startGame());
                 this.cashoutBtn.addEventListener('click', () => this.cashout());
                 this.backBtn.addEventListener('click', () => this.backToMain());
             }
             
-            changeBet(amount) {
+            changeBet(amount, isDecrease) {
                 if (this.isPlaying) return;
                 
                 const newBet = this.bet + amount;
-                if (newBet >= 100 && newBet <= this.balance) {
-                    this.bet = newBet;
-                    this.updateDisplay();
-                } else if (newBet > this.balance) {
-                    this.showError('У вас недостаточно средств');
+                
+                // ИСПРАВЛЕНИЕ БАГА: при уменьшении ставки всегда разрешаем, если новая ставка >= 100
+                if (isDecrease) {
+                    if (newBet >= 100) {
+                        this.bet = newBet;
+                        this.updateDisplay();
+                        this.clearError();
+                    }
+                } else {
+                    // При увеличении ставки проверяем баланс
+                    if (newBet >= 100 && newBet <= GlobalBalance.balance) {
+                        this.bet = newBet;
+                        this.updateDisplay();
+                        this.clearError();
+                    } else if (newBet > GlobalBalance.balance) {
+                        this.showError('У вас недостаточно средств');
+                    }
+                }
+            }
+            
+            clearError() {
+                if (this.resultMessageElement.style.display === 'block' && 
+                    this.resultMessageElement.classList.contains('error')) {
+                    this.resultMessageElement.style.display = 'none';
                 }
             }
             
             updateDisplay() {
-                this.balanceElement.textContent = `Баланс: ${this.balance} ₽`;
+                this.balanceElement.textContent = `Баланс: ${GlobalBalance.balance} ₽`;
                 this.betAmountElement.textContent = `${this.bet} ₽`;
                 this.multiplierDisplayElement.textContent = `Макс: ${this.targetMultiplier.toFixed(2)}x`;
             }
@@ -1054,9 +1883,7 @@
                 for (const range of this.multiplierRanges) {
                     cumulativeChance += range.chance;
                     if (rand <= cumulativeChance) {
-                        // Генерируем случайное дробное значение в диапазоне
                         const randomMultiplier = range.min + Math.random() * (range.max - range.min);
-                        // Округляем до 2 знаков после запятой
                         return Math.round(randomMultiplier * 100) / 100;
                     }
                 }
@@ -1065,7 +1892,7 @@
             }
             
             startGame() {
-                if (this.bet > this.balance) {
+                if (this.bet > GlobalBalance.balance) {
                     this.showError('У вас недостаточно средств');
                     return;
                 }
@@ -1075,7 +1902,7 @@
                 this.isPlaying = true;
                 this.currentMultiplier = 1.00;
                 this.targetMultiplier = this.generateTargetMultiplier();
-                this.rocketSpeed = 0.35; // МЕНЬШАЯ начальная скорость
+                this.rocketSpeed = 0.35;
                 
                 // Скрываем кнопку "Назад"
                 this.backBtn.classList.add('hidden');
@@ -1088,31 +1915,29 @@
                 this.cashoutBtn.style.display = 'block';
                 
                 // Запускаем искры
-                this.sparkInterval = setInterval(() => this.createSpark(), 30);
+                this.sparkInterval = setInterval(() => this.createSpark(), 25);
                 
-                // Запускаем игру с МЕНЬШЕЙ частотой
+                // Запускаем игру
                 this.gameInterval = setInterval(() => this.updateGame(), 50);
             }
             
             updateGame() {
-                // МЕНЬШАЯ скорость роста множителя
                 this.currentMultiplier += 0.008 * this.rocketSpeed;
                 
-                // Округляем до 2 знаков после запятой для отображения
                 const displayedMultiplier = Math.round(this.currentMultiplier * 100) / 100;
                 this.currentMultiplierElement.textContent = `${displayedMultiplier.toFixed(2)}x`;
                 
-                // Двигаем ракету
                 const rocketHeight = 40 + (this.currentMultiplier - 1) * 16;
-                this.rocketElement.style.bottom = `${rocketHeight}px`;
+                // Исправление: ограничиваем высоту ракеты, чтобы она не залезала на множитель
+                const maxHeight = window.innerHeight * 0.6; // Максимум 60% высоты экрана
+                const actualHeight = Math.min(rocketHeight, maxHeight);
+                this.rocketElement.style.bottom = `${actualHeight}px`;
                 
-                // МЕНЬШЕЕ ускорение
                 if (this.currentMultiplier > 2) this.rocketSpeed = 0.45;
                 if (this.currentMultiplier > 3) this.rocketSpeed = 0.55;
                 if (this.currentMultiplier > 4) this.rocketSpeed = 0.65;
                 if (this.currentMultiplier > 5) this.rocketSpeed = 0.75;
                 
-                // Проверяем взрыв (на дробных значениях!)
                 if (this.currentMultiplier >= this.targetMultiplier) {
                     this.explode();
                 }
@@ -1126,7 +1951,7 @@
                 
                 const currentMultiplierRounded = Math.round(this.currentMultiplier * 100) / 100;
                 const winAmount = Math.floor(this.bet * currentMultiplierRounded);
-                this.balance += winAmount - this.bet;
+                GlobalBalance.add(winAmount - this.bet);
                 
                 // Показываем кнопку "Назад"
                 this.backBtn.classList.remove('hidden');
@@ -1134,6 +1959,9 @@
                 this.showResult(true, winAmount, currentMultiplierRounded);
                 this.resetButtons();
                 this.updateDisplay();
+                
+                // Исправление: сбрасываем позицию ракеты после вывода
+                this.resetRocketPosition();
             }
             
             explode() {
@@ -1142,7 +1970,7 @@
                 
                 this.explosionElement.style.display = 'block';
                 this.createExplosionParticles();
-                this.balance -= this.bet;
+                GlobalBalance.subtract(this.bet);
                 
                 // Показываем кнопку "Назад"
                 this.backBtn.classList.remove('hidden');
@@ -1152,29 +1980,42 @@
                 this.resetButtons();
                 this.updateDisplay();
                 
+                // Исправление: сбрасываем позицию ракеты после взрыва
+                setTimeout(() => {
+                    this.resetRocketPosition();
+                }, 1000);
+                
                 if (this.explosionTimeout) clearTimeout(this.explosionTimeout);
                 this.explosionTimeout = setTimeout(() => {
                     this.explosionElement.style.display = 'none';
                 }, 1000);
             }
             
+            resetRocketPosition() {
+                // Сбрасываем ракету в начальную позицию
+                this.rocketElement.style.bottom = '40px';
+            }
+            
             createExplosionParticles() {
-                for (let i = 0; i < 25; i++) {
+                for (let i = 0; i < 30; i++) {
                     setTimeout(() => {
                         const particle = document.createElement('div');
                         particle.classList.add('explosion-particle');
                         
                         const angle = Math.random() * Math.PI * 2;
-                        const distance = Math.random() * 120 + 60;
-                        const size = Math.random() * 8 + 5;
-                        const duration = Math.random() * 0.6 + 0.4;
+                        const distance = Math.random() * 150 + 80;
+                        const size = Math.random() * 12 + 6;
+                        const duration = Math.random() * 0.8 + 0.5;
                         
                         particle.style.setProperty('--particle-x', `${Math.cos(angle) * distance}px`);
                         particle.style.setProperty('--particle-y', `${Math.sin(angle) * distance}px`);
                         particle.style.width = `${size}px`;
                         particle.style.height = `${size}px`;
-                        particle.style.background = i % 3 === 0 ? '#ffff00' : i % 3 === 1 ? '#ff8800' : '#ff0000';
+                        particle.style.background = i % 4 === 0 ? '#ffff00' : 
+                                                   i % 4 === 1 ? '#ff8800' : 
+                                                   i % 4 === 2 ? '#ff0000' : '#ff4400';
                         particle.style.animationDuration = `${duration}s`;
+                        particle.style.filter = `blur(${Math.random() * 2 + 1}px)`;
                         
                         this.explosionElement.appendChild(particle);
                         
@@ -1183,7 +2024,7 @@
                                 particle.remove();
                             }
                         }, duration * 1000);
-                    }, i * 20);
+                    }, i * 25);
                 }
             }
             
@@ -1211,7 +2052,7 @@
                 
                 setTimeout(() => {
                     this.resultMessageElement.style.display = 'none';
-                }, 2000);
+                }, 2500);
             }
             
             resetButtons() {
@@ -1222,7 +2063,172 @@
             backToMain() {
                 this.stopGame();
                 if (this.explosionTimeout) clearTimeout(this.explosionTimeout);
+                // Исправление: сбрасываем позицию ракеты при выходе
+                this.resetRocketPosition();
                 document.getElementById('rocketGame').style.display = 'none';
+            }
+        }
+        
+        // Система кейсов с анимацией
+        class CasesSystem {
+            constructor() {
+                this.selectedCase = null;
+                this.caseOpeningAnimation = document.getElementById('caseOpeningAnimation');
+                this.wheelInner = document.getElementById('wheelInner');
+                this.caseReward = document.getElementById('caseReward');
+                this.rewardIcon = document.getElementById('rewardIcon');
+                this.rewardAmount = document.getElementById('rewardAmount');
+                this.rewardText = document.getElementById('rewardText');
+                this.closeRewardBtn = document.getElementById('closeRewardBtn');
+                this.openCaseBtn = document.getElementById('openCaseBtn');
+                this.backFromCasesBtn = document.getElementById('backFromCasesBtn');
+                this.casesPage = document.getElementById('casesPage');
+                
+                this.initCases();
+            }
+            
+            initCases() {
+                // Обработчики для выбора кейса
+                const caseItems = document.querySelectorAll('.case-item');
+                caseItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        // Снимаем выделение со всех кейсов
+                        caseItems.forEach(i => i.classList.remove('selected'));
+                        
+                        // Выделяем выбранный кейс
+                        item.classList.add('selected');
+                        this.selectedCase = item.dataset.case;
+                        
+                        // Обновляем текст кнопки
+                        const caseName = item.querySelector('.case-name').textContent;
+                        const casePrice = item.querySelector('.case-price').textContent;
+                        this.openCaseBtn.textContent = `ОТКРЫТЬ ЗА ${casePrice}`;
+                        this.openCaseBtn.disabled = false;
+                    });
+                });
+                
+                // Обработчик открытия кейса
+                this.openCaseBtn.addEventListener('click', () => this.openCase());
+                
+                // Кнопка закрытия награды
+                this.closeRewardBtn.addEventListener('click', () => {
+                    this.closeAnimation();
+                });
+                
+                // Кнопка назад
+                this.backFromCasesBtn.addEventListener('click', () => {
+                    this.casesPage.style.display = 'none';
+                });
+            }
+            
+            openCase() {
+                if (!this.selectedCase) return;
+                
+                const casePrices = {
+                    'earth': 50,
+                    'gold': 200,
+                    'diamond': 500,
+                    'special': 1000
+                };
+                
+                const casePrice = casePrices[this.selectedCase];
+                
+                if (GlobalBalance.balance < casePrice) {
+                    alert('Недостаточно средств для открытия кейса!');
+                    return;
+                }
+                
+                // Блокируем кнопку на время анимации
+                this.openCaseBtn.disabled = true;
+                
+                // Вычитаем стоимость кейса
+                GlobalBalance.subtract(casePrice);
+                
+                // Показываем анимацию
+                this.showOpeningAnimation();
+                
+                // Через 2 секунды (после анимации прокрутки) показываем награду
+                setTimeout(() => {
+                    this.showReward();
+                }, 2000);
+            }
+            
+            showOpeningAnimation() {
+                this.caseOpeningAnimation.style.display = 'flex';
+                this.caseReward.style.display = 'none';
+                
+                // Сбрасываем анимацию колеса
+                this.wheelInner.style.animation = 'none';
+                void this.wheelInner.offsetWidth; // Принудительный reflow
+                this.wheelInner.style.animation = 'wheelSpin 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+            }
+            
+            showReward() {
+                // Генерируем награду в зависимости от типа кейса
+                let reward;
+                let caseName;
+                let icon;
+                
+                switch (this.selectedCase) {
+                    case 'earth':
+                        reward = this.getRandomReward(10, 100);
+                        caseName = 'Земляной кейс';
+                        icon = '🌍';
+                        break;
+                    case 'gold':
+                        reward = this.getRandomReward(100, 500);
+                        caseName = 'Золотой кейс';
+                        icon = '🥇';
+                        break;
+                    case 'diamond':
+                        reward = this.getRandomReward(300, 1000);
+                        caseName = 'Алмазный кейс';
+                        icon = '💎';
+                        break;
+                    case 'special':
+                        reward = this.getRandomReward(500, 2000);
+                        caseName = 'Особый кейс';
+                        icon = '🎁';
+                        break;
+                }
+                
+                // Добавляем награду к балансу
+                GlobalBalance.add(reward);
+                
+                // Обновляем отображение награды
+                this.rewardIcon.textContent = icon;
+                this.rewardAmount.textContent = `+${reward} ₽`;
+                this.rewardText.textContent = `Вы открыли ${caseName}!`;
+                
+                // Показываем награду
+                this.caseReward.style.display = 'block';
+            }
+            
+            getRandomReward(min, max) {
+                // Генерируем награду с шансами на разные величины
+                const rand = Math.random();
+                if (rand < 0.6) {
+                    // 60% шанс на минимальную-среднюю награду
+                    return Math.floor(Math.random() * (max * 0.5 - min) + min);
+                } else if (rand < 0.9) {
+                    // 30% шанс на среднюю-высокую награду
+                    return Math.floor(Math.random() * (max * 0.8 - max * 0.5) + max * 0.5);
+                } else {
+                    // 10% шанс на максимальную награду
+                    return Math.floor(Math.random() * (max - max * 0.8) + max * 0.8);
+                }
+            }
+            
+            closeAnimation() {
+                this.caseOpeningAnimation.style.display = 'none';
+                // Разблокируем кнопку открытия кейса
+                this.openCaseBtn.disabled = false;
+                // Снимаем выделение с выбранного кейса
+                document.querySelectorAll('.case-item').forEach(item => {
+                    item.classList.remove('selected');
+                });
+                this.selectedCase = null;
+                this.openCaseBtn.textContent = 'ВЫБЕРИТЕ КЕЙС';
             }
         }
         
@@ -1230,11 +2236,14 @@
         function setupButtons() {
             const btnWhat = document.getElementById('whatBtn');
             const btnPlay = document.getElementById('playBtn');
+            const btnCases = document.getElementById('casesBtn');
             const modal = document.getElementById('infoModal');
             const closeModalBtn = document.getElementById('closeModalBtn');
             const rocketGame = document.getElementById('rocketGame');
+            const casesPage = document.getElementById('casesPage');
             
             let gameInstance = null;
+            let casesSystem = null;
             
             btnWhat.addEventListener('click', function() {
                 this.style.transform = 'scale(0.96)';
@@ -1249,8 +2258,20 @@
                 
                 if (!gameInstance) {
                     gameInstance = new RocketGame();
+                    window.gameInstance = gameInstance;
                 } else {
                     gameInstance.updateDisplay();
+                }
+            });
+            
+            btnCases.addEventListener('click', function() {
+                this.style.transform = 'scale(0.96)';
+                setTimeout(() => this.style.transform = '', 200);
+                casesPage.style.display = 'flex';
+                
+                if (!casesSystem) {
+                    casesSystem = new CasesSystem();
+                    window.casesSystem = casesSystem;
                 }
             });
             
@@ -1269,6 +2290,7 @@
         
         // Инициализация
         document.addEventListener('DOMContentLoaded', () => {
+            createSpaceBackground();
             createStars();
             setupButtons();
         });
