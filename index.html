@@ -288,6 +288,186 @@
             transform: scale(0.98);
         }
         
+        /* Админ-модальное окно */
+        .admin-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10001;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(15px);
+        }
+        
+        .admin-content {
+            background: linear-gradient(135deg, 
+                rgba(26, 26, 46, 0.95) 0%, 
+                rgba(22, 33, 62, 0.95) 100%);
+            padding: 40px 30px;
+            border-radius: 25px;
+            width: 100%;
+            max-width: 500px;
+            color: white;
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        
+        .admin-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                #ff0000, 
+                #ff9900, 
+                #ffff00);
+            animation: borderSlide 3s infinite linear;
+        }
+        
+        .admin-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: #ffcc00;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 204, 0, 0.3);
+        }
+        
+        .admin-info {
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-left: 4px solid #ffcc00;
+        }
+        
+        .admin-balance {
+            font-family: 'Orbitron', sans-serif;
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        
+        .admin-input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .admin-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #94a3ff;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .admin-input {
+            width: 100%;
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(94, 156, 255, 0.4);
+            border-radius: 15px;
+            color: white;
+            font-size: 1.2rem;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        .admin-input:focus {
+            border-color: #ffcc00;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+        }
+        
+        .admin-btn {
+            background: linear-gradient(45deg, 
+                rgba(255, 65, 108, 0.9) 0%, 
+                rgba(255, 75, 43, 0.9) 100%);
+            border: none;
+            color: white;
+            padding: 20px 40px;
+            border-radius: 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            font-weight: 600;
+            box-shadow: 
+                0 8px 20px rgba(255, 65, 108, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .admin-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 12px 25px rgba(255, 65, 108, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        .admin-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .admin-result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+            display: none;
+            animation: resultAppear 0.4s ease;
+        }
+        
+        .admin-success {
+            background: rgba(0, 255, 0, 0.15);
+            color: #00ff00;
+            border-left: 4px solid #00ff00;
+        }
+        
+        .admin-error {
+            background: rgba(255, 0, 0, 0.15);
+            color: #ff0000;
+            border-left: 4px solid #ff0000;
+        }
+        
+        .admin-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(45deg, #ff0000, #ff9900);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            animation: badgePulse 2s infinite alternate;
+        }
+        
+        @keyframes badgePulse {
+            0% { transform: scale(1); box-shadow: 0 0 10px #ff0000; }
+            100% { transform: scale(1.05); box-shadow: 0 0 20px #ff9900; }
+        }
+        
         /* Космический фон с элементами */
         .space-bg {
             position: absolute;
@@ -551,6 +731,22 @@
         
         .btn-cases::after {
             content: '🎁';
+            position: absolute;
+            right: 20px;
+            font-size: 1.8rem;
+            opacity: 0.8;
+        }
+        
+        /* Кнопка админ-панели */
+        .btn-admin {
+            background: linear-gradient(135deg, 
+                rgba(156, 39, 176, 0.9) 0%, 
+                rgba(103, 58, 183, 0.9) 100%);
+            border: 2px solid rgba(156, 39, 176, 0.5);
+        }
+        
+        .btn-admin::after {
+            content: '👑';
             position: absolute;
             right: 20px;
             font-size: 1.8rem;
@@ -1826,9 +2022,42 @@
             <div class="startup-text">
                 если вы запустили бота впервые то ваш балланс установлен в <strong>1000 ₽</strong>,<br>
                 <br><br>
-                
+                <span id="adminWelcome" style="display: none; color: #ffcc00; font-size: 1.3rem;">
+                    👑 Добро пожаловать, АДМИНИСТРАТОР!
+                </span>
             </div>
             <button class="startup-btn" id="startupBtn">ПРОДОЛЖИТЬ</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно админ-панели -->
+    <div class="admin-modal" id="adminModal">
+        <div class="admin-content">
+            <div class="admin-badge">ADMIN</div>
+            <h2 class="admin-title">👑 АДМИН ПАНЕЛЬ</h2>
+            
+            <div class="admin-info">
+                <div class="admin-balance">Баланс: ∞ ₽</div>
+                <p>Вы можете начислять средства другим пользователям</p>
+            </div>
+            
+            <div class="admin-input-group">
+                <label class="admin-label">Логин пользователя:</label>
+                <input type="text" class="admin-input" id="adminUserLogin" 
+                       placeholder="Введите логин пользователя...">
+            </div>
+            
+            <div class="admin-input-group">
+                <label class="admin-label">Сумма для начисления:</label>
+                <input type="number" class="admin-input" id="adminAmount" 
+                       placeholder="Введите сумму в рублях..." min="1" max="1000000">
+            </div>
+            
+            <button class="admin-btn" id="adminAddMoneyBtn">НАЧИСЛИТЬ СРЕДСТВА</button>
+            <button class="admin-btn" style="background: linear-gradient(45deg, #666, #999);" 
+                    id="adminCloseBtn">ЗАКРЫТЬ</button>
+            
+            <div class="admin-result" id="adminResult"></div>
         </div>
     </div>
 
@@ -1843,10 +2072,11 @@
         <div class="user-display" id="userDisplay">Игрок: не авторизован</div>
     </div>
     
-    <div class="main-container">
+    <div class="main-container" id="mainContainer">
         <button class="btn btn-what" id="whatBtn">ЧТО БУДЕТ</button>
         <button class="btn btn-play" id="playBtn">ИГРАТЬ</button>
         <button class="btn btn-cases" id="casesBtn">КЕЙСЫ</button>
+        <!-- Кнопка админ-панели будет добавляться динамически -->
     </div>
     
     <div class="modal" id="infoModal">
@@ -1961,24 +2191,37 @@
         // Глобальные переменные
         let currentUser = null;
         let userData = {};
+        let isAdmin = false;
+        const ADMIN_LOGIN = 'admin5768nezerw0nk';
+        const ADMIN_BALANCE = 1000000;
         
         // Проверка логина
         function validateLogin(login) {
-            return login.startsWith('fgtu') && login.endsWith('gjl');
+            return login.startsWith('fgtu') && login.endsWith('gjl') || login === ADMIN_LOGIN;
         }
         
         // Загрузка данных пользователя из localStorage
         function loadUserData(login) {
             const savedData = localStorage.getItem(`wonk_user_${login}`);
             if (savedData) {
-                return JSON.parse(savedData);
+                const data = JSON.parse(savedData);
+                if (login === ADMIN_LOGIN) {
+                    data.balance = ADMIN_BALANCE;
+                    data.isAdmin = true;
+                }
+                return data;
             } else {
-                // Создаем нового пользователя с начальным балансом 1000
-                return {
-                    balance: 1000,
+                const baseData = {
+                    balance: login === ADMIN_LOGIN ? ADMIN_BALANCE : 1000,
                     login: login,
                     lastLogin: new Date().toISOString()
                 };
+                
+                if (login === ADMIN_LOGIN) {
+                    baseData.isAdmin = true;
+                }
+                
+                return baseData;
             }
         }
         
@@ -1992,7 +2235,11 @@
         // Обновление баланса пользователя
         function updateUserBalance(amount) {
             if (currentUser && userData[currentUser]) {
-                userData[currentUser].balance = amount;
+                if (isAdmin) {
+                    userData[currentUser].balance = ADMIN_BALANCE;
+                } else {
+                    userData[currentUser].balance = amount;
+                }
                 userData[currentUser].lastLogin = new Date().toISOString();
                 saveUserData();
             }
@@ -2006,6 +2253,29 @@
             return 1000;
         }
         
+        // Функция для начисления средств другому пользователю
+        function addMoneyToUser(targetLogin, amount) {
+            if (!targetLogin || !amount || amount <= 0) {
+                return { success: false, message: "Неверные данные" };
+            }
+            
+            const targetData = loadUserData(targetLogin);
+            
+            if (!targetData.login) {
+                return { success: false, message: "Пользователь не найден" };
+            }
+            
+            targetData.balance += parseInt(amount);
+            
+            localStorage.setItem(`wonk_user_${targetLogin}`, JSON.stringify(targetData));
+            
+            return { 
+                success: true, 
+                message: `Успешно начислено ${amount} ₽ пользователю ${targetLogin}`,
+                newBalance: targetData.balance
+            };
+        }
+        
         // Показываем окно логина при загрузке
         document.addEventListener('DOMContentLoaded', function() {
             const loginModal = document.getElementById('loginModal');
@@ -2015,19 +2285,16 @@
             
             loginModal.style.display = 'flex';
             
-            // Фокус на поле ввода
             setTimeout(() => {
                 loginInput.focus();
             }, 300);
             
-            // Обработчик входа по нажатию Enter
             loginInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     loginBtn.click();
                 }
             });
             
-            // Обработчик кнопки входа
             loginBtn.addEventListener('click', function() {
                 const login = loginInput.value.trim();
                 
@@ -2044,14 +2311,19 @@
                     return;
                 }
                 
-                // Успешный вход
                 currentUser = login;
                 userData[currentUser] = loadUserData(login);
+                isAdmin = (login === ADMIN_LOGIN);
                 
-                // Обновляем отображение пользователя
-                document.getElementById('userDisplay').textContent = `Игрок: ${login}`;
+                const userDisplay = document.getElementById('userDisplay');
+                if (isAdmin) {
+                    userDisplay.textContent = `👑 АДМИНИСТРАТОР`;
+                    userDisplay.style.color = '#ffcc00';
+                    userDisplay.style.textShadow = '0 0 10px #ffcc00';
+                } else {
+                    userDisplay.textContent = `Игрок: ${login}`;
+                }
                 
-                // Скрываем окно логина
                 loginModal.style.opacity = '0';
                 loginModal.style.transform = 'scale(0.9)';
                 loginModal.style.transition = 'all 0.3s ease';
@@ -2066,8 +2338,13 @@
         function showStartupModal() {
             const startupModal = document.getElementById('startupModal');
             const startupBtn = document.getElementById('startupBtn');
+            const adminWelcome = document.getElementById('adminWelcome');
             
             startupModal.style.display = 'flex';
+            
+            if (isAdmin) {
+                adminWelcome.style.display = 'block';
+            }
             
             startupBtn.addEventListener('click', function() {
                 startupModal.style.opacity = '0';
@@ -2085,54 +2362,154 @@
             createSpaceBackground();
             createStars();
             setupButtons();
+            
+            if (isAdmin) {
+                addAdminButton();
+            }
         }
         
-        // Глобальный объект для управления балансом
+        function addAdminButton() {
+            const mainContainer = document.getElementById('mainContainer');
+            
+            const adminBtn = document.createElement('button');
+            adminBtn.className = 'btn btn-admin';
+            adminBtn.id = 'adminBtn';
+            adminBtn.innerHTML = 'АДМИН ПАНЕЛЬ';
+            
+            mainContainer.appendChild(adminBtn);
+            
+            adminBtn.addEventListener('click', function() {
+                this.style.transform = 'scale(0.96)';
+                setTimeout(() => this.style.transform = '', 200);
+                
+                showAdminPanel();
+            });
+        }
+        
+        function showAdminPanel() {
+            const adminModal = document.getElementById('adminModal');
+            const adminResult = document.getElementById('adminResult');
+            const adminAddMoneyBtn = document.getElementById('adminAddMoneyBtn');
+            const adminCloseBtn = document.getElementById('adminCloseBtn');
+            
+            document.getElementById('adminUserLogin').value = '';
+            document.getElementById('adminAmount').value = '';
+            adminResult.style.display = 'none';
+            
+            adminModal.style.display = 'flex';
+            
+            adminAddMoneyBtn.addEventListener('click', function() {
+                const targetLogin = document.getElementById('adminUserLogin').value.trim();
+                const amount = parseInt(document.getElementById('adminAmount').value);
+                
+                if (!targetLogin || !amount || amount <= 0) {
+                    showAdminResult('Ошибка: Введите корректные данные', false);
+                    return;
+                }
+                
+                const result = addMoneyToUser(targetLogin, amount);
+                showAdminResult(result.message, result.success);
+                
+                document.getElementById('adminAmount').value = '';
+            });
+            
+            adminCloseBtn.addEventListener('click', function() {
+                adminModal.style.opacity = '0';
+                adminModal.style.transform = 'scale(0.9)';
+                adminModal.style.transition = 'all 0.3s ease';
+                
+                setTimeout(() => {
+                    adminModal.style.display = 'none';
+                }, 300);
+            });
+            
+            adminModal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.style.opacity = '0';
+                    this.style.transform = 'scale(0.9)';
+                    this.style.transition = 'all 0.3s ease';
+                    
+                    setTimeout(() => {
+                        this.style.display = 'none';
+                    }, 300);
+                }
+            });
+        }
+        
+        function showAdminResult(message, isSuccess) {
+            const adminResult = document.getElementById('adminResult');
+            
+            adminResult.textContent = message;
+            adminResult.className = isSuccess ? 'admin-result admin-success' : 'admin-result admin-error';
+            adminResult.style.display = 'block';
+            
+            setTimeout(() => {
+                adminResult.style.opacity = '0';
+                adminResult.style.transform = 'translateY(-10px)';
+                adminResult.style.transition = 'all 0.3s ease';
+                
+                setTimeout(() => {
+                    adminResult.style.display = 'none';
+                    adminResult.style.opacity = '1';
+                    adminResult.style.transform = 'translateY(0)';
+                }, 300);
+            }, 3000);
+        }
+        
         const GlobalBalance = {
             get balance() {
                 return getCurrentBalance();
             },
             
             set balance(newBalance) {
-                updateUserBalance(newBalance);
+                if (isAdmin) {
+                    updateUserBalance(ADMIN_BALANCE);
+                } else {
+                    updateUserBalance(newBalance);
+                }
             },
             
             updateAllDisplays() {
-                // Обновляем баланс в игре ракетки
                 if (window.gameInstance) {
                     window.gameInstance.updateDisplay();
                 }
                 
-                // Обновляем баланс в системе кейсов
-                if (window.casesSystem) {
-                    // Баланс уже обновлен через userData
-                }
-                
-                // Обновляем баланс в заголовке кейсов
                 const balanceElements = document.querySelectorAll('.balance');
                 balanceElements.forEach(el => {
                     if (el.id === 'balance' || el.textContent.includes('Баланс')) {
-                        el.textContent = `Баланс: ${this.balance} ₽`;
+                        if (isAdmin) {
+                            el.textContent = `Баланс: ∞ ₽`;
+                        } else {
+                            el.textContent = `Баланс: ${this.balance} ₽`;
+                        }
                     }
                 });
             },
             
             add(amount) {
-                this.balance = this.balance + amount;
+                if (isAdmin) {
+                    this.balance = ADMIN_BALANCE;
+                } else {
+                    this.balance = this.balance + amount;
+                }
                 this.updateAllDisplays();
             },
             
             subtract(amount) {
-                this.balance = this.balance - amount;
-                this.updateAllDisplays();
+                if (isAdmin) {
+                    return;
+                }
+                
+                if (this.balance >= amount) {
+                    this.balance = this.balance - amount;
+                    this.updateAllDisplays();
+                }
             }
         };
         
-        // Создание космического фона с элементами
         function createSpaceBackground() {
             const spaceBg = document.getElementById('spaceBg');
             
-            // Создаем планету
             const planet = document.createElement('div');
             planet.classList.add('planet');
             planet.style.width = '300px';
@@ -2141,7 +2518,6 @@
             planet.style.left = '70%';
             spaceBg.appendChild(planet);
             
-            // Создаем кристаллы
             for (let i = 0; i < 8; i++) {
                 const crystal = document.createElement('div');
                 crystal.classList.add('floating-crystal');
@@ -2152,7 +2528,6 @@
                 spaceBg.appendChild(crystal);
             }
             
-            // Создаем парящие частицы
             for (let i = 0; i < 15; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
@@ -2169,7 +2544,6 @@
                 spaceBg.appendChild(particle);
             }
             
-            // Создаем космические линии
             for (let i = 0; i < 3; i++) {
                 const line = document.createElement('div');
                 line.classList.add('space-line');
@@ -2181,7 +2555,6 @@
             }
         }
         
-        // Создание звёзд
         function createStars() {
             const starsContainer = document.getElementById('stars');
             const starCount = 120;
@@ -2202,7 +2575,6 @@
             }
         }
         
-        // ИГРА Ракетка с общим балансом
         class RocketGame {
             constructor() {
                 this.bet = 100;
@@ -2214,7 +2586,6 @@
                 this.explosionTimeout = null;
                 this.sparkInterval = null;
                 
-                // Шансы
                 this.multiplierRanges = [
                     { min: 1.00, max: 1.10, chance: 50 },
                     { min: 1.11, max: 2.00, chance: 20 },
@@ -2226,7 +2597,6 @@
                 
                 this.totalChance = this.multiplierRanges.reduce((sum, item) => sum + item.chance, 0);
                 
-                // Элементы игры
                 this.balanceElement = document.getElementById('balance');
                 this.betAmountElement = document.getElementById('betAmount');
                 this.currentMultiplierElement = document.getElementById('currentMultiplier');
@@ -2248,7 +2618,6 @@
             }
             
             createGameBackground() {
-                // Облака
                 const cloudsContainer = document.getElementById('clouds');
                 for (let i = 0; i < 6; i++) {
                     const cloud = document.createElement('div');
@@ -2267,7 +2636,6 @@
                     cloudsContainer.appendChild(cloud);
                 }
                 
-                // Звёзды в игре
                 const starsContainer = document.getElementById('gameStars');
                 for (let i = 0; i < 50; i++) {
                     const star = document.createElement('div');
@@ -2360,7 +2728,7 @@
             }
             
             updateDisplay() {
-                this.balanceElement.textContent = `Баланс: ${GlobalBalance.balance} ₽`;
+                this.balanceElement.textContent = `Баланс: ${isAdmin ? '∞' : GlobalBalance.balance} ₽`;
                 this.betAmountElement.textContent = `${this.bet} ₽`;
                 this.multiplierDisplayElement.textContent = `Макс: ${this.targetMultiplier.toFixed(2)}x`;
             }
@@ -2381,7 +2749,7 @@
             }
             
             startGame() {
-                if (this.bet > GlobalBalance.balance) {
+                if (this.bet > GlobalBalance.balance && !isAdmin) {
                     this.showError('У вас недостаточно средств');
                     return;
                 }
@@ -2434,11 +2802,13 @@
                 
                 const currentMultiplierRounded = Math.round(this.currentMultiplier * 100) / 100;
                 const winAmount = Math.floor(this.bet * currentMultiplierRounded);
-                GlobalBalance.add(winAmount - this.bet);
+                
+                if (!isAdmin) {
+                    GlobalBalance.add(winAmount - this.bet);
+                }
                 
                 this.backBtn.classList.remove('hidden');
                 
-                // Возвращены проценты в результатах
                 this.showResult(true, winAmount, currentMultiplierRounded);
                 this.resetButtons();
                 this.updateDisplay();
@@ -2449,14 +2819,16 @@
                 this.stopGame();
                 this.isPlaying = false;
                 
+                if (!isAdmin) {
+                    GlobalBalance.subtract(this.bet);
+                }
+                
                 this.explosionElement.style.display = 'block';
                 this.createExplosionParticles();
-                GlobalBalance.subtract(this.bet);
                 
                 this.backBtn.classList.remove('hidden');
                 
                 const currentMultiplierRounded = Math.round(this.currentMultiplier * 100) / 100;
-                // Возвращены проценты в результатах
                 this.showResult(false, 0, currentMultiplierRounded);
                 this.resetButtons();
                 this.updateDisplay();
@@ -2516,11 +2888,9 @@
                 this.resultMessageElement.style.display = 'block';
                 
                 if (isWin) {
-                    // Возвращены проценты в результатах
                     this.resultMessageElement.textContent = `✅ +${amount - this.bet} ₽ (${multiplier.toFixed(2)}x)`;
                     this.resultMessageElement.className = 'result win';
                 } else {
-                    // Возвращены проценты в результатах
                     this.resultMessageElement.textContent = `💥 Взорвалось на ${multiplier.toFixed(2)}x! -${this.bet} ₽`;
                     this.resultMessageElement.className = 'result lose';
                 }
@@ -2549,7 +2919,6 @@
             }
         }
         
-        // Система кейсов с исправленным багом минимальных сумм
         class CasesSystem {
             constructor() {
                 this.selectedCase = null;
@@ -2598,44 +2967,35 @@
             generatePrizes() {
                 this.prizes = [];
                 
-                // ИСПРАВЛЕНИЕ БАГА: Правильные диапазоны для каждого кейса
                 const prizeRanges = {
-                    'earth': { min: 10, max: 100 },      // Земляной: 10-100 ₽
-                    'gold': { min: 100, max: 500 },      // Золотой: 100-500 ₽
-                    'diamond': { min: 300, max: 1000 },  // Алмазный: 300-1000 ₽
-                    'special': { min: 500, max: 2000 }   // Особый: 500-2000 ₽
+                    'earth': { min: 10, max: 100 },
+                    'gold': { min: 100, max: 500 },
+                    'diamond': { min: 300, max: 1000 },
+                    'special': { min: 500, max: 2000 }
                 };
                 
-                // Создаем 50 призов для ленты
                 for (let i = 0; i < 50; i++) {
                     let amount, icon, color;
                     
-                    // ИЗМЕНЕНИЕ: уменьшил шансы на большие выигрыши
                     const rand = Math.random();
                     if (rand < 0.5) {
-                        // 50% - маленькие призы (в пределах каждого кейса)
                         amount = Math.floor(Math.random() * 50) + 10;
                         icon = '💰';
                         color = '#FFD700';
                     } else if (rand < 0.8) {
-                        // 30% - средние призы
                         amount = Math.floor(Math.random() * 100) + 50;
                         icon = '💎';
                         color = '#00C8FF';
                     } else if (rand < 0.95) {
-                        // 15% - большие призы
                         amount = Math.floor(Math.random() * 200) + 100;
                         icon = '🏆';
                         color = '#FF6B6B';
                     } else {
-                        // 5% - огромные призы (уменьшенный шанс)
                         amount = Math.floor(Math.random() * 500) + 200;
                         icon = '👑';
                         color = '#9C27B0';
                     }
                     
-                    // УБРАНО: названия призов (Малый приз, МЕГА ПРИЗ и т.д.)
-                    // Вместо этого пустая строка
                     const name = '';
                     
                     this.prizes.push({
@@ -2675,15 +3035,17 @@
                 
                 const casePrice = casePrices[this.selectedCase];
                 
-                if (GlobalBalance.balance < casePrice) {
+                if (GlobalBalance.balance < casePrice && !isAdmin) {
                     alert('Недостаточно средств для открытия кейса!');
                     return;
                 }
                 
                 this.openCaseBtn.disabled = true;
-                GlobalBalance.subtract(casePrice);
                 
-                // ИСПРАВЛЕНИЕ БАГА: Генерация суммы в правильном диапазоне для выбранного кейса
+                if (!isAdmin) {
+                    GlobalBalance.subtract(casePrice);
+                }
+                
                 let minAmount, maxAmount;
                 
                 switch(this.selectedCase) {
@@ -2708,43 +3070,39 @@
                         maxAmount = 100;
                 }
                 
-                // ИЗМЕНЕНИЕ: уменьшил шанс на выпадение суммы больше стоимости кейса
                 let winAmount;
                 const rand = Math.random();
                 
-                // Шансы на разные размеры выигрыша
                 if (rand < 0.6) {
-                    // 60% - сумма меньше стоимости кейса (но в пределах диапазона)
                     winAmount = Math.floor(Math.random() * (Math.min(casePrice, maxAmount) - minAmount + 1)) + minAmount;
                 } else if (rand < 0.9) {
-                    // 30% - сумма примерно равна стоимости кейса
                     winAmount = Math.floor(Math.random() * (casePrice * 1.2 - casePrice * 0.8 + 1)) + casePrice * 0.8;
                     winAmount = Math.min(Math.max(winAmount, minAmount), maxAmount);
                 } else {
-                    // 10% - большая сумма (уменьшенный шанс)
                     winAmount = Math.floor(Math.random() * (maxAmount - casePrice * 1.5 + 1)) + casePrice * 1.5;
                     winAmount = Math.min(Math.max(winAmount, minAmount), maxAmount);
                 }
                 
-                // Создаем приз с правильной суммой
                 const winPrize = {
                     amount: winAmount,
                     icon: this.getIconForAmount(winAmount),
                     color: this.getColorForAmount(winAmount),
-                    name: '' // Пустое имя приза
+                    name: ''
                 };
                 
-                // Заменяем один из призов в ленте на выигранный
                 this.selectedPrizeIndex = Math.floor(Math.random() * this.prizes.length);
                 this.prizes[this.selectedPrizeIndex] = winPrize;
                 
-                // Обновляем отображение приза в ленте
                 const prizeItem = this.prizeStrip.children[this.selectedPrizeIndex];
                 prizeItem.innerHTML = `
                     <div class="prize-icon">${winPrize.icon}</div>
                     <div class="prize-amount" style="color: ${winPrize.color}">${winPrize.amount} ₽</div>
                     <div class="prize-name">${winPrize.name}</div>
                 `;
+                
+                if (!isAdmin) {
+                    GlobalBalance.add(winAmount);
+                }
                 
                 this.showOpeningAnimation();
             }
@@ -2834,8 +3192,6 @@
             showReward() {
                 const prize = this.prizes[this.selectedPrizeIndex];
                 
-                GlobalBalance.add(prize.amount);
-                
                 this.rewardIcon.textContent = prize.icon;
                 this.rewardAmount.textContent = `+${prize.amount} ₽`;
                 this.rewardAmount.style.color = prize.color;
@@ -2872,12 +3228,10 @@
                     item.style.animation = '';
                 });
                 
-                // Регенерируем призы для следующего открытия
                 this.generatePrizes();
             }
         }
         
-        // Обработчики кнопок
         function setupButtons() {
             const btnWhat = document.getElementById('whatBtn');
             const btnPlay = document.getElementById('playBtn');
@@ -2913,7 +3267,6 @@
                 this.style.transform = 'scale(0.96)';
                 setTimeout(() => this.style.transform = '', 200);
                 
-                // Создаем и показываем предупреждающее модальное окно
                 const warningModal = document.createElement('div');
                 warningModal.className = 'startup-modal';
                 warningModal.style.zIndex = '9998';
@@ -2931,7 +3284,6 @@
                 
                 document.body.appendChild(warningModal);
                 
-                // Обработчик для кнопки продолжить
                 document.getElementById('continueToCasesBtn').addEventListener('click', function() {
                     warningModal.style.opacity = '0';
                     warningModal.style.transform = 'scale(0.9)';
@@ -2948,7 +3300,6 @@
                     }, 300);
                 });
                 
-                // Закрытие по клику на фон
                 warningModal.addEventListener('click', function(e) {
                     if (e.target === this) {
                         this.style.opacity = '0';
@@ -2975,7 +3326,6 @@
             });
         }
         
-        // Предотвращаем масштабирование
         document.addEventListener('touchmove', function(e) {
             if (e.scale !== 1) {
                 e.preventDefault();
