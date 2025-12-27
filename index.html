@@ -29,6 +29,156 @@
             touch-action: manipulation;
         }
         
+        /* Окно логина */
+        .login-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(15px);
+        }
+        
+        .login-content {
+            background: linear-gradient(135deg, 
+                rgba(26, 26, 46, 0.95) 0%, 
+                rgba(22, 33, 62, 0.95) 100%);
+            padding: 40px 30px;
+            border-radius: 25px;
+            width: 100%;
+            max-width: 500px;
+            color: white;
+            border: 2px solid rgba(94, 156, 255, 0.4);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        
+        .login-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                #6a11cb, 
+                #2575fc, 
+                #6a11cb);
+            animation: borderSlide 3s infinite linear;
+        }
+        
+        @keyframes borderSlide {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+        
+        .login-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            color: #ffcc00;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 204, 0, 0.3);
+        }
+        
+        .login-text {
+            margin-bottom: 25px;
+            line-height: 1.6;
+            font-size: 1.2rem;
+            color: #94a3ff;
+            padding: 20px;
+            background: rgba(255, 65, 108, 0.15);
+            border-radius: 10px;
+            border-left: 4px solid #ff416c;
+        }
+        
+        .login-text strong {
+            color: #ffcc00;
+            font-size: 1.3rem;
+        }
+        
+        .login-input {
+            width: 100%;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(94, 156, 255, 0.4);
+            border-radius: 15px;
+            color: white;
+            font-size: 1.2rem;
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        .login-input:focus {
+            border-color: #ffcc00;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+        }
+        
+        .login-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .login-btn {
+            background: linear-gradient(45deg, 
+                rgba(255, 65, 108, 0.9) 0%, 
+                rgba(255, 75, 43, 0.9) 100%);
+            border: none;
+            color: white;
+            padding: 20px 40px;
+            border-radius: 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            font-weight: 600;
+            box-shadow: 
+                0 8px 20px rgba(255, 65, 108, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 12px 25px rgba(255, 65, 108, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        .login-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .login-error {
+            color: #ff6b6b;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 1.1rem;
+            display: none;
+            padding: 10px;
+            background: rgba(255, 107, 107, 0.15);
+            border-radius: 10px;
+            border-left: 4px solid #ff6b6b;
+        }
+        
         /* Стартовое окно */
         .startup-modal {
             position: fixed;
@@ -76,11 +226,6 @@
                 #2575fc, 
                 #6a11cb);
             animation: borderSlide 3s infinite linear;
-        }
-        
-        @keyframes borderSlide {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
         }
         
         .startup-title {
@@ -222,6 +367,10 @@
             top: 20px;
             left: 0;
             z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
         }
         
         .title {
@@ -285,6 +434,20 @@
         @keyframes textPulse {
             0% { opacity: 0.9; }
             100% { opacity: 1; }
+        }
+        
+        /* Отображение текущего пользователя */
+        .user-display {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            color: #00ffcc;
+            text-shadow: 0 0 10px #00ffcc;
+            padding: 12px 25px;
+            background: rgba(0, 255, 204, 0.1);
+            border-radius: 15px;
+            border: 2px solid rgba(0, 255, 204, 0.3);
+            backdrop-filter: blur(10px);
+            margin-left: 20px;
         }
         
         /* Центральный контейнер с кнопками */
@@ -1640,6 +1803,22 @@
     </style>
 </head>
 <body>
+    <!-- Окно логина -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <h2 class="login-title">ВХОД В WONK MINIGAME</h2>
+            <div class="login-text">
+                Введите ваш логин для начала игры.<br>
+                <strong>Формат логина:</strong> должен начинаться на <strong>fgtu</strong> и заканчиваться на <strong>gjl</strong>
+                <br><br>
+                <small>Пример: fgtu123gjl или fgtuplayer2024gjl</small>
+            </div>
+            <input type="text" class="login-input" id="loginInput" placeholder="Введите ваш логин..." maxlength="20">
+            <div class="login-error" id="loginError">Неверный формат логина! Логин должен начинаться на "fgtu" и заканчиваться на "gjl"</div>
+            <button class="login-btn" id="loginBtn">ВОЙТИ</button>
+        </div>
+    </div>
+
     <!-- Стартовое окно -->
     <div class="startup-modal" id="startupModal">
         <div class="startup-content">
@@ -1662,6 +1841,7 @@
         <h1 class="title">
             НОВОСТИ <span class="wonk">WONK</span> <span class="minigame">MINIGAME</span>
         </h1>
+        <div class="user-display" id="userDisplay">Игрок: не авторизован</div>
     </div>
     
     <div class="main-container">
@@ -1779,8 +1959,112 @@
     </div>
 
     <script>
-        // Показываем стартовое окно при загрузке
+        // Глобальные переменные
+        let currentUser = null;
+        let userData = {};
+        
+        // Проверка логина
+        function validateLogin(login) {
+            return login.startsWith('fgtu') && login.endsWith('gjl');
+        }
+        
+        // Загрузка данных пользователя из localStorage
+        function loadUserData(login) {
+            const savedData = localStorage.getItem(`wonk_user_${login}`);
+            if (savedData) {
+                return JSON.parse(savedData);
+            } else {
+                // Создаем нового пользователя с начальным балансом 1000
+                return {
+                    balance: 1000,
+                    login: login,
+                    lastLogin: new Date().toISOString()
+                };
+            }
+        }
+        
+        // Сохранение данных пользователя в localStorage
+        function saveUserData() {
+            if (currentUser && userData[currentUser]) {
+                localStorage.setItem(`wonk_user_${currentUser}`, JSON.stringify(userData[currentUser]));
+            }
+        }
+        
+        // Обновление баланса пользователя
+        function updateUserBalance(amount) {
+            if (currentUser && userData[currentUser]) {
+                userData[currentUser].balance = amount;
+                userData[currentUser].lastLogin = new Date().toISOString();
+                saveUserData();
+            }
+        }
+        
+        // Получение текущего баланса пользователя
+        function getCurrentBalance() {
+            if (currentUser && userData[currentUser]) {
+                return userData[currentUser].balance;
+            }
+            return 1000;
+        }
+        
+        // Показываем окно логина при загрузке
         document.addEventListener('DOMContentLoaded', function() {
+            const loginModal = document.getElementById('loginModal');
+            const loginBtn = document.getElementById('loginBtn');
+            const loginInput = document.getElementById('loginInput');
+            const loginError = document.getElementById('loginError');
+            
+            loginModal.style.display = 'flex';
+            
+            // Фокус на поле ввода
+            setTimeout(() => {
+                loginInput.focus();
+            }, 300);
+            
+            // Обработчик входа по нажатию Enter
+            loginInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    loginBtn.click();
+                }
+            });
+            
+            // Обработчик кнопки входа
+            loginBtn.addEventListener('click', function() {
+                const login = loginInput.value.trim();
+                
+                if (!validateLogin(login)) {
+                    loginError.style.display = 'block';
+                    loginInput.style.borderColor = '#ff6b6b';
+                    loginInput.style.boxShadow = '0 0 15px rgba(255, 107, 107, 0.5)';
+                    
+                    setTimeout(() => {
+                        loginError.style.display = 'none';
+                        loginInput.style.borderColor = 'rgba(94, 156, 255, 0.4)';
+                        loginInput.style.boxShadow = 'none';
+                    }, 3000);
+                    return;
+                }
+                
+                // Успешный вход
+                currentUser = login;
+                userData[currentUser] = loadUserData(login);
+                
+                // Обновляем отображение пользователя
+                document.getElementById('userDisplay').textContent = `Игрок: ${login}`;
+                
+                // Скрываем окно логина
+                loginModal.style.opacity = '0';
+                loginModal.style.transform = 'scale(0.9)';
+                loginModal.style.transition = 'all 0.3s ease';
+                
+                setTimeout(() => {
+                    loginModal.style.display = 'none';
+                    showStartupModal();
+                }, 300);
+            });
+        });
+        
+        function showStartupModal() {
             const startupModal = document.getElementById('startupModal');
             const startupBtn = document.getElementById('startupBtn');
             
@@ -1796,7 +2080,7 @@
                     initGame();
                 }, 300);
             });
-        });
+        }
         
         function initGame() {
             createSpaceBackground();
@@ -1806,18 +2090,23 @@
         
         // Глобальный объект для управления балансом
         const GlobalBalance = {
-            balance: 1000,
+            get balance() {
+                return getCurrentBalance();
+            },
+            
+            set balance(newBalance) {
+                updateUserBalance(newBalance);
+            },
             
             updateAllDisplays() {
                 // Обновляем баланс в игре ракетки
                 if (window.gameInstance) {
-                    window.gameInstance.balance = this.balance;
                     window.gameInstance.updateDisplay();
                 }
                 
                 // Обновляем баланс в системе кейсов
                 if (window.casesSystem) {
-                    window.casesSystem.balance = this.balance;
+                    // Баланс уже обновлен через userData
                 }
                 
                 // Обновляем баланс в заголовке кейсов
@@ -1830,17 +2119,12 @@
             },
             
             add(amount) {
-                this.balance += amount;
+                this.balance = this.balance + amount;
                 this.updateAllDisplays();
             },
             
             subtract(amount) {
-                this.balance -= amount;
-                this.updateAllDisplays();
-            },
-            
-            set(newBalance) {
-                this.balance = newBalance;
+                this.balance = this.balance - amount;
                 this.updateAllDisplays();
             }
         };
