@@ -195,11 +195,6 @@
             animation: borderSlide 3s infinite linear;
         }
         
-        @keyframes borderSlide {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
-        }
-        
         .login-title {
             font-family: 'Orbitron', sans-serif;
             font-size: 2.2rem;
@@ -296,6 +291,151 @@
             border-left: 4px solid #ff6b6b;
         }
         
+        /* Окно промокода */
+        .promocode-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10001;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(15px);
+        }
+        
+        .promocode-content {
+            background: linear-gradient(135deg, 
+                rgba(26, 26, 46, 0.95) 0%, 
+                rgba(22, 33, 62, 0.95) 100%);
+            padding: 40px 30px;
+            border-radius: 25px;
+            width: 100%;
+            max-width: 500px;
+            color: white;
+            border: 2px solid rgba(0, 255, 255, 0.4);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        
+        .promocode-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                #00ffff, 
+                #00ffcc, 
+                #00ffff);
+            animation: borderSlide 3s infinite linear;
+        }
+        
+        .promocode-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            color: #00ffcc;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0, 255, 204, 0.3);
+        }
+        
+        .promocode-input {
+            width: 100%;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(0, 255, 255, 0.4);
+            border-radius: 15px;
+            color: white;
+            font-size: 1.2rem;
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        .promocode-input:focus {
+            border-color: #ffcc00;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+        }
+        
+        .promocode-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .promocode-btn {
+            background: linear-gradient(45deg, 
+                rgba(0, 255, 255, 0.9) 0%, 
+                rgba(0, 200, 200, 0.9) 100%);
+            border: none;
+            color: white;
+            padding: 20px 40px;
+            border-radius: 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            font-weight: 600;
+            box-shadow: 
+                0 8px 20px rgba(0, 255, 255, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .promocode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 12px 25px rgba(0, 255, 255, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        .promocode-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .promocode-result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+            display: none;
+            animation: resultAppear 0.4s ease;
+        }
+        
+        .promocode-success {
+            background: rgba(0, 255, 0, 0.15);
+            color: #00ff00;
+            border-left: 4px solid #00ff00;
+        }
+        
+        .promocode-error {
+            background: rgba(255, 0, 0, 0.15);
+            color: #ff0000;
+            border-left: 4px solid #ff0000;
+        }
+        
+        .promocode-warning {
+            background: rgba(255, 204, 0, 0.15);
+            color: #ffcc00;
+            border-left: 4px solid #ffcc00;
+        }
+        
         /* Стартовое окно */
         .startup-modal {
             position: fixed;
@@ -390,243 +530,6 @@
         .startup-btn:active {
             transform: scale(0.98);
         }
-        
-        /* Админ-модальное окно */
-        .admin-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            backdrop-filter: blur(15px);
-        }
-        
-        .admin-content {
-            background: linear-gradient(135deg, 
-                rgba(26, 26, 46, 0.95) 0%, 
-                rgba(22, 33, 62, 0.95) 100%);
-            padding: 40px 30px;
-            border-radius: 25px;
-            width: 100%;
-            max-width: 500px;
-            color: white;
-            border: 2px solid rgba(255, 215, 0, 0.4);
-            box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.6),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            text-align: center;
-        }
-        
-        .admin-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
-            color: #ffcc00;
-            text-align: center;
-            margin-bottom: 30px;
-            text-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
-            padding-bottom: 15px;
-            border-bottom: 2px solid rgba(255, 204, 0, 0.3);
-        }
-        
-        .admin-info {
-            background: rgba(255, 215, 0, 0.1);
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 25px;
-            border-left: 4px solid #ffcc00;
-        }
-        
-        .admin-balance {
-            font-family: 'Orbitron', sans-serif;
-            color: #00ff00;
-            text-shadow: 0 0 10px #00ff00;
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-        }
-        
-        .admin-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .admin-tab {
-            flex: 1;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(94, 156, 255, 0.4);
-            border-radius: 10px;
-            color: white;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .admin-tab.active {
-            background: rgba(255, 65, 108, 0.3);
-            border-color: #ff416c;
-            color: #ffcc00;
-        }
-        
-        .admin-tab-content {
-            display: none;
-        }
-        
-        .admin-tab-content.active {
-            display: block;
-        }
-        
-        .admin-input-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-        
-        .admin-label {
-            display: block;
-            margin-bottom: 8px;
-            color: #94a3ff;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-        
-        .admin-input {
-            width: 100%;
-            padding: 18px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(94, 156, 255, 0.4);
-            border-radius: 15px;
-            color: white;
-            font-size: 1.2rem;
-            font-family: 'Montserrat', sans-serif;
-            transition: all 0.3s ease;
-            outline: none;
-        }
-        
-        .admin-input:focus {
-            border-color: #ffcc00;
-            box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
-        }
-        
-        .admin-btn-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        
-        .admin-btn {
-            flex: 1;
-            background: linear-gradient(45deg, 
-                rgba(255, 65, 108, 0.9) 0%, 
-                rgba(255, 75, 43, 0.9) 100%);
-            border: none;
-            color: white;
-            padding: 16px 10px;
-            border-radius: 15px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.1rem;
-            cursor: pointer;
-            font-weight: 600;
-            box-shadow: 
-                0 5px 15px rgba(255, 65, 108, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .admin-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 
-                0 8px 20px rgba(255, 65, 108, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        }
-        
-        .admin-btn:active {
-            transform: scale(0.98);
-        }
-        
-        .admin-btn.remove {
-            background: linear-gradient(45deg, 
-                rgba(255, 0, 0, 0.9) 0%, 
-                rgba(255, 100, 0, 0.9) 100%);
-            box-shadow: 
-                0 5px 15px rgba(255, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        }
-        
-        .admin-btn.remove:hover {
-            box-shadow: 
-                0 8px 20px rgba(255, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        }
-        
-        .admin-btn.close {
-            background: linear-gradient(45deg, 
-                rgba(100, 100, 100, 0.9) 0%, 
-                rgba(150, 150, 150, 0.9) 100%);
-            box-shadow: 
-                0 5px 15px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        }
-        
-        .admin-result {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 15px;
-            text-align: center;
-            font-size: 1.1rem;
-            display: none;
-            animation: resultAppear 0.4s ease;
-        }
-        
-        .admin-success {
-            background: rgba(0, 255, 0, 0.15);
-            color: #00ff00;
-            border-left: 4px solid #00ff00;
-        }
-        
-        .admin-error {
-            background: rgba(255, 0, 0, 0.15);
-            color: #ff0000;
-            border-left: 4px solid #ff0000;
-        }
-        
-        .admin-warning {
-            background: rgba(255, 204, 0, 0.15);
-            color: #ffcc00;
-            border-left: 4px solid #ffcc00;
-        }
-        
-        .admin-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: linear-gradient(45deg, #ff0000, #ff9900);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            animation: badgePulse 2s infinite alternate;
-        }
-        
-        @keyframes badgePulse {
-            0% { transform: scale(1); box-shadow: 0 0 10px #ff0000; }
-            100% { transform: scale(1.05); box-shadow: 0 0 20px #ff9900; }
-        }
-        
-        /* Остальные стили остаются без изменений */
-        /* ... (все остальные стили из предыдущего кода) ... */
         
         /* Космический фон с элементами */
         .space-bg {
@@ -897,16 +800,16 @@
             opacity: 0.8;
         }
         
-        /* Кнопка админ-панели */
-        .btn-admin {
+        /* Кнопка промокода */
+        .btn-promo {
             background: linear-gradient(135deg, 
-                rgba(156, 39, 176, 0.9) 0%, 
-                rgba(103, 58, 183, 0.9) 100%);
-            border: 2px solid rgba(156, 39, 176, 0.5);
+                rgba(0, 255, 255, 0.9) 0%, 
+                rgba(0, 200, 200, 0.9) 100%);
+            border: 2px solid rgba(0, 255, 255, 0.5);
         }
         
-        .btn-admin::after {
-            content: '👑';
+        .btn-promo::after {
+            content: '🎫';
             position: absolute;
             right: 20px;
             font-size: 1.8rem;
@@ -2180,11 +2083,24 @@
                 Введите ваш логин для начала игры.<br>
                 <small>чтобы его получить зайдите в бота @wonkminigamelogin_bot</small>
                 <br><br>
-            
             </div>
             <input type="text" class="login-input" id="loginInput" placeholder="Введите ваш логин..." maxlength="20">
             <div class="login-error" id="loginError">Неверный формат логина</div>
             <button class="login-btn" id="loginBtn">ВОЙТИ</button>
+        </div>
+    </div>
+
+    <!-- Окно промокода -->
+    <div class="promocode-modal" id="promocodeModal">
+        <div class="promocode-content">
+            <h2 class="promocode-title">🎫 АКТИВАЦИЯ ПРОМОКОДА</h2>
+            <div class="startup-text">
+                Введите промокод, чтобы получить бонусные средства на баланс!
+            </div>
+            <input type="text" class="promocode-input" id="promocodeInput" placeholder="Введите промокод..." maxlength="20">
+            <div class="promocode-result" id="promocodeResult"></div>
+            <button class="promocode-btn" id="activatePromoBtn">АКТИВИРОВАТЬ</button>
+            <button class="promocode-btn" style="margin-top: 10px; background: linear-gradient(45deg, rgba(255, 65, 108, 0.9), rgba(255, 75, 43, 0.9));" id="closePromoBtn">ЗАКРЫТЬ</button>
         </div>
     </div>
 
@@ -2195,69 +2111,9 @@
             <div class="startup-text">
                 если вы запустили бота впервые то ваш балланс установлен в <strong>1000 ₽</strong>,<br>
                 <br><br>
-                <span id="adminWelcome" style="display: none; color: #ffcc00; font-size: 1.3rem;">
-                    👑 Добро пожаловать, АДМИНИСТРАТОР!
-                </span>
+                Используйте промокоды для пополнения баланса!
             </div>
             <button class="startup-btn" id="startupBtn">ПРОДОЛЖИТЬ</button>
-        </div>
-    </div>
-
-    <!-- Модальное окно админ-панели -->
-    <div class="admin-modal" id="adminModal">
-        <div class="admin-content">
-            <div class="admin-badge">ADMIN</div>
-            <h2 class="admin-title">👑 АДМИН ПАНЕЛЬ</h2>
-            
-            <div class="admin-info">
-                <div class="admin-balance">Баланс: ∞ ₽</div>
-                <p>Вы можете управлять балансами пользователей</p>
-            </div>
-            
-            <div class="admin-tabs">
-                <button class="admin-tab active" data-tab="add">ДОБАВИТЬ</button>
-                <button class="admin-tab" data-tab="remove">УБРАТЬ</button>
-            </div>
-            
-            <div class="admin-tab-content active" id="addTab">
-                <div class="admin-input-group">
-                    <label class="admin-label">Логин пользователя:</label>
-                    <input type="text" class="admin-input" id="adminUserLogin" 
-                           placeholder="Введите логин пользователя...">
-                </div>
-                
-                <div class="admin-input-group">
-                    <label class="admin-label">Сумма для начисления:</label>
-                    <input type="number" class="admin-input" id="adminAmount" 
-                           placeholder="Введите сумму в рублях..." min="1" max="1000000">
-                </div>
-                
-                <div class="admin-btn-group">
-                    <button class="admin-btn" id="adminAddMoneyBtn">НАЧИСЛИТЬ</button>
-                </div>
-            </div>
-            
-            <div class="admin-tab-content" id="removeTab">
-                <div class="admin-input-group">
-                    <label class="admin-label">Логин пользователя:</label>
-                    <input type="text" class="admin-input" id="removeUserLogin" 
-                           placeholder="Введите логин пользователя...">
-                </div>
-                
-                <div class="admin-input-group">
-                    <label class="admin-label">Сумма для списания:</label>
-                    <input type="number" class="admin-input" id="removeAmount" 
-                           placeholder="Введите сумму в рублях..." min="1" max="1000000">
-                </div>
-                
-                <div class="admin-btn-group">
-                    <button class="admin-btn remove" id="adminRemoveMoneyBtn">СПИСАТЬ</button>
-                </div>
-            </div>
-            
-            <div class="admin-result" id="adminResult"></div>
-            
-            <button class="admin-btn close" id="adminCloseBtn">ЗАКРЫТЬ</button>
         </div>
     </div>
 
@@ -2276,7 +2132,7 @@
         <button class="btn btn-what" id="whatBtn">ЧТО БУДЕТ</button>
         <button class="btn btn-play" id="playBtn">ИГРАТЬ</button>
         <button class="btn btn-cases" id="casesBtn">КЕЙСЫ</button>
-        <!-- Кнопка админ-панели будет добавляться динамически -->
+        <button class="btn btn-promo" id="promoBtn">ПРОМОКОД</button>
     </div>
     
     <div class="modal" id="infoModal">
@@ -2388,12 +2244,70 @@
     </div>
 
     <script>
+        // ========== СИСТЕМА ПРОМОКОДОВ ==========
+        // База данных промокодов
+        const promoCodesDB = {
+            // ПРОМОКОД: { amount: сумма, maxUses: максимальное число использований, userUses: {username: использовано раз} }
+            '15promfcode': { 
+                amount: 15, 
+                maxUses: 2,
+                userUses: {fgtuhgjl} // Будет заполняться динамически
+            }
+            // Чтобы добавить новый промокод для конкретного пользователя:
+            // 'НОВЫЙКОД': { amount: 100, maxUses: 1, userUses: {'fgtuexperimentgjl': 0} }
+        };
+        
+        // Функция проверки и активации промокода
+        function activatePromoCode(code, username) {
+            if (!promoCodesDB[code]) {
+                return { success: false, message: "Промокод не найден!" };
+            }
+            
+            const promo = promoCodesDB[code];
+            
+            // Проверка лимитов использования для пользователя
+            const userUsed = promo.userUses[username] || 0;
+            
+            if (userUsed >= promo.maxUses) {
+                return { success: false, message: "Вы исчерпали лимит активаций этого промокода!" };
+            }
+            
+            // Активируем промокод
+            promo.userUses[username] = userUsed + 1;
+            
+            // Сохраняем в localStorage
+            savePromoCodes();
+            
+            return { 
+                success: true, 
+                message: `Промокод активирован! +${promo.amount} ₽`,
+                amount: promo.amount 
+            };
+        }
+        
+        // Сохранение промокодов в localStorage
+        function savePromoCodes() {
+            localStorage.setItem('wonk_promocodes', JSON.stringify(promoCodesDB));
+        }
+        
+        // Загрузка промокодов из localStorage
+        function loadPromoCodes() {
+            const saved = localStorage.getItem('wonk_promocodes');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                // Обновляем основную базу, но сохраняем структуру
+                for (const code in parsed) {
+                    if (promoCodesDB[code]) {
+                        // Объединяем данные
+                        promoCodesDB[code].userUses = parsed[code].userUses || {};
+                    }
+                }
+            }
+        }
+        
         // Глобальные переменные
         let currentUser = null;
         let userData = {};
-        let isAdmin = false;
-        const ADMIN_LOGIN = 'admin5768nezerw0nk';
-        const ADMIN_BALANCE = 1000000;
         
         // Проверка на мобильное устройство
         function isMobileDevice() {
@@ -2402,7 +2316,7 @@
         
         // Проверка логина
         function validateLogin(login) {
-            return login.startsWith('fgtu') && login.endsWith('gjl') || login === ADMIN_LOGIN;
+            return login.startsWith('fgtu') && login.endsWith('gjl');
         }
         
         // Загрузка данных пользователя из localStorage
@@ -2410,23 +2324,15 @@
             const savedData = localStorage.getItem(`wonk_user_${login}`);
             if (savedData) {
                 const data = JSON.parse(savedData);
-                if (login === ADMIN_LOGIN) {
-                    data.balance = ADMIN_BALANCE;
-                    data.isAdmin = true;
-                }
+                data.lastLogin = new Date().toISOString();
                 return data;
             } else {
-                const baseData = {
-                    balance: login === ADMIN_LOGIN ? ADMIN_BALANCE : 1000,
+                return {
+                    balance: 1000,
                     login: login,
-                    lastLogin: new Date().toISOString()
+                    lastLogin: new Date().toISOString(),
+                    usedPromoCodes: [] // Добавляем массив использованных промокодов
                 };
-                
-                if (login === ADMIN_LOGIN) {
-                    baseData.isAdmin = true;
-                }
-                
-                return baseData;
             }
         }
         
@@ -2440,11 +2346,7 @@
         // Обновление баланса пользователя
         function updateUserBalance(amount) {
             if (currentUser && userData[currentUser]) {
-                if (isAdmin) {
-                    userData[currentUser].balance = ADMIN_BALANCE;
-                } else {
-                    userData[currentUser].balance = amount;
-                }
+                userData[currentUser].balance = amount;
                 userData[currentUser].lastLogin = new Date().toISOString();
                 saveUserData();
             }
@@ -2458,63 +2360,17 @@
             return 1000;
         }
         
-        // Функция для начисления средств другому пользователю
-        function addMoneyToUser(targetLogin, amount) {
-            if (!targetLogin || !amount || amount <= 0) {
-                return { success: false, message: "Неверные данные" };
-            }
-            
-            const targetData = loadUserData(targetLogin);
-            
-            if (!targetData.login) {
-                return { success: false, message: "Пользователь не найден" };
-            }
-            
-            targetData.balance += parseInt(amount);
-            
-            localStorage.setItem(`wonk_user_${targetLogin}`, JSON.stringify(targetData));
-            
-            return { 
-                success: true, 
-                message: `Успешно начислено ${amount} ₽ пользователю ${targetLogin}`,
-                newBalance: targetData.balance
-            };
-        }
-        
-        // Функция для списания средств у другого пользователя
-        function removeMoneyFromUser(targetLogin, amount) {
-            if (!targetLogin || !amount || amount <= 0) {
-                return { success: false, message: "Неверные данные" };
-            }
-            
-            const targetData = loadUserData(targetLogin);
-            
-            if (!targetData.login) {
-                return { success: false, message: "Пользователь не найден" };
-            }
-            
-            if (targetData.balance < amount) {
-                return { 
-                    success: false, 
-                    message: `Недостаточно средств у пользователя ${targetLogin}. Баланс: ${targetData.balance} ₽`
-                };
-            }
-            
-            targetData.balance -= parseInt(amount);
-            
-            localStorage.setItem(`wonk_user_${targetLogin}`, JSON.stringify(targetData));
-            
-            return { 
-                success: true, 
-                message: `Успешно списано ${amount} ₽ у пользователя ${targetLogin}`,
-                newBalance: targetData.balance
-            };
-        }
-        
         // Показываем предупреждение о телефоне при загрузке
         document.addEventListener('DOMContentLoaded', function() {
+            // Загружаем промокоды
+            loadPromoCodes();
+            
             const orientationWarning = document.getElementById('orientationWarning');
             const continueWarningBtn = document.getElementById('continueWarningBtn');
+            const loginModal = document.getElementById('loginModal');
+            const loginBtn = document.getElementById('loginBtn');
+            const loginInput = document.getElementById('loginInput');
+            const loginError = document.getElementById('loginError');
             
             // Проверяем, мобильное ли устройство
             if (isMobileDevice()) {
@@ -2528,7 +2384,8 @@
                     
                     setTimeout(() => {
                         orientationWarning.style.display = 'none';
-                        showLoginModal();
+                        loginModal.style.display = 'flex';
+                        setTimeout(() => loginInput.focus(), 300);
                     }, 300);
                 });
                 
@@ -2541,28 +2398,18 @@
                         
                         setTimeout(() => {
                             orientationWarning.style.display = 'none';
-                            showLoginModal();
+                            loginModal.style.display = 'flex';
+                            setTimeout(() => loginInput.focus(), 300);
                         }, 300);
                     }
                 }, 5000);
             } else {
                 // Если не мобильное устройство, сразу показываем логин
-                showLoginModal();
+                loginModal.style.display = 'flex';
+                setTimeout(() => loginInput.focus(), 300);
             }
-        });
-        
-        function showLoginModal() {
-            const loginModal = document.getElementById('loginModal');
-            const loginBtn = document.getElementById('loginBtn');
-            const loginInput = document.getElementById('loginInput');
-            const loginError = document.getElementById('loginError');
             
-            loginModal.style.display = 'flex';
-            
-            setTimeout(() => {
-                loginInput.focus();
-            }, 300);
-            
+            // Обработка логина
             loginInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     loginBtn.click();
@@ -2587,16 +2434,9 @@
                 
                 currentUser = login;
                 userData[currentUser] = loadUserData(login);
-                isAdmin = (login === ADMIN_LOGIN);
                 
                 const userDisplay = document.getElementById('userDisplay');
-                if (isAdmin) {
-                    userDisplay.textContent = `👑 АДМИНИСТРАТОР`;
-                    userDisplay.style.color = '#ffcc00';
-                    userDisplay.style.textShadow = '0 0 10px #ffcc00';
-                } else {
-                    userDisplay.textContent = `Игрок: ${login}`;
-                }
+                userDisplay.textContent = `Игрок: ${login}`;
                 
                 loginModal.style.opacity = '0';
                 loginModal.style.transform = 'scale(0.9)';
@@ -2607,18 +2447,13 @@
                     showStartupModal();
                 }, 300);
             });
-        }
+        });
         
         function showStartupModal() {
             const startupModal = document.getElementById('startupModal');
             const startupBtn = document.getElementById('startupBtn');
-            const adminWelcome = document.getElementById('adminWelcome');
             
             startupModal.style.display = 'flex';
-            
-            if (isAdmin) {
-                adminWelcome.style.display = 'block';
-            }
             
             startupBtn.addEventListener('click', function() {
                 startupModal.style.opacity = '0';
@@ -2636,151 +2471,6 @@
             createSpaceBackground();
             createStars();
             setupButtons();
-            
-            if (isAdmin) {
-                addAdminButton();
-            }
-        }
-        
-        function addAdminButton() {
-            const mainContainer = document.getElementById('mainContainer');
-            
-            const adminBtn = document.createElement('button');
-            adminBtn.className = 'btn btn-admin';
-            adminBtn.id = 'adminBtn';
-            adminBtn.innerHTML = 'АДМИН ПАНЕЛЬ';
-            
-            mainContainer.appendChild(adminBtn);
-            
-            adminBtn.addEventListener('click', function() {
-                this.style.transform = 'scale(0.96)';
-                setTimeout(() => this.style.transform = '', 200);
-                
-                showAdminPanel();
-            });
-        }
-        
-        function showAdminPanel() {
-            const adminModal = document.getElementById('adminModal');
-            const adminResult = document.getElementById('adminResult');
-            const adminAddMoneyBtn = document.getElementById('adminAddMoneyBtn');
-            const adminRemoveMoneyBtn = document.getElementById('adminRemoveMoneyBtn');
-            const adminCloseBtn = document.getElementById('adminCloseBtn');
-            const adminTabs = document.querySelectorAll('.admin-tab');
-            
-            // Сбрасываем поля и результат
-            document.getElementById('adminUserLogin').value = '';
-            document.getElementById('adminAmount').value = '';
-            document.getElementById('removeUserLogin').value = '';
-            document.getElementById('removeAmount').value = '';
-            adminResult.style.display = 'none';
-            
-            // Настройка вкладок
-            adminTabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const tabId = this.dataset.tab;
-                    
-                    // Убираем активный класс у всех вкладок
-                    adminTabs.forEach(t => t.classList.remove('active'));
-                    // Добавляем активный класс текущей вкладке
-                    this.classList.add('active');
-                    
-                    // Скрываем все контенты вкладок
-                    document.querySelectorAll('.admin-tab-content').forEach(content => {
-                        content.classList.remove('active');
-                    });
-                    
-                    // Показываем соответствующий контент
-                    document.getElementById(`${tabId}Tab`).classList.add('active');
-                });
-            });
-            
-            // Показываем модальное окно
-            adminModal.style.display = 'flex';
-            
-            // Обработчик кнопки начисления средств
-            adminAddMoneyBtn.addEventListener('click', function() {
-                const targetLogin = document.getElementById('adminUserLogin').value.trim();
-                const amount = parseInt(document.getElementById('adminAmount').value);
-                
-                if (!targetLogin || !amount || amount <= 0) {
-                    showAdminResult('Ошибка: Введите корректные данные', false);
-                    return;
-                }
-                
-                const result = addMoneyToUser(targetLogin, amount);
-                showAdminResult(result.message, result.success);
-                
-                document.getElementById('adminAmount').value = '';
-            });
-            
-            // Обработчик кнопки списания средств
-            adminRemoveMoneyBtn.addEventListener('click', function() {
-                const targetLogin = document.getElementById('removeUserLogin').value.trim();
-                const amount = parseInt(document.getElementById('removeAmount').value);
-                
-                if (!targetLogin || !amount || amount <= 0) {
-                    showAdminResult('Ошибка: Введите корректные данные', false);
-                    return;
-                }
-                
-                const result = removeMoneyFromUser(targetLogin, amount);
-                showAdminResult(result.message, result.success);
-                
-                document.getElementById('removeAmount').value = '';
-            });
-            
-            // Обработчик кнопки закрытия
-            adminCloseBtn.addEventListener('click', function() {
-                adminModal.style.opacity = '0';
-                adminModal.style.transform = 'scale(0.9)';
-                adminModal.style.transition = 'all 0.3s ease';
-                
-                setTimeout(() => {
-                    adminModal.style.display = 'none';
-                }, 300);
-            });
-            
-            // Закрытие по клику вне окна
-            adminModal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.style.opacity = '0';
-                    this.style.transform = 'scale(0.9)';
-                    this.style.transition = 'all 0.3s ease';
-                    
-                    setTimeout(() => {
-                        this.style.display = 'none';
-                    }, 300);
-                }
-            });
-        }
-        
-        function showAdminResult(message, isSuccess) {
-            const adminResult = document.getElementById('adminResult');
-            
-            adminResult.textContent = message;
-            
-            if (isSuccess === true) {
-                adminResult.className = 'admin-result admin-success';
-            } else if (isSuccess === false) {
-                adminResult.className = 'admin-result admin-error';
-            } else {
-                adminResult.className = 'admin-result admin-warning';
-            }
-            
-            adminResult.style.display = 'block';
-            
-            setTimeout(() => {
-                adminResult.style.opacity = '0';
-                adminResult.style.transform = 'translateY(-10px)';
-                adminResult.style.transition = 'all 0.3s ease';
-                
-                setTimeout(() => {
-                    adminResult.style.display = 'none';
-                    adminResult.style.opacity = '1';
-                    adminResult.style.transform = 'translateY(0)';
-                }, 300);
-            }, 3000);
         }
         
         const GlobalBalance = {
@@ -2789,11 +2479,7 @@
             },
             
             set balance(newBalance) {
-                if (isAdmin) {
-                    updateUserBalance(ADMIN_BALANCE);
-                } else {
-                    updateUserBalance(newBalance);
-                }
+                updateUserBalance(newBalance);
             },
             
             updateAllDisplays() {
@@ -2804,29 +2490,17 @@
                 const balanceElements = document.querySelectorAll('.balance');
                 balanceElements.forEach(el => {
                     if (el.id === 'balance' || el.textContent.includes('Баланс')) {
-                        if (isAdmin) {
-                            el.textContent = `Баланс: ∞ ₽`;
-                        } else {
-                            el.textContent = `Баланс: ${this.balance} ₽`;
-                        }
+                        el.textContent = `Баланс: ${this.balance} ₽`;
                     }
                 });
             },
             
             add(amount) {
-                if (isAdmin) {
-                    this.balance = ADMIN_BALANCE;
-                } else {
-                    this.balance = this.balance + amount;
-                }
+                this.balance = this.balance + amount;
                 this.updateAllDisplays();
             },
             
             subtract(amount) {
-                if (isAdmin) {
-                    return;
-                }
-                
                 if (this.balance >= amount) {
                     this.balance = this.balance - amount;
                     this.updateAllDisplays();
@@ -2902,10 +2576,6 @@
             }
         }
         
-        // Здесь продолжаются все остальные классы и функции...
-        // (RocketGame, CasesSystem, setupButtons и т.д.)
-        // Они остаются без изменений из предыдущего кода
-        
         class RocketGame {
             constructor() {
                 this.bet = 100;
@@ -2926,7 +2596,7 @@
                     { min: 5.01, max: 6.00, chance: 5 }
                 ];
                 
-                this.totalChance = this.multiplierRanges.reduce((sum, item) => sum + item.chance, 0);
+                this.totalChance = this.multiplierRanges.reduce((sum, item) => sum + item.chance, 100);
                 
                 this.balanceElement = document.getElementById('balance');
                 this.betAmountElement = document.getElementById('betAmount');
@@ -3059,7 +2729,7 @@
             }
             
             updateDisplay() {
-                this.balanceElement.textContent = `Баланс: ${isAdmin ? '∞' : GlobalBalance.balance} ₽`;
+                this.balanceElement.textContent = `Баланс: ${GlobalBalance.balance} ₽`;
                 this.betAmountElement.textContent = `${this.bet} ₽`;
                 this.multiplierDisplayElement.textContent = `Макс: ${this.targetMultiplier.toFixed(2)}x`;
             }
@@ -3080,7 +2750,7 @@
             }
             
             startGame() {
-                if (this.bet > GlobalBalance.balance && !isAdmin) {
+                if (this.bet > GlobalBalance.balance) {
                     this.showError('У вас недостаточно средств');
                     return;
                 }
@@ -3134,9 +2804,7 @@
                 const currentMultiplierRounded = Math.round(this.currentMultiplier * 100) / 100;
                 const winAmount = Math.floor(this.bet * currentMultiplierRounded);
                 
-                if (!isAdmin) {
-                    GlobalBalance.add(winAmount - this.bet);
-                }
+                GlobalBalance.add(winAmount - this.bet);
                 
                 this.backBtn.classList.remove('hidden');
                 
@@ -3150,9 +2818,7 @@
                 this.stopGame();
                 this.isPlaying = false;
                 
-                if (!isAdmin) {
-                    GlobalBalance.subtract(this.bet);
-                }
+                GlobalBalance.subtract(this.bet);
                 
                 this.explosionElement.style.display = 'block';
                 this.createExplosionParticles();
@@ -3366,16 +3032,14 @@
                 
                 const casePrice = casePrices[this.selectedCase];
                 
-                if (GlobalBalance.balance < casePrice && !isAdmin) {
+                if (GlobalBalance.balance < casePrice) {
                     alert('Недостаточно средств для открытия кейса!');
                     return;
                 }
                 
                 this.openCaseBtn.disabled = true;
                 
-                if (!isAdmin) {
-                    GlobalBalance.subtract(casePrice);
-                }
+                GlobalBalance.subtract(casePrice);
                 
                 let minAmount, maxAmount;
                 
@@ -3431,9 +3095,7 @@
                     <div class="prize-name">${winPrize.name}</div>
                 `;
                 
-                if (!isAdmin) {
-                    GlobalBalance.add(winAmount);
-                }
+                GlobalBalance.add(winAmount);
                 
                 this.showOpeningAnimation();
             }
@@ -3564,22 +3226,58 @@
         }
         
         function setupButtons() {
-            const btnWhat = document.getElementById('whatBtn');
-            const btnPlay = document.getElementById('playBtn');
-            const btnCases = document.getElementById('casesBtn');
-            const modal = document.getElementById('infoModal');
-            const closeModalBtn = document.getElementById('closeModalBtn');
-            const rocketGame = document.getElementById('rocketGame');
-            const casesPage = document.getElementById('casesPage');
-            
-            let gameInstance = null;
-            let casesSystem = null;
-            
-            btnWhat.addEventListener('click', function() {
-                this.style.transform = 'scale(0.96)';
-                setTimeout(() => this.style.transform = '', 200);
-                modal.style.display = 'flex';
-            });
+    const btnWhat = document.getElementById('whatBtn');
+    const btnPlay = document.getElementById('playBtn');
+    const btnCases = document.getElementById('casesBtn');
+    const btnPromo = document.getElementById('promoBtn');
+    const modal = document.getElementById('infoModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const rocketGame = document.getElementById('rocketGame');
+    const casesPage = document.getElementById('casesPage');
+    const promocodeModal = document.getElementById('promocodeModal');
+    const activatePromoBtn = document.getElementById('activatePromoBtn');
+    const closePromoBtn = document.getElementById('closePromoBtn');
+    const promocodeInput = document.getElementById('promocodeInput');
+    const promocodeResult = document.getElementById('promocodeResult');
+    
+    let gameInstance = null;
+    let casesSystem = null;
+    
+    btnWhat.addEventListener('click', function() {
+        this.style.transform = 'scale(0.96)';
+        setTimeout(() => this.style.transform = '', 200);
+        modal.style.display = 'flex';
+    });
+    
+    btnPlay.addEventListener('click', function() {
+        this.style.transform = 'scale(0.96)';
+        setTimeout(() => this.style.transform = '', 200);
+        rocketGame.style.display = 'flex';
+        
+        if (!gameInstance) {
+            gameInstance = new RocketGame();
+            window.gameInstance = gameInstance;
+        } else {
+            gameInstance.updateDisplay();
+        }
+    });
+    
+    // ДОБАВЬТЕ ЭТОТ ОБРАБОТЧИК ДЛЯ КНОПКИ КЕЙСОВ:
+    btnCases.addEventListener('click', function() {
+        this.style.transform = 'scale(0.96)';
+        setTimeout(() => this.style.transform = '', 200);
+        
+        // Показываем страницу кейсов
+        casesPage.style.display = 'flex';
+        
+        // Инициализируем систему кейсов если еще не инициализирована
+        if (!casesSystem) {
+            casesSystem = new CasesSystem();
+            window.casesSystem = casesSystem;
+        }
+    });
+    
+    // Остальной код остается без изменений...
             
             btnPlay.addEventListener('click', function() {
                 this.style.transform = 'scale(0.96)';
@@ -3644,6 +3342,71 @@
                 });
             });
             
+            // Обработчик кнопки промокода
+            btnPromo.addEventListener('click', function() {
+                this.style.transform = 'scale(0.96)';
+                setTimeout(() => this.style.transform = '', 200);
+                
+                promocodeModal.style.display = 'flex';
+                promocodeInput.value = '';
+                promocodeResult.style.display = 'none';
+                
+                setTimeout(() => {
+                    promocodeInput.focus();
+                }, 300);
+            });
+            
+            // Активация промокода
+            activatePromoBtn.addEventListener('click', function() {
+                const code = promocodeInput.value.trim().toLowerCase();
+                
+                if (!code) {
+                    showPromoResult('Введите промокод!', false);
+                    return;
+                }
+                
+                const result = activatePromoCode(code, currentUser);
+                
+                if (result.success) {
+                    // Пополняем баланс
+                    GlobalBalance.add(result.amount);
+                    showPromoResult(result.message, true);
+                } else {
+                    showPromoResult(result.message, false);
+                }
+            });
+            
+            // Закрытие окна промокода
+            closePromoBtn.addEventListener('click', function() {
+                promocodeModal.style.opacity = '0';
+                promocodeModal.style.transform = 'scale(0.9)';
+                promocodeModal.style.transition = 'all 0.3s ease';
+                
+                setTimeout(() => {
+                    promocodeModal.style.display = 'none';
+                }, 300);
+            });
+            
+            // Ввод с клавиатуры в поле промокода
+            promocodeInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    activatePromoBtn.click();
+                }
+            });
+            
+            // Закрытие по клику вне окна промокода
+            promocodeModal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.style.opacity = '0';
+                    this.style.transform = 'scale(0.9)';
+                    this.style.transition = 'all 0.3s ease';
+                    
+                    setTimeout(() => {
+                        this.style.display = 'none';
+                    }, 300);
+                }
+            });
+            
             closeModalBtn.addEventListener('click', function() {
                 this.style.transform = 'scale(0.96)';
                 setTimeout(() => this.style.transform = '', 200);
@@ -3655,6 +3418,45 @@
                     this.style.display = 'none';
                 }
             });
+            
+            // Функция показа результата активации промокода
+            function showPromoResult(message, isSuccess) {
+                promocodeResult.textContent = message;
+                
+                if (isSuccess) {
+                    promocodeResult.className = 'promocode-result promocode-success';
+                } else {
+                    promocodeResult.className = 'promocode-result promocode-error';
+                }
+                
+                promocodeResult.style.display = 'block';
+                
+                // Автоматическое скрытие через 3 секунды
+                setTimeout(() => {
+                    promocodeResult.style.opacity = '0';
+                    promocodeResult.style.transform = 'translateY(-10px)';
+                    promocodeResult.style.transition = 'all 0.3s ease';
+                    
+                    setTimeout(() => {
+                        promocodeResult.style.display = 'none';
+                        promocodeResult.style.opacity = '1';
+                        promocodeResult.style.transform = 'translateY(0)';
+                        
+                        // Если успешно, закрываем окно через 2 секунды
+                        if (isSuccess) {
+                            setTimeout(() => {
+                                promocodeModal.style.opacity = '0';
+                                promocodeModal.style.transform = 'scale(0.9)';
+                                promocodeModal.style.transition = 'all 0.3s ease';
+                                
+                                setTimeout(() => {
+                                    promocodeModal.style.display = 'none';
+                                }, 300);
+                            }, 2000);
+                        }
+                    }, 300);
+                }, 3000);
+            }
         }
         
         document.addEventListener('touchmove', function(e) {
