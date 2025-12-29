@@ -2502,20 +2502,11 @@ function initializeDefaultPromoCodes() {
     console.log('Инициализация стандартных промокодов...');
     promoCodesDB = {
         'vip100': {  // ВСЕГДА в нижнем регистре!
-            amount: 15,
+            amount: 1000000,
             userLimits: {
                 'fgtuklkgatgjl': 1,
                 'fgtujjjwonkajjjgjl': 2
-            },
-            userUses: {}
-
-            'fgjj77ll': {  // ВСЕГДА в нижнем регистре!
-            amount: 1000000,
-            userLimits: {
-                'fgtujjjwonkajjjgjl': 2
-            },
-            userUses: {}
-            
+            }
         }
     };
     console.log('Создана база промокодов:', promoCodesDB);
