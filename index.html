@@ -291,6 +291,73 @@
             border-left: 4px solid #ff6b6b;
         }
         
+        /* Окно пополнения */
+        .deposit-modal, .withdraw-modal, .withdraw-confirm-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10001;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(15px);
+        }
+        
+        .deposit-content, .withdraw-content, .withdraw-confirm-content {
+            background: linear-gradient(135deg, 
+                rgba(26, 26, 46, 0.95) 0%, 
+                rgba(22, 33, 62, 0.95) 100%);
+            padding: 40px 30px;
+            border-radius: 25px;
+            width: 100%;
+            max-width: 500px;
+            color: white;
+            border: 2px solid rgba(0, 255, 0, 0.4);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        
+        .withdraw-content, .withdraw-confirm-content {
+            border: 2px solid rgba(255, 193, 7, 0.4);
+        }
+        
+        .deposit-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                #00ff00, 
+                #00cc00, 
+                #00ff00);
+            animation: borderSlide 3s infinite linear;
+        }
+        
+        .withdraw-content::before, .withdraw-confirm-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                #ffcc00, 
+                #ff9900, 
+                #ffcc00);
+            animation: borderSlide 3s infinite linear;
+        }
+        
         /* Окно промокода */
         .promocode-modal {
             display: none;
@@ -611,9 +678,9 @@
             left: 0;
             z-index: 10;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            padding: 20px 30px;
+            padding: 15px 30px;
         }
         
         .title {
@@ -635,6 +702,7 @@
             backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
+            margin-bottom: 10px;
         }
         
         .title::before {
@@ -679,18 +747,95 @@
             100% { opacity: 1; }
         }
         
+        /* Баланс в шапке */
+        .header-balance {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: #ffcc00;
+            text-shadow: 0 0 10px #ffcc00;
+            padding: 10px 20px;
+            background: rgba(255, 204, 0, 0.1);
+            border-radius: 15px;
+            border: 2px solid rgba(255, 204, 0, 0.3);
+            backdrop-filter: blur(10px);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .star-icon {
+            font-size: 1.4rem;
+            animation: starTwinkle 2s infinite alternate;
+        }
+        
+        @keyframes starTwinkle {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.2); opacity: 1; }
+        }
+        
+        /* Кнопки пополнения и вывода */
+        .money-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .money-btn {
+            background: linear-gradient(45deg, 
+                rgba(255, 193, 7, 0.9) 0%, 
+                rgba(255, 152, 0, 0.9) 100%);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 
+                0 4px 10px rgba(255, 193, 7, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .money-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 6px 15px rgba(255, 193, 7, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        .money-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .money-btn.withdraw {
+            background: linear-gradient(45deg, 
+                rgba(33, 150, 243, 0.9) 0%, 
+                rgba(3, 169, 244, 0.9) 100%);
+            box-shadow: 
+                0 4px 10px rgba(33, 150, 243, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        .money-btn.withdraw:hover {
+            box-shadow: 
+                0 6px 15px rgba(33, 150, 243, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
         /* Отображение текущего пользователя */
         .user-display {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #00ffcc;
             text-shadow: 0 0 10px #00ffcc;
-            padding: 12px 25px;
+            padding: 8px 16px;
             background: rgba(0, 255, 204, 0.1);
-            border-radius: 15px;
+            border-radius: 12px;
             border: 2px solid rgba(0, 255, 204, 0.3);
             backdrop-filter: blur(10px);
-            margin-left: 20px;
         }
         
         /* Центральный контейнер с кнопками */
@@ -699,11 +844,11 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 30px;
+            gap: 20px;
             width: 100%;
             max-width: 360px;
             z-index: 10;
-            margin-top: 40px;
+            margin-top: 180px;
             position: relative;
         }
         
@@ -711,12 +856,12 @@
         .btn {
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             text-transform: uppercase;
             color: white;
-            padding: 22px 45px;
+            padding: 20px 40px;
             border: none;
-            border-radius: 35px;
+            border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             width: 100%;
@@ -726,7 +871,7 @@
             position: relative;
             overflow: hidden;
             letter-spacing: 2px;
-            min-height: 80px;
+            min-height: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -766,7 +911,7 @@
             content: '🚀';
             position: absolute;
             right: 20px;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             opacity: 0.8;
         }
         
@@ -781,7 +926,7 @@
             content: '💎';
             position: absolute;
             right: 20px;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             opacity: 0.8;
         }
         
@@ -796,7 +941,7 @@
             content: '🎁';
             position: absolute;
             right: 20px;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             opacity: 0.8;
         }
         
@@ -812,7 +957,7 @@
             content: '🎫';
             position: absolute;
             right: 20px;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             opacity: 0.8;
         }
         
@@ -993,6 +1138,9 @@
             background: rgba(0, 255, 0, 0.1);
             border-radius: 10px;
             border: 1px solid rgba(0, 255, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
         .game-container {
@@ -1973,6 +2121,11 @@
                 padding: 12px 25px;
             }
             
+            .header-balance {
+                font-size: 1.1rem;
+                padding: 8px 16px;
+            }
+            
             .btn {
                 font-size: 1.2rem;
                 padding: 18px 36px;
@@ -1980,8 +2133,9 @@
             }
             
             .main-container {
-                gap: 25px;
+                gap: 20px;
                 max-width: 320px;
+                margin-top: 160px;
             }
             
             .rocket {
@@ -2031,8 +2185,8 @@
         
         @media (max-height: 600px) {
             .main-container {
-                margin-top: 30px;
-                gap: 20px;
+                margin-top: 140px;
+                gap: 15px;
             }
             
             .btn {
@@ -2058,6 +2212,45 @@
                 height: 120px;
                 margin: 20px 0;
             }
+        }
+        
+        /* Исправление бага с некликабельностью - ВАЖНОЕ ИСПРАВЛЕНИЕ */
+        .btn, .money-btn, .bet-btn, .launch-btn, .cashout-btn, .back-btn, 
+        .case-open-btn, .close-reward, .promocode-btn, .login-btn, 
+        .startup-btn, .warning-btn, .close-modal {
+            cursor: pointer !important;
+            pointer-events: auto !important;
+            user-select: none !important;
+            -webkit-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+        }
+        
+        .case-item {
+            cursor: pointer !important;
+            pointer-events: auto !important;
+        }
+        
+        /* Фикс для модальных окон - чтобы они не блокировали клики после закрытия */
+        .modal, .promocode-modal, .deposit-modal, .withdraw-modal, 
+        .withdraw-confirm-modal, .login-modal, .startup-modal, 
+        .orientation-warning, .cases-page, .rocket-game, .case-opening-animation {
+            pointer-events: auto;
+        }
+        
+        /* Когда модальное окно скрыто, оно не должно мешать */
+        .modal[style*="display: none"],
+        .promocode-modal[style*="display: none"],
+        .deposit-modal[style*="display: none"],
+        .withdraw-modal[style*="display: none"],
+        .withdraw-confirm-modal[style*="display: none"],
+        .login-modal[style*="display: none"],
+        .startup-modal[style*="display: none"],
+        .orientation-warning[style*="display: none"],
+        .cases-page[style*="display: none"],
+        .rocket-game[style*="display: none"],
+        .case-opening-animation[style*="display: none"] {
+            pointer-events: none !important;
         }
     </style>
 </head>
@@ -2090,12 +2283,59 @@
         </div>
     </div>
 
+    <!-- Окно пополнения -->
+    <div class="deposit-modal" id="depositModal">
+        <div class="deposit-content">
+            <h2 class="promocode-title">⭐ ПОПОЛНЕНИЕ БАЛАНСА</h2>
+            <div class="startup-text">
+                Для пополнения баланса отправьте любой подарок пользователю <strong>@plushpeppa</strong><br><br>
+                В течение 24 часов вам будет выдан промокод для пополнения.<br><br>
+                <small>После получения промокода активируйте его в разделе "Промокод"</small>
+            </div>
+            <button class="promocode-btn" id="closeDepositBtn">ПОНЯТНО</button>
+        </div>
+    </div>
+
+    <!-- Окно вывода информации -->
+    <div class="withdraw-modal" id="withdrawModal">
+        <div class="withdraw-content">
+            <h2 class="promocode-title">💰 ВЫВОД СРЕДСТВ</h2>
+            <div class="startup-text">
+                <strong>Требования для вывода:</strong><br><br>
+                1. Включить запись экрана<br>
+                2. Закрыть мини-приложение<br>
+                3. Заново его открыть и авторизоваться<br>
+                4. Нажать кнопку "Вывод"<br><br>
+                
+                <strong>Дополнительные условия:</strong><br>
+                • Сделать хотя бы 1 пополнение (при помощи промокода) в течение 5 дней<br>
+                • Минимальный вывод: <strong>25 ⭐</strong><br>
+                • Максимальный вывод: <strong>25 ⭐</strong> (на данный момент)
+            </div>
+            <button class="promocode-btn" id="continueWithdrawBtn">ПОНЯТНО</button>
+        </div>
+    </div>
+
+    <!-- Окно подтверждения вывода -->
+    <div class="withdraw-confirm-modal" id="withdrawConfirmModal">
+        <div class="withdraw-confirm-content">
+            <h2 class="promocode-title">✅ ПОДТВЕРЖДЕНИЕ ВЫВОДА</h2>
+            <div class="startup-text">
+                Если вы точно выполнили все условия, то нажмите на кнопку "ВЫВЕСТИ".<br><br>
+                После этого с вашего баланса будут списаны <strong>25 ⭐</strong>.<br><br>
+                <small id="withdrawMessage">Проверяем условия вывода...</small>
+            </div>
+            <button class="promocode-btn" id="confirmWithdrawBtn" disabled>ВЫВЕСТИ</button>
+            <button class="promocode-btn" style="margin-top: 10px; background: linear-gradient(45deg, rgba(255, 65, 108, 0.9), rgba(255, 75, 43, 0.9));" id="cancelWithdrawBtn">ОТМЕНА</button>
+        </div>
+    </div>
+
     <!-- Окно промокода -->
     <div class="promocode-modal" id="promocodeModal">
         <div class="promocode-content">
             <h2 class="promocode-title">🎫 АКТИВАЦИЯ ПРОМОКОДА</h2>
             <div class="startup-text">
-                Введите промокод, чтобы получить бонусные средства на баланс!
+                Введите промокод, чтобы получить бонусные звезды на баланс!
             </div>
             <input type="text" class="promocode-input" id="promocodeInput" placeholder="Введите промокод..." maxlength="20">
             <div class="promocode-result" id="promocodeResult"></div>
@@ -2109,7 +2349,7 @@
         <div class="startup-content">
             <h2 class="startup-title">ВНИМАНИЕ!</h2>
             <div class="startup-text">
-                если вы запустили бота впервые то ваш балланс установлен в <strong>1000 ₽</strong>,<br>
+                Ваш начальный баланс: <strong>1 ⭐</strong><br>
                 <br><br>
                 Используйте промокоды для пополнения баланса!
             </div>
@@ -2123,8 +2363,19 @@
     
     <div class="header-container">
         <h1 class="title">
-            НОВОСТИ <span class="wonk">WONK</span> <span class="minigame">MINIGAME</span>
+            <span class="wonk">WONK</span> <span class="minigame">MINIGAME</span>
         </h1>
+        
+        <div class="header-balance">
+            <span class="star-icon">⭐</span>
+            <span id="headerBalance">0 ⭐</span>
+        </div>
+        
+        <div class="money-buttons">
+            <button class="money-btn" id="depositBtn">ПОПОЛНИТЬ</button>
+            <button class="money-btn withdraw" id="withdrawBtn">ВЫВОД</button>
+        </div>
+        
         <div class="user-display" id="userDisplay">Игрок: не авторизован</div>
     </div>
     
@@ -2155,7 +2406,7 @@
     
     <div class="rocket-game" id="rocketGame">
         <div class="game-header">
-            <div class="balance" id="balance">Баланс: 1000 ₽</div>
+            <div class="balance" id="balance"><span class="star-icon">⭐</span> 0 ⭐</div>
             <div class="balance" id="multiplierDisplay">Макс: 1.10x</div>
         </div>
         <div class="game-container">
@@ -2181,9 +2432,9 @@
             </div>
             <div class="controls">
                 <div class="bet-controls">
-                    <button class="bet-btn" id="decreaseBet">-100</button>
-                    <div class="bet-amount" id="betAmount">100 ₽</div>
-                    <button class="bet-btn" id="increaseBet">+100</button>
+                    <button class="bet-btn" id="decreaseBet">-10 ⭐</button>
+                    <div class="bet-amount" id="betAmount">10 ⭐</div>
+                    <button class="bet-btn" id="increaseBet">+10 ⭐</button>
                 </div>
                 <div class="game-buttons">
                     <button class="launch-btn" id="launchBtn">🚀 ЗАПУСТИТЬ</button>
@@ -2204,26 +2455,26 @@
             <div class="case-item case-basic" data-case="earth">
                 <span class="case-icon">🌍</span>
                 <h3 class="case-name">Земляной кейс</h3>
-                <div class="case-price">50 ₽</div>
-                <div class="case-chance">Награды: 10-100 ₽</div>
+                <div class="case-price">1 ⭐</div>
+                <div class="case-chance">Награды: 0-20 ⭐</div>
             </div>
             <div class="case-item case-gold" data-case="gold">
                 <span class="case-icon">🥇</span>
                 <h3 class="case-name">Золотой кейс</h3>
-                <div class="case-price">200 ₽</div>
-                <div class="case-chance">Награды: 100-500 ₽</div>
+                <div class="case-price">10 ⭐</div>
+                <div class="case-chance">Награды: 2-40 ⭐</div>
             </div>
             <div class="case-item case-diamond" data-case="diamond">
                 <span class="case-icon">💎</span>
                 <h3 class="case-name">Алмазный кейс</h3>
-                <div class="case-price">500 ₽</div>
-                <div class="case-chance">Награды: 300-1000 ₽</div>
+                <div class="case-price">25 ⭐</div>
+                <div class="case-chance">Награды: 15-35 ⭐</div>
             </div>
             <div class="case-item case-special" data-case="special">
                 <span class="case-icon">🎁</span>
                 <h3 class="case-name">Особый кейс</h3>
-                <div class="case-price">1000 ₽</div>
-                <div class="case-chance">Награды: 500-2000 ₽</div>
+                <div class="case-price">60 ⭐</div>
+                <div class="case-chance">Награды: 30-100 ⭐</div>
             </div>
         </div>
         <button class="case-open-btn" id="openCaseBtn">ВЫБЕРИТЕ КЕЙС</button>
@@ -2237,74 +2488,180 @@
         </div>
         <div class="case-reward" id="caseReward">
             <span class="reward-icon" id="rewardIcon">💰</span>
-            <div class="reward-amount" id="rewardAmount">+0 ₽</div>
+            <div class="reward-amount" id="rewardAmount">+0 ⭐</div>
             <div class="reward-text" id="rewardText">Поздравляем с выигрышем!</div>
             <button class="close-reward" id="closeRewardBtn">ЗАБРАТЬ НАГРАДУ</button>
         </div>
     </div>
 
     <script>
-        // ========== СИСТЕМА ПРОМОКОДОВ ==========
-        // База данных промокодов
-        const promoCodesDB = {
-            // ПРОМОКОД: { amount: сумма, maxUses: максимальное число использований, userUses: {username: использовано раз} }
-            '15promfcode': { 
-                amount: 15, 
-                maxUses: 2,
-                userUses: {fgtuhgjl} // Будет заполняться динамически
-            }
-            // Чтобы добавить новый промокод для конкретного пользователя:
-            // 'НОВЫЙКОД': { amount: 100, maxUses: 1, userUses: {'fgtuexperimentgjl': 0} }
-        };
-        
-        // Функция проверки и активации промокода
-        function activatePromoCode(code, username) {
-            if (!promoCodesDB[code]) {
-                return { success: false, message: "Промокод не найден!" };
-            }
-            
-            const promo = promoCodesDB[code];
-            
-            // Проверка лимитов использования для пользователя
-            const userUsed = promo.userUses[username] || 0;
-            
-            if (userUsed >= promo.maxUses) {
-                return { success: false, message: "Вы исчерпали лимит активаций этого промокода!" };
-            }
-            
-            // Активируем промокод
-            promo.userUses[username] = userUsed + 1;
-            
-            // Сохраняем в localStorage
-            savePromoCodes();
-            
-            return { 
-                success: true, 
-                message: `Промокод активирован! +${promo.amount} ₽`,
-                amount: promo.amount 
-            };
+let promoCodesDB = {};
+
+// Инициализация стандартных промокодов
+function initializeDefaultPromoCodes() {
+    console.log('Инициализация стандартных промокодов...');
+    promoCodesDB = {
+        'vip100': {  // ВСЕГДА в нижнем регистре!
+            amount: 15,
+            userLimits: {
+                'fgtuklkgatgjl': 1,
+                'fgtujjjwonkajjjgjl': 2
+            },
+            userUses: {}
         }
-        
-        // Сохранение промокодов в localStorage
-        function savePromoCodes() {
-            localStorage.setItem('wonk_promocodes', JSON.stringify(promoCodesDB));
-        }
-        
-        // Загрузка промокодов из localStorage
-        function loadPromoCodes() {
-            const saved = localStorage.getItem('wonk_promocodes');
-            if (saved) {
-                const parsed = JSON.parse(saved);
-                // Обновляем основную базу, но сохраняем структуру
-                for (const code in parsed) {
-                    if (promoCodesDB[code]) {
-                        // Объединяем данные
-                        promoCodesDB[code].userUses = parsed[code].userUses || {};
-                    }
+    };
+    console.log('Создана база промокодов:', promoCodesDB);
+    savePromoCodes();
+}
+
+// Загрузка промокодов из localStorage
+function loadPromoCodes() {
+    console.log('Загрузка промокодов из localStorage...');
+    const saved = localStorage.getItem('wonk_promocodes');
+    console.log('Сохраненные данные:', saved);
+    
+    if (saved) {
+        try {
+            const parsed = JSON.parse(saved);
+            console.log('Распарсенные данные:', parsed);
+            
+            // Обрабатываем старые и новые структуры
+            for (const code in parsed) {
+                const savedPromo = parsed[code];
+                
+                // Если это старая структура (с maxUses)
+                if (savedPromo.maxUses !== undefined) {
+                    // Конвертируем в новую структуру
+                    promoCodesDB[code] = {
+                        amount: savedPromo.amount,
+                        userLimits: { '*': savedPromo.maxUses },
+                        userUses: savedPromo.userUses || {}
+                    };
+                }
+                // Если это новая структура (с userLimits)
+                else if (savedPromo.userLimits !== undefined) {
+                    // Просто обновляем userUses из сохраненных данных
+                    promoCodesDB[code] = savedPromo;
+                }
+                // Если это совсем старая структура
+                else if (savedPromo.amount !== undefined) {
+                    // Пытаемся восстановить
+                    promoCodesDB[code] = {
+                        amount: savedPromo.amount,
+                        userLimits: { '*': 2 },
+                        userUses: {}
+                    };
                 }
             }
+            
+            console.log('Промокоды загружены:', promoCodesDB);
+        } catch (e) {
+            console.error('Ошибка загрузки промокодов:', e);
+            // Если не удалось загрузить, используем стандартные
+            initializeDefaultPromoCodes();
         }
-        
+    } else {
+        console.log('Нет сохраненных данных, инициализируем стандартные');
+        // Если нет сохраненных данных, инициализируем стандартные
+        initializeDefaultPromoCodes();
+    }
+}
+
+// Функция проверки и активации промокода
+function activatePromoCode(code, username) {
+    console.log('=== АКТИВАЦИЯ ПРОМОКОДА ===');
+    console.log('Входные данные - код:', code, 'пользователь:', username);
+    
+    // Приводим код к нижнему регистру
+    const normalizedCode = code.toLowerCase().trim();
+    console.log('Нормализованный код:', normalizedCode);
+    
+    console.log('Текущая база промокодов:', promoCodesDB);
+    console.log('Ключи в базе:', Object.keys(promoCodesDB));
+    
+    if (!promoCodesDB[normalizedCode]) {
+        console.log('❌ Промокод не найден! Ищем:', normalizedCode);
+        console.log('Доступные промокоды:', Object.keys(promoCodesDB));
+        return { success: false, message: "Промокод не найден!" };
+    }
+    
+    const promo = promoCodesDB[normalizedCode];
+    console.log('Найден промокод:', promo);
+    
+    // Проверяем, может ли пользователь использовать этот промокод
+    let userLimit = null;
+    
+    // Сначала ищем персональный лимит
+    if (promo.userLimits[username]) {
+        userLimit = promo.userLimits[username];
+        console.log('✅ Найден персональный лимит:', userLimit);
+    }
+    // Если нет персонального, ищем общий лимит
+    else if (promo.userLimits['*']) {
+        userLimit = promo.userLimits['*'];
+        console.log('✅ Используется общий лимит:', userLimit);
+    }
+    // Если нет ни персонального, ни общего лимита
+    else {
+        console.log('❌ Нет лимита для пользователя');
+        return { success: false, message: "У вас нет доступа к этому промокоду!" };
+    }
+    
+    // Проверка лимитов использования
+    const userUsed = promo.userUses[username] || 0;
+    console.log('Использовано:', userUsed, 'Лимит:', userLimit);
+    
+    if (userUsed >= userLimit) {
+        console.log('❌ Лимит исчерпан');
+        return { 
+            success: false, 
+            message: `Вы исчерпали лимит активаций этого промокода! (${userUsed}/${userLimit})` 
+        };
+    }
+    
+    // Активируем промокод
+    promo.userUses[username] = userUsed + 1;
+    console.log('✅ Промокод активирован! Новое значение:', promo.userUses[username]);
+    
+    // Сохраняем
+    savePromoCodes();
+    
+    return { 
+        success: true, 
+        message: `Промокод активирован! +${promo.amount} ⭐`,
+        amount: promo.amount 
+    };
+}
+
+// Сохранение промокодов в localStorage
+function savePromoCodes() {
+    console.log('Сохранение промокодов...');
+    localStorage.setItem('wonk_promocodes', JSON.stringify(promoCodesDB));
+}
+
+// Функция для сброса промокодов
+function resetPromoCodes() {
+    console.log('Сброс промокодов...');
+    localStorage.removeItem('wonk_promocodes');
+    initializeDefaultPromoCodes();
+    alert('Промокоды сброшены к стандартным значениям!');
+}
+
+// Тестовая функция
+function testPromoCode() {
+    console.log('=== ТЕСТ ПРОМОКОДА ===');
+    console.log('База до теста:', promoCodesDB);
+    
+    // Тестируем активацию
+    const testUser = 'fgtutestgjl';
+    const testCode = 'VIP100';
+    
+    console.log('Тестируем код:', testCode, 'для пользователя:', testUser);
+    const result = activatePromoCode(testCode, testUser);
+    console.log('Результат:', result);
+    
+    return result;
+}
         // Глобальные переменные
         let currentUser = null;
         let userData = {};
@@ -2319,27 +2676,52 @@
             return login.startsWith('fgtu') && login.endsWith('gjl');
         }
         
+        // Проверка на админа
+        function isAdmin(login) {
+            return login === 'fgtujjjadminjjjwonkajjjgjl';
+        }
+        
         // Загрузка данных пользователя из localStorage
         function loadUserData(login) {
             const savedData = localStorage.getItem(`wonk_user_${login}`);
             if (savedData) {
-                const data = JSON.parse(savedData);
-                data.lastLogin = new Date().toISOString();
-                return data;
-            } else {
-                return {
-                    balance: 1000,
-                    login: login,
-                    lastLogin: new Date().toISOString(),
-                    usedPromoCodes: [] // Добавляем массив использованных промокодов
-                };
+                try {
+                    const data = JSON.parse(savedData);
+                    data.lastLogin = new Date().toISOString();
+                    // Проверяем и добавляем массив использованных промокодов если его нет
+                    if (!data.usedPromoCodes) {
+                        data.usedPromoCodes = [];
+                    }
+                    if (!data.promoCodesUsedAt) {
+                        data.promoCodesUsedAt = {};
+                    }
+                    return data;
+                } catch (e) {
+                    console.error('Ошибка загрузки данных пользователя:', e);
+                }
             }
+            
+            // Начальный баланс для обычных пользователей - 1 звезда
+            // Для админа - бесконечный баланс (1000000 звезд)
+            const initialBalance = isAdmin(login) ? 1000000 : 1;
+            return {
+                balance: initialBalance,
+                login: login,
+                lastLogin: new Date().toISOString(),
+                usedPromoCodes: [], // Массив использованных промокодов
+                promoCodesUsedAt: {}, // Время использования промокодов
+                isAdmin: isAdmin(login)
+            };
         }
         
         // Сохранение данных пользователя в localStorage
         function saveUserData() {
             if (currentUser && userData[currentUser]) {
-                localStorage.setItem(`wonk_user_${currentUser}`, JSON.stringify(userData[currentUser]));
+                try {
+                    localStorage.setItem(`wonk_user_${currentUser}`, JSON.stringify(userData[currentUser]));
+                } catch (e) {
+                    console.error('Ошибка сохранения данных пользователя:', e);
+                }
             }
         }
         
@@ -2349,6 +2731,7 @@
                 userData[currentUser].balance = amount;
                 userData[currentUser].lastLogin = new Date().toISOString();
                 saveUserData();
+                updateBalanceDisplay();
             }
         }
         
@@ -2357,7 +2740,54 @@
             if (currentUser && userData[currentUser]) {
                 return userData[currentUser].balance;
             }
-            return 1000;
+            return 0;
+        }
+        
+        // Проверка, использовал ли пользователь промокод в течение последних 5 дней
+        function hasUsedPromoCodeInLast5Days() {
+            if (!currentUser || !userData[currentUser]) return false;
+            
+            const user = userData[currentUser];
+            
+            // Если у пользователя нет массива usedPromoCodes, значит он не использовал промокоды
+            if (!user.usedPromoCodes || user.usedPromoCodes.length === 0) {
+                return false;
+            }
+            
+            // Получаем текущее время
+            const now = new Date();
+            
+            // Проверяем время использования каждого промокода
+            for (const promoCode of user.usedPromoCodes) {
+                // Получаем время использования промокода
+                let usedAt = user.promoCodesUsedAt?.[promoCode];
+                
+                if (usedAt) {
+                    usedAt = new Date(usedAt);
+                    // Разница во времени в днях
+                    const timeDiff = now.getTime() - usedAt.getTime();
+                    const daysDiff = timeDiff / (1000 * 3600 * 24);
+                    
+                    // Если промокод использован в течение последних 5 дней
+                    if (daysDiff <= 5) {
+                        return true;
+                    }
+                }
+            }
+            
+            return false;
+        }
+        
+        // Обновление отображения баланса в шапке
+        function updateBalanceDisplay() {
+            const headerBalance = document.getElementById('headerBalance');
+            const gameBalance = document.getElementById('balance');
+            const balance = getCurrentBalance();
+            
+            headerBalance.textContent = `${balance} ⭐`;
+            if (gameBalance) {
+                gameBalance.innerHTML = `<span class="star-icon">⭐</span> ${balance} ⭐`;
+            }
         }
         
         // Показываем предупреждение о телефоне при загрузке
@@ -2371,6 +2801,83 @@
             const loginBtn = document.getElementById('loginBtn');
             const loginInput = document.getElementById('loginInput');
             const loginError = document.getElementById('loginError');
+            const depositModal = document.getElementById('depositModal');
+            const withdrawModal = document.getElementById('withdrawModal');
+            const withdrawConfirmModal = document.getElementById('withdrawConfirmModal');
+            const depositBtn = document.getElementById('depositBtn');
+            const withdrawBtn = document.getElementById('withdrawBtn');
+            const closeDepositBtn = document.getElementById('closeDepositBtn');
+            const continueWithdrawBtn = document.getElementById('continueWithdrawBtn');
+            const confirmWithdrawBtn = document.getElementById('confirmWithdrawBtn');
+            const cancelWithdrawBtn = document.getElementById('cancelWithdrawBtn');
+            const withdrawMessage = document.getElementById('withdrawMessage');
+            
+            // Обработчики для кнопок пополнения и вывода
+            depositBtn.addEventListener('click', function() {
+                depositModal.style.display = 'flex';
+            });
+            
+            withdrawBtn.addEventListener('click', function() {
+                withdrawModal.style.display = 'flex';
+            });
+            
+            closeDepositBtn.addEventListener('click', function() {
+                depositModal.style.display = 'none';
+            });
+            
+            continueWithdrawBtn.addEventListener('click', function() {
+                withdrawModal.style.display = 'none';
+                withdrawConfirmModal.style.display = 'flex';
+                
+                // Проверяем условия вывода
+                checkWithdrawConditions();
+            });
+            
+            cancelWithdrawBtn.addEventListener('click', function() {
+                withdrawConfirmModal.style.display = 'none';
+            });
+            
+            // Проверка условий вывода
+            function checkWithdrawConditions() {
+                confirmWithdrawBtn.disabled = true;
+                withdrawMessage.textContent = "Проверяем условия вывода...";
+                
+                setTimeout(() => {
+                    const balance = getCurrentBalance();
+                    const hasUsedPromo = hasUsedPromoCodeInLast5Days();
+                    
+                    if (balance < 25) {
+                        withdrawMessage.textContent = "❌ У вас недостаточно звезд для вывода (нужно 25 ⭐)";
+                        withdrawMessage.style.color = "#ff0000";
+                    } else if (!hasUsedPromo) {
+                        withdrawMessage.textContent = "❌ Вы не использовали промокод в течение последних 5 дней";
+                        withdrawMessage.style.color = "#ff0000";
+                    } else {
+                        withdrawMessage.textContent = "✅ Все условия выполнены! Можете выводить средства.";
+                        withdrawMessage.style.color = "#00ff00";
+                        confirmWithdrawBtn.disabled = false;
+                    }
+                }, 1000);
+            }
+            
+            // Подтверждение вывода
+            confirmWithdrawBtn.addEventListener('click', function() {
+                const balance = getCurrentBalance();
+                const hasUsedPromo = hasUsedPromoCodeInLast5Days();
+                
+                if (balance >= 25 && hasUsedPromo) {
+                    // Списываем 25 звезд
+                    GlobalBalance.subtract(25);
+                    
+                    // Показываем сообщение об успехе
+                    alert("✅ Запрос на вывод 25 ⭐ отправлен! Средства будут переведены в ближайшее время.");
+                    
+                    // Закрываем окно
+                    withdrawConfirmModal.style.display = 'none';
+                } else {
+                    alert("❌ Не удалось выполнить вывод. Проверьте условия.");
+                }
+            });
             
             // Проверяем, мобильное ли устройство
             if (isMobileDevice()) {
@@ -2437,6 +2944,13 @@
                 
                 const userDisplay = document.getElementById('userDisplay');
                 userDisplay.textContent = `Игрок: ${login}`;
+                if (isAdmin(login)) {
+                    userDisplay.textContent += ' (ADMIN)';
+                    userDisplay.style.color = '#ff0000';
+                    userDisplay.style.textShadow = '0 0 10px #ff0000';
+                }
+                
+                updateBalanceDisplay();
                 
                 loginModal.style.opacity = '0';
                 loginModal.style.transform = 'scale(0.9)';
@@ -2487,12 +3001,7 @@
                     window.gameInstance.updateDisplay();
                 }
                 
-                const balanceElements = document.querySelectorAll('.balance');
-                balanceElements.forEach(el => {
-                    if (el.id === 'balance' || el.textContent.includes('Баланс')) {
-                        el.textContent = `Баланс: ${this.balance} ₽`;
-                    }
-                });
+                updateBalanceDisplay();
             },
             
             add(amount) {
@@ -2504,7 +3013,9 @@
                 if (this.balance >= amount) {
                     this.balance = this.balance - amount;
                     this.updateAllDisplays();
+                    return true;
                 }
+                return false;
             }
         };
         
@@ -2578,7 +3089,7 @@
         
         class RocketGame {
             constructor() {
-                this.bet = 100;
+                this.bet = 10; // Минимальная ставка 10 звезд
                 this.isPlaying = false;
                 this.currentMultiplier = 1.00;
                 this.targetMultiplier = 1.10;
@@ -2587,13 +3098,12 @@
                 this.explosionTimeout = null;
                 this.sparkInterval = null;
                 
+                // Новые шансы на ракетку
                 this.multiplierRanges = [
-                    { min: 1.00, max: 1.10, chance: 50 },
-                    { min: 1.11, max: 2.00, chance: 20 },
-                    { min: 2.01, max: 3.00, chance: 10 },
-                    { min: 3.01, max: 4.00, chance: 8 },
-                    { min: 4.01, max: 5.00, chance: 7 },
-                    { min: 5.01, max: 6.00, chance: 5 }
+                    { min: 1.00, max: 1.05, chance: 30 },   // 30% на 1.00x-1.05x
+                    { min: 1.06, max: 1.50, chance: 60 },   // 60% на 1.06x-1.50x
+                    { min: 1.51, max: 2.00, chance: 6 },    // 6% на 1.51x-2.00x
+                    { min: 2.01, max: 4.00, chance: 4 }     // 4% на 2.01x-4.00x (чаще 3x-4x)
                 ];
                 
                 this.totalChance = this.multiplierRanges.reduce((sum, item) => sum + item.chance, 100);
@@ -2691,8 +3201,8 @@
             initGame() {
                 this.updateDisplay();
                 
-                this.decreaseBetBtn.addEventListener('click', () => this.changeBet(-100, true));
-                this.increaseBetBtn.addEventListener('click', () => this.changeBet(100, false));
+                this.decreaseBetBtn.addEventListener('click', () => this.changeBet(-10, true));
+                this.increaseBetBtn.addEventListener('click', () => this.changeBet(10, false));
                 
                 this.launchBtn.addEventListener('click', () => this.startGame());
                 this.cashoutBtn.addEventListener('click', () => this.cashout());
@@ -2705,18 +3215,18 @@
                 const newBet = this.bet + amount;
                 
                 if (isDecrease) {
-                    if (newBet >= 100) {
+                    if (newBet >= 10) { // Минимальная ставка 10 звезд
                         this.bet = newBet;
                         this.updateDisplay();
                         this.clearError();
                     }
                 } else {
-                    if (newBet >= 100 && newBet <= GlobalBalance.balance) {
+                    if (newBet >= 10 && newBet <= GlobalBalance.balance) {
                         this.bet = newBet;
                         this.updateDisplay();
                         this.clearError();
                     } else if (newBet > GlobalBalance.balance) {
-                        this.showError('У вас недостаточно средств');
+                        this.showError('У вас недостаточно звезд');
                     }
                 }
             }
@@ -2729,8 +3239,8 @@
             }
             
             updateDisplay() {
-                this.balanceElement.textContent = `Баланс: ${GlobalBalance.balance} ₽`;
-                this.betAmountElement.textContent = `${this.bet} ₽`;
+                this.balanceElement.innerHTML = `<span class="star-icon">⭐</span> ${GlobalBalance.balance} ⭐`;
+                this.betAmountElement.textContent = `${this.bet} ⭐`;
                 this.multiplierDisplayElement.textContent = `Макс: ${this.targetMultiplier.toFixed(2)}x`;
             }
             
@@ -2741,7 +3251,13 @@
                 for (const range of this.multiplierRanges) {
                     cumulativeChance += range.chance;
                     if (rand <= cumulativeChance) {
-                        const randomMultiplier = range.min + Math.random() * (range.max - range.min);
+                        let randomMultiplier;
+                        // Для больших иксов (последний диапазон) чаще генерируем 3x-4x
+                        if (range === this.multiplierRanges[3]) {
+                            randomMultiplier = 3 + Math.random(); // 3.00 - 4.00
+                        } else {
+                            randomMultiplier = range.min + Math.random() * (range.max - range.min);
+                        }
                         return Math.round(randomMultiplier * 100) / 100;
                     }
                 }
@@ -2751,7 +3267,7 @@
             
             startGame() {
                 if (this.bet > GlobalBalance.balance) {
-                    this.showError('У вас недостаточно средств');
+                    this.showError('У вас недостаточно звезд');
                     return;
                 }
                 
@@ -2885,10 +3401,11 @@
                 this.resultMessageElement.style.display = 'block';
                 
                 if (isWin) {
-                    this.resultMessageElement.textContent = `✅ +${amount - this.bet} ₽ (${multiplier.toFixed(2)}x)`;
+                    const profit = amount - this.bet;
+                    this.resultMessageElement.textContent = `✅ +${profit} ⭐ (${multiplier.toFixed(2)}x)`;
                     this.resultMessageElement.className = 'result win';
                 } else {
-                    this.resultMessageElement.textContent = `💥 Взорвалось на ${multiplier.toFixed(2)}x! -${this.bet} ₽`;
+                    this.resultMessageElement.textContent = `💥 Взорвалось на ${multiplier.toFixed(2)}x! -${this.bet} ⭐`;
                     this.resultMessageElement.className = 'result lose';
                 }
             }
@@ -2964,20 +3481,14 @@
             generatePrizes() {
                 this.prizes = [];
                 
-                const prizeRanges = {
-                    'earth': { min: 10, max: 100 },
-                    'gold': { min: 100, max: 500 },
-                    'diamond': { min: 300, max: 1000 },
-                    'special': { min: 500, max: 2000 }
-                };
-                
+                // Генерируем призы для ленты (50 призов)
                 for (let i = 0; i < 50; i++) {
                     let amount, icon, color;
                     
                     const rand = Math.random();
                     if (rand < 0.5) {
-                        amount = Math.floor(Math.random() * 50) + 10;
-                        icon = '💰';
+                        amount = Math.floor(Math.random() * 50) + 1;
+                        icon = '⭐';
                         color = '#FFD700';
                     } else if (rand < 0.8) {
                         amount = Math.floor(Math.random() * 100) + 50;
@@ -3012,7 +3523,7 @@
                     
                     prizeItem.innerHTML = `
                         <div class="prize-icon">${prize.icon}</div>
-                        <div class="prize-amount" style="color: ${prize.color}">${prize.amount} ₽</div>
+                        <div class="prize-amount" style="color: ${prize.color}">${prize.amount} ⭐</div>
                         <div class="prize-name">${prize.name}</div>
                     `;
                     
@@ -3024,16 +3535,16 @@
                 if (!this.selectedCase) return;
                 
                 const casePrices = {
-                    'earth': 50,
-                    'gold': 200,
-                    'diamond': 500,
-                    'special': 1000
+                    'earth': 1,
+                    'gold': 10,
+                    'diamond': 25,
+                    'special': 60
                 };
                 
                 const casePrice = casePrices[this.selectedCase];
                 
                 if (GlobalBalance.balance < casePrice) {
-                    alert('Недостаточно средств для открытия кейса!');
+                    alert('Недостаточно звезд для открытия кейса!');
                     return;
                 }
                 
@@ -3041,41 +3552,44 @@
                 
                 GlobalBalance.subtract(casePrice);
                 
-                let minAmount, maxAmount;
+                let winAmount;
                 
+                // Шансы для каждого кейса
                 switch(this.selectedCase) {
                     case 'earth':
-                        minAmount = 10;
-                        maxAmount = 100;
+                        // Земляной кейс: 0 звезд (95%) или 20 звезд (5%)
+                        winAmount = Math.random() < 0.95 ? 0 : 20;
                         break;
                     case 'gold':
-                        minAmount = 100;
-                        maxAmount = 500;
+                        // Золотой кейс
+                        const goldRand = Math.random();
+                        if (goldRand < 0.5) {
+                            winAmount = 2; // 50% на 2 звезды
+                        } else if (goldRand < 0.86) {
+                            winAmount = 5; // 36% на 5 звезд
+                        } else if (goldRand < 0.96) {
+                            winAmount = 15; // 10% на 15 звезд
+                        } else {
+                            winAmount = 40; // 4% на 40 звезд
+                        }
                         break;
                     case 'diamond':
-                        minAmount = 300;
-                        maxAmount = 1000;
+                        // Алмазный кейс
+                        winAmount = Math.random() < 0.75 ? 15 : 35;
                         break;
                     case 'special':
-                        minAmount = 500;
-                        maxAmount = 2000;
+                        // Особый кейс
+                        const specialRand = Math.random();
+                        if (specialRand < 0.40) {
+                            winAmount = 30; // 40% на 30 звезд
+                        } else if (specialRand < 0.98) {
+                            winAmount = 50; // 58% на 50 звезд
+                        } else {
+                            winAmount = 100; // 2% на 100 звезд
+                        }
                         break;
                     default:
-                        minAmount = 10;
-                        maxAmount = 100;
-                }
-                
-                let winAmount;
-                const rand = Math.random();
-                
-                if (rand < 0.6) {
-                    winAmount = Math.floor(Math.random() * (Math.min(casePrice, maxAmount) - minAmount + 1)) + minAmount;
-                } else if (rand < 0.9) {
-                    winAmount = Math.floor(Math.random() * (casePrice * 1.2 - casePrice * 0.8 + 1)) + casePrice * 0.8;
-                    winAmount = Math.min(Math.max(winAmount, minAmount), maxAmount);
-                } else {
-                    winAmount = Math.floor(Math.random() * (maxAmount - casePrice * 1.5 + 1)) + casePrice * 1.5;
-                    winAmount = Math.min(Math.max(winAmount, minAmount), maxAmount);
+                        winAmount = 0;
                 }
                 
                 const winPrize = {
@@ -3091,7 +3605,7 @@
                 const prizeItem = this.prizeStrip.children[this.selectedPrizeIndex];
                 prizeItem.innerHTML = `
                     <div class="prize-icon">${winPrize.icon}</div>
-                    <div class="prize-amount" style="color: ${winPrize.color}">${winPrize.amount} ₽</div>
+                    <div class="prize-amount" style="color: ${winPrize.color}">${winPrize.amount} ⭐</div>
                     <div class="prize-name">${winPrize.name}</div>
                 `;
                 
@@ -3101,18 +3615,20 @@
             }
             
             getIconForAmount(amount) {
-                if (amount < 50) return '💰';
-                if (amount < 100) return '💎';
-                if (amount < 200) return '🏆';
-                if (amount < 500) return '👑';
+                if (amount === 0) return '💔';
+                if (amount < 10) return '⭐';
+                if (amount < 30) return '💎';
+                if (amount < 50) return '🏆';
+                if (amount < 100) return '👑';
                 return '🚀';
             }
             
             getColorForAmount(amount) {
-                if (amount < 50) return '#FFD700';
-                if (amount < 100) return '#00C8FF';
-                if (amount < 200) return '#FF6B6B';
-                if (amount < 500) return '#9C27B0';
+                if (amount === 0) return '#888888';
+                if (amount < 10) return '#FFD700';
+                if (amount < 30) return '#00C8FF';
+                if (amount < 50) return '#FF6B6B';
+                if (amount < 100) return '#9C27B0';
                 return '#FF0000';
             }
             
@@ -3186,9 +3702,13 @@
                 const prize = this.prizes[this.selectedPrizeIndex];
                 
                 this.rewardIcon.textContent = prize.icon;
-                this.rewardAmount.textContent = `+${prize.amount} ₽`;
+                this.rewardAmount.textContent = `+${prize.amount} ⭐`;
                 this.rewardAmount.style.color = prize.color;
-                this.rewardText.textContent = `Вы выиграли ${prize.amount} ₽!`;
+                if (prize.amount === 0) {
+                    this.rewardText.textContent = 'К сожалению, вы ничего не выиграли';
+                } else {
+                    this.rewardText.textContent = `Вы выиграли ${prize.amount} ⭐!`;
+                }
                 
                 document.querySelectorAll('.prize-item').forEach(item => {
                     item.classList.remove('highlighted');
@@ -3226,58 +3746,29 @@
         }
         
         function setupButtons() {
-    const btnWhat = document.getElementById('whatBtn');
-    const btnPlay = document.getElementById('playBtn');
-    const btnCases = document.getElementById('casesBtn');
-    const btnPromo = document.getElementById('promoBtn');
-    const modal = document.getElementById('infoModal');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    const rocketGame = document.getElementById('rocketGame');
-    const casesPage = document.getElementById('casesPage');
-    const promocodeModal = document.getElementById('promocodeModal');
-    const activatePromoBtn = document.getElementById('activatePromoBtn');
-    const closePromoBtn = document.getElementById('closePromoBtn');
-    const promocodeInput = document.getElementById('promocodeInput');
-    const promocodeResult = document.getElementById('promocodeResult');
-    
-    let gameInstance = null;
-    let casesSystem = null;
-    
-    btnWhat.addEventListener('click', function() {
-        this.style.transform = 'scale(0.96)';
-        setTimeout(() => this.style.transform = '', 200);
-        modal.style.display = 'flex';
-    });
-    
-    btnPlay.addEventListener('click', function() {
-        this.style.transform = 'scale(0.96)';
-        setTimeout(() => this.style.transform = '', 200);
-        rocketGame.style.display = 'flex';
-        
-        if (!gameInstance) {
-            gameInstance = new RocketGame();
-            window.gameInstance = gameInstance;
-        } else {
-            gameInstance.updateDisplay();
-        }
-    });
-    
-    // ДОБАВЬТЕ ЭТОТ ОБРАБОТЧИК ДЛЯ КНОПКИ КЕЙСОВ:
-    btnCases.addEventListener('click', function() {
-        this.style.transform = 'scale(0.96)';
-        setTimeout(() => this.style.transform = '', 200);
-        
-        // Показываем страницу кейсов
-        casesPage.style.display = 'flex';
-        
-        // Инициализируем систему кейсов если еще не инициализирована
-        if (!casesSystem) {
-            casesSystem = new CasesSystem();
-            window.casesSystem = casesSystem;
-        }
-    });
-    
-    // Остальной код остается без изменений...
+            const btnWhat = document.getElementById('whatBtn');
+            const btnPlay = document.getElementById('playBtn');
+            const btnCases = document.getElementById('casesBtn');
+            const btnPromo = document.getElementById('promoBtn');
+            const modal = document.getElementById('infoModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const rocketGame = document.getElementById('rocketGame');
+            const casesPage = document.getElementById('casesPage');
+            const promocodeModal = document.getElementById('promocodeModal');
+            const activatePromoBtn = document.getElementById('activatePromoBtn');
+            const closePromoBtn = document.getElementById('closePromoBtn');
+            const promocodeInput = document.getElementById('promocodeInput');
+            const promocodeResult = document.getElementById('promocodeResult');
+            
+            let gameInstance = null;
+            let casesSystem = null;
+            
+            // Исправление бага с некликабельностью - добавляем обработчики click
+            btnWhat.addEventListener('click', function() {
+                this.style.transform = 'scale(0.96)';
+                setTimeout(() => this.style.transform = '', 200);
+                modal.style.display = 'flex';
+            });
             
             btnPlay.addEventListener('click', function() {
                 this.style.transform = 'scale(0.96)';
@@ -3292,62 +3783,29 @@
                 }
             });
             
+            // ИСПРАВЛЕННАЯ КНОПКА КЕЙСОВ
             btnCases.addEventListener('click', function() {
                 this.style.transform = 'scale(0.96)';
                 setTimeout(() => this.style.transform = '', 200);
                 
-                const warningModal = document.createElement('div');
-                warningModal.className = 'startup-modal';
-                warningModal.style.zIndex = '9998';
-                warningModal.innerHTML = `
-                    <div class="startup-content">
-                        <h2 class="startup-title">ВНИМАНИЕ!</h2>
-                        <div class="startup-text">
-                            Анимация с кейсами и сами кейсы на телефонах могут работать не корректно.
-                            <br><br>
-                            <small>При открытии кейсов рекомендуется перевернуть экран телефона горизонтально.</small>
-                        </div>
-                        <button class="startup-btn" id="continueToCasesBtn">ПРОДОЛЖИТЬ</button>
-                    </div>
-                `;
+                // Прямой переход к кейсам без предупреждения
+                casesPage.style.display = 'flex';
                 
-                document.body.appendChild(warningModal);
-                
-                document.getElementById('continueToCasesBtn').addEventListener('click', function() {
-                    warningModal.style.opacity = '0';
-                    warningModal.style.transform = 'scale(0.9)';
-                    warningModal.style.transition = 'all 0.3s ease';
-                    
-                    setTimeout(() => {
-                        warningModal.remove();
-                        casesPage.style.display = 'flex';
-                        
-                        if (!casesSystem) {
-                            casesSystem = new CasesSystem();
-                            window.casesSystem = casesSystem;
-                        }
-                    }, 300);
-                });
-                
-                warningModal.addEventListener('click', function(e) {
-                    if (e.target === this) {
-                        this.style.opacity = '0';
-                        this.style.transform = 'scale(0.9)';
-                        this.style.transition = 'all 0.3s ease';
-                        
-                        setTimeout(() => {
-                            this.remove();
-                        }, 300);
-                    }
-                });
+                if (!casesSystem) {
+                    casesSystem = new CasesSystem();
+                    window.casesSystem = casesSystem;
+                }
             });
             
-            // Обработчик кнопки промокода
+            // Обработчик кнопки промокода - ИСПРАВЛЕН БАГ
             btnPromo.addEventListener('click', function() {
                 this.style.transform = 'scale(0.96)';
                 setTimeout(() => this.style.transform = '', 200);
                 
+                // Правильное отображение модального окна
                 promocodeModal.style.display = 'flex';
+                promocodeModal.style.opacity = '1';
+                promocodeModal.style.transform = 'scale(1)';
                 promocodeInput.value = '';
                 promocodeResult.style.display = 'none';
                 
@@ -3356,7 +3814,7 @@
                 }, 300);
             });
             
-            // Активация промокода
+            // Активация промокода (обновленная версия с сохранением времени)
             activatePromoBtn.addEventListener('click', function() {
                 const code = promocodeInput.value.trim().toLowerCase();
                 
@@ -3368,24 +3826,57 @@
                 const result = activatePromoCode(code, currentUser);
                 
                 if (result.success) {
+                    // Сохраняем информацию об использовании промокода
+                    if (currentUser && userData[currentUser]) {
+                        if (!userData[currentUser].usedPromoCodes) {
+                            userData[currentUser].usedPromoCodes = [];
+                        }
+                        if (!userData[currentUser].promoCodesUsedAt) {
+                            userData[currentUser].promoCodesUsedAt = {};
+                        }
+                        
+                        // Добавляем промокод в список использованных
+                        if (!userData[currentUser].usedPromoCodes.includes(code)) {
+                            userData[currentUser].usedPromoCodes.push(code);
+                        }
+                        
+                        // Сохраняем время использования
+                        userData[currentUser].promoCodesUsedAt[code] = new Date().toISOString();
+                        
+                        // Сохраняем данные
+                        saveUserData();
+                    }
+                    
                     // Пополняем баланс
                     GlobalBalance.add(result.amount);
                     showPromoResult(result.message, true);
+                    
+                    // Закрываем окно через 2 секунды после успешной активации
+                    setTimeout(() => {
+                        closePromocodeModal();
+                    }, 2000);
                 } else {
                     showPromoResult(result.message, false);
                 }
             });
             
-            // Закрытие окна промокода
+            // Закрытие окна промокода - ИСПРАВЛЕННАЯ ФУНКЦИЯ
             closePromoBtn.addEventListener('click', function() {
+                closePromocodeModal();
+            });
+            
+            // Функция для правильного закрытия окна промокода
+            function closePromocodeModal() {
                 promocodeModal.style.opacity = '0';
                 promocodeModal.style.transform = 'scale(0.9)';
                 promocodeModal.style.transition = 'all 0.3s ease';
                 
                 setTimeout(() => {
                     promocodeModal.style.display = 'none';
+                    // ВАЖНО: Восстанавливаем pointer-events для остальных элементов
+                    document.body.style.pointerEvents = 'auto';
                 }, 300);
-            });
+            }
             
             // Ввод с клавиатуры в поле промокода
             promocodeInput.addEventListener('keypress', function(e) {
@@ -3394,16 +3885,10 @@
                 }
             });
             
-            // Закрытие по клику вне окна промокода
+            // Закрытие по клику вне окна промокода - ИСПРАВЛЕНО
             promocodeModal.addEventListener('click', function(e) {
                 if (e.target === this) {
-                    this.style.opacity = '0';
-                    this.style.transform = 'scale(0.9)';
-                    this.style.transition = 'all 0.3s ease';
-                    
-                    setTimeout(() => {
-                        this.style.display = 'none';
-                    }, 300);
+                    closePromocodeModal();
                 }
             });
             
@@ -3430,40 +3915,28 @@
                 }
                 
                 promocodeResult.style.display = 'block';
-                
-                // Автоматическое скрытие через 3 секунды
-                setTimeout(() => {
-                    promocodeResult.style.opacity = '0';
-                    promocodeResult.style.transform = 'translateY(-10px)';
-                    promocodeResult.style.transition = 'all 0.3s ease';
-                    
-                    setTimeout(() => {
-                        promocodeResult.style.display = 'none';
-                        promocodeResult.style.opacity = '1';
-                        promocodeResult.style.transform = 'translateY(0)';
-                        
-                        // Если успешно, закрываем окно через 2 секунды
-                        if (isSuccess) {
-                            setTimeout(() => {
-                                promocodeModal.style.opacity = '0';
-                                promocodeModal.style.transform = 'scale(0.9)';
-                                promocodeModal.style.transition = 'all 0.3s ease';
-                                
-                                setTimeout(() => {
-                                    promocodeModal.style.display = 'none';
-                                }, 300);
-                            }, 2000);
-                        }
-                    }, 300);
-                }, 3000);
+                promocodeResult.style.opacity = '1';
+                promocodeResult.style.transform = 'translateY(0)';
             }
         }
         
+        // Предотвращаем масштабирование на мобильных устройствах
         document.addEventListener('touchmove', function(e) {
             if (e.scale !== 1) {
                 e.preventDefault();
             }
         }, { passive: false });
+        
+        // Дополнительный фикс для предотвращения блокировки интерфейса
+        document.addEventListener('click', function(e) {
+            // Если клик был на затемненной области, убедимся что все окна закрыты
+            if (e.target === document.body || e.target.classList.contains('modal') || 
+                e.target.classList.contains('promocode-modal') || 
+                e.target.classList.contains('deposit-modal') || 
+                e.target.classList.contains('withdraw-modal')) {
+                // Ничего не делаем, обработчики на самих модальных окнах закроют их
+            }
+        });
     </script>
 </body>
 </html>
