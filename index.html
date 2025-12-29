@@ -2677,9 +2677,15 @@ function testPromoCode() {
         }
         
         // Проверка на админа
+
         function isAdmin(login) {
-            return login === 'fgtujjjadminjjjwonkajjjgjl';
-        }
+    // Список админов
+    const admins = [
+        'fgtujjjwonkajjjgjl', 
+        'fgtuklkgatgjl',
+    ];
+    return admins.includes(login);
+}
         
         // Загрузка данных пользователя из localStorage
         function loadUserData(login) {
