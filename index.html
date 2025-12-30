@@ -2495,172 +2495,124 @@
     </div>
 
     <script>
-let promoCodesDB = {};
+// === УПРОЩЕННАЯ СИСТЕМА ПРОМОКОДОВ С ИНДИВИДУАЛЬНЫМИ ЛИМИТАМИ ===
 
-// Инициализация стандартных промокодов
-function initializeDefaultPromoCodes() {
-    console.log('Инициализация стандартных промокодов...');
-    promoCodesDB = {
-        'vip100': {  // ВСЕГДА в нижнем регистре!
-            amount: 1000000,
-            userLimits: {
-                'fgtuklkgatgjl': 1,
-                'fgtujjjwonkajjjgjl': 4
-            }
-        }
-    };
-    console.log('Создана база промокодов:', promoCodesDB);
-    savePromoCodes();
+// База данных промокодов: {username: {maxUses: число, used: число, lastUsed: дата}}
+let promoCodeLimits = {};
+
+function initPromoCodeSystem() {
+    loadPromoCodeLimits();
 }
 
-// Загрузка промокодов из localStorage
-function loadPromoCodes() {
-    console.log('Загрузка промокодов из localStorage...');
-    const saved = localStorage.getItem('wonk_promocodes');
-    console.log('Сохраненные данные:', saved);
+// Загрузка лимитов промокодов
+function loadPromoCodeLimits() {
+    const saved = localStorage.getItem('wonk_promo_limits');
     
     if (saved) {
         try {
-            const parsed = JSON.parse(saved);
-            console.log('Распарсенные данные:', parsed);
-            
-            // Обрабатываем старые и новые структуры
-            for (const code in parsed) {
-                const savedPromo = parsed[code];
-                
-                // Если это старая структура (с maxUses)
-                if (savedPromo.maxUses !== undefined) {
-                    // Конвертируем в новую структуру
-                    promoCodesDB[code] = {
-                        amount: savedPromo.amount,
-                        userLimits: { '*': savedPromo.maxUses },
-                        userUses: savedPromo.userUses || {}
-                    };
-                }
-                // Если это новая структура (с userLimits)
-                else if (savedPromo.userLimits !== undefined) {
-                    // Просто обновляем userUses из сохраненных данных
-                    promoCodesDB[code] = savedPromo;
-                }
-                // Если это совсем старая структура
-                else if (savedPromo.amount !== undefined) {
-                    // Пытаемся восстановить
-                    promoCodesDB[code] = {
-                        amount: savedPromo.amount,
-                        userLimits: { '*': 2 },
-                        userUses: {}
-                    };
-                }
-            }
-            
-            console.log('Промокоды загружены:', promoCodesDB);
+            promoCodeLimits = JSON.parse(saved);
         } catch (e) {
-            console.error('Ошибка загрузки промокодов:', e);
-            // Если не удалось загрузить, используем стандартные
-            initializeDefaultPromoCodes();
+            console.error('Ошибка загрузки лимитов промокодов:', e);
+            promoCodeLimits = {};
         }
     } else {
-        console.log('Нет сохраненных данных, инициализируем стандартные');
-        // Если нет сохраненных данных, инициализируем стандартные
-        initializeDefaultPromoCodes();
+        promoCodeLimits = {};
     }
 }
 
-// Функция проверки и активации промокода
+// Сохранение лимитов промокодов
+function savePromoCodeLimits() {
+    localStorage.setItem('wonk_promo_limits', JSON.stringify(promoCodeLimits));
+}
+
+// Установить лимит активаций для пользователя
+function setUserPromoLimit(username, maxUses) {
+    if (!promoCodeLimits[username]) {
+        promoCodeLimits[username] = {
+            maxUses: maxUses,
+            used: 0,
+            lastUsed: null
+        };
+    } else {
+        promoCodeLimits[username].maxUses = maxUses;
+    }
+    
+    savePromoCodeLimits();
+    return true;
+}
+
+// Проверка и активация промокода
 function activatePromoCode(code, username) {
-    console.log('=== АКТИВАЦИЯ ПРОМОКОДА ===');
-    console.log('Входные данные - код:', code, 'пользователь:', username);
-    
-    // Приводим код к нижнему регистру
     const normalizedCode = code.toLowerCase().trim();
-    console.log('Нормализованный код:', normalizedCode);
     
-    console.log('Текущая база промокодов:', promoCodesDB);
-    console.log('Ключи в базе:', Object.keys(promoCodesDB));
-    
-    if (!promoCodesDB[normalizedCode]) {
-        console.log('❌ Промокод не найден! Ищем:', normalizedCode);
-        console.log('Доступные промокоды:', Object.keys(promoCodesDB));
-        return { success: false, message: "Промокод не найден!" };
-    }
-    
-    const promo = promoCodesDB[normalizedCode];
-    console.log('Найден промокод:', promo);
-    
-    // Проверяем, может ли пользователь использовать этот промокод
-    let userLimit = null;
-    
-    // Сначала ищем персональный лимит
-    if (promo.userLimits[username]) {
-        userLimit = promo.userLimits[username];
-        console.log('✅ Найден персональный лимит:', userLimit);
-    }
-    // Если нет персонального, ищем общий лимит
-    else if (promo.userLimits['*']) {
-        userLimit = promo.userLimits['*'];
-        console.log('✅ Используется общий лимит:', userLimit);
-    }
-    // Если нет ни персонального, ни общего лимита
-    else {
-        console.log('❌ Нет лимита для пользователя');
-        return { success: false, message: "У вас нет доступа к этому промокоду!" };
-    }
-    
-    // Проверка лимитов использования
-    const userUsed = promo.userUses[username] || 0;
-    console.log('Использовано:', userUsed, 'Лимит:', userLimit);
-    
-    if (userUsed >= userLimit) {
-        console.log('❌ Лимит исчерпан');
+    // Проверяем правильность промокода
+    if (normalizedCode !== 'vip100') {
         return { 
             success: false, 
-            message: `Вы исчерпали лимит активаций этого промокода! (${userUsed}/${userLimit})` 
+            message: "Неверный промокод! Используйте: vip100" 
+        };
+    }
+    
+    // Проверяем, есть ли у пользователя право на промокод
+    if (!promoCodeLimits[username]) {
+        return { 
+            success: false, 
+            message: "Вам не разрешено использовать этот промокод!" 
+        };
+    }
+    
+    const userPromoData = promoCodeLimits[username];
+    
+    // Проверяем, не превысил ли пользователь свой лимит
+    if (userPromoData.used >= userPromoData.maxUses) {
+        return { 
+            success: false, 
+            message: `Вы исчерпали свой лимит активаций! (${userPromoData.used}/${userPromoData.maxUses})` 
         };
     }
     
     // Активируем промокод
-    promo.userUses[username] = userUsed + 1;
-    console.log('✅ Промокод активирован! Новое значение:', promo.userUses[username]);
+    userPromoData.used += 1;
+    userPromoData.lastUsed = new Date().toISOString();
     
-    // Сохраняем
-    savePromoCodes();
+    // Сохраняем данные
+    savePromoCodeLimits();
+    
+    // Сохраняем в историю пользователя
+    if (currentUser && userData[currentUser]) {
+        if (!userData[currentUser].usedPromoCodes) {
+            userData[currentUser].usedPromoCodes = [];
+        }
+        if (!userData[currentUser].promoCodesUsedAt) {
+            userData[currentUser].promoCodesUsedAt = {};
+        }
+        
+        if (!userData[currentUser].usedPromoCodes.includes('vip100')) {
+            userData[currentUser].usedPromoCodes.push('vip100');
+        }
+        
+        userData[currentUser].promoCodesUsedAt['vip100'] = new Date().toISOString();
+        saveUserData();
+    }
     
     return { 
         success: true, 
-        message: `Промокод активирован! +${promo.amount} ⭐`,
-        amount: promo.amount 
+        message: `Промокод активирован! +15 ⭐ (${userPromoData.used}/${userPromoData.maxUses})`,
+        amount: 15 
     };
 }
 
-// Сохранение промокодов в localStorage
-function savePromoCodes() {
-    console.log('Сохранение промокодов...');
-    localStorage.setItem('wonk_promocodes', JSON.stringify(promoCodesDB));
+// ВАЖНО: ЗДЕСЬ НАСТРАИВАЕМ ПОЛЬЗОВАТЕЛЕЙ
+function initPromoCodeSystem() {
+    loadPromoCodeLimits();
+    
+    // ДОБАВЬТЕ СЮДА ВСЕХ ПОЛЬЗОВАТЕЛЕЙ
+    // Формат: setUserPromoLimit('логин', количество_активаций);
+    
+    // Примеры:
+    setUserPromoLimit('fgtujjjwonkajjjgjl', 1000);   // 1000 активаций
 }
 
-// Функция для сброса промокодов
-function resetPromoCodes() {
-    console.log('Сброс промокодов...');
-    localStorage.removeItem('wonk_promocodes');
-    initializeDefaultPromoCodes();
-    alert('Промокоды сброшены к стандартным значениям!');
-}
-
-// Тестовая функция
-function testPromoCode() {
-    console.log('=== ТЕСТ ПРОМОКОДА ===');
-    console.log('База до теста:', promoCodesDB);
-    
-    // Тестируем активацию
-    const testUser = 'fgtutestgjl';
-    const testCode = 'VIP100';
-    
-    console.log('Тестируем код:', testCode, 'для пользователя:', testUser);
-    const result = activatePromoCode(testCode, testUser);
-    console.log('Результат:', result);
-    
-    return result;
-}
         // Глобальные переменные
         let currentUser = null;
         let userData = {};
@@ -2748,40 +2700,38 @@ function testPromoCode() {
             return 0;
         }
         
-        // Проверка, использовал ли пользователь промокод в течение последних 5 дней
-        function hasUsedPromoCodeInLast5Days() {
-            if (!currentUser || !userData[currentUser]) return false;
-            
-            const user = userData[currentUser];
-            
-            // Если у пользователя нет массива usedPromoCodes, значит он не использовал промокоды
-            if (!user.usedPromoCodes || user.usedPromoCodes.length === 0) {
-                return false;
-            }
-            
-            // Получаем текущее время
+// Проверка, использовал ли пользователь промокод в течение последних 5 дней
+function hasUsedPromoCodeInLast5Days() {
+    if (!currentUser) return false;
+    
+    // Проверяем через нашу новую систему
+    if (promoCodeUsage[currentUser] && promoCodeUsage[currentUser].vip100) {
+        const lastUsed = promoCodeUsage[currentUser].vip100.lastUsed;
+        if (lastUsed) {
             const now = new Date();
+            const usedDate = new Date(lastUsed);
+            const timeDiff = now.getTime() - usedDate.getTime();
+            const daysDiff = timeDiff / (1000 * 3600 * 24);
             
-            // Проверяем время использования каждого промокода
-            for (const promoCode of user.usedPromoCodes) {
-                // Получаем время использования промокода
-                let usedAt = user.promoCodesUsedAt?.[promoCode];
-                
-                if (usedAt) {
-                    usedAt = new Date(usedAt);
-                    // Разница во времени в днях
-                    const timeDiff = now.getTime() - usedAt.getTime();
-                    const daysDiff = timeDiff / (1000 * 3600 * 24);
-                    
-                    // Если промокод использован в течение последних 5 дней
-                    if (daysDiff <= 5) {
-                        return true;
-                    }
-                }
-            }
-            
-            return false;
+            console.log('Последнее использование промокода:', daysDiff, 'дней назад');
+            return daysDiff <= 5;
         }
+    }
+    
+    // Также проверяем старую систему для обратной совместимости
+    if (userData[currentUser] && userData[currentUser].promoCodesUsedAt) {
+        const lastUsed = userData[currentUser].promoCodesUsedAt['vip100'];
+        if (lastUsed) {
+            const now = new Date();
+            const usedDate = new Date(lastUsed);
+            const timeDiff = now.getTime() - usedDate.getTime();
+            const daysDiff = timeDiff / (1000 * 3600 * 24);
+            return daysDiff <= 5;
+        }
+    }
+    
+    return false;
+}
         
         // Обновление отображения баланса в шапке
         function updateBalanceDisplay() {
@@ -2798,7 +2748,7 @@ function testPromoCode() {
         // Показываем предупреждение о телефоне при загрузке
         document.addEventListener('DOMContentLoaded', function() {
             // Загружаем промокоды
-            loadPromoCodes();
+          initPromoCodeSystem();
             
             const orientationWarning = document.getElementById('orientationWarning');
             const continueWarningBtn = document.getElementById('continueWarningBtn');
