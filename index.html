@@ -6,6 +6,11 @@
     <title>WONK MINIGAME</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <style>
+        
+        #continueWithdrawBtn {
+    margin-top: -20px !important;  /* Поднять на 10px вверх */
+    position: relative;}
+
         * {
             margin: 0;
             padding: 0;
@@ -2302,15 +2307,15 @@
             <h2 class="promocode-title">💰 ВЫВОД СРЕДСТВ</h2>
             <div class="startup-text">
                 <strong>Требования для вывода:</strong><br><br>
-               <h5> 1. Включить запись экрана<br>
+                <h5>1. Включить запись экрана (показать время)<br>
                 2. Закрыть мини-приложение<br>
                 3. Заново его открыть и авторизоваться<br>
-                4. Нажать кнопку "Вывод"<br> </h5>
+                4. Нажать кнопку "Вывод" и отправить запись экрана @plushpeppa<br><br> </h5>
                 
-                <strong>Дополнительные условия:</strong><br>
-                • Сделать хотя бы 1 пополнение (при помощи промокода) в течение 5 дней<br>
+                <strong>Дополнительные условия:</strong>
+                <h5>• Сделать хотя бы 1 пополнение (при помощи промокода) в течение 5 дней<br>
                 • Минимальный вывод: <strong>25 ⭐</strong><br>
-                • Максимальный вывод: <strong>25 ⭐</strong> (на данный момент)
+                • Максимальный вывод: <strong>25 ⭐ </strong> выводить можно 1 раз в 24ч </h5>
             </div>
             <button class="promocode-btn" id="continueWithdrawBtn">ПОНЯТНО</button>
         </div>
@@ -2610,7 +2615,7 @@ function initPromoCodeSystem() {
     // Формат: setUserPromoLimit('логин', количество_активаций);
     
     // Примеры:
-    setUserPromoLimit('fgtujjjwonkajjjgjl', 1000);   // 1000 активаций
+    setUserPromoLimit('fgtujjjwonkajjjgjl', 6);   // 5 активаций
 }
 
         // Глобальные переменные
@@ -2705,8 +2710,8 @@ function hasUsedPromoCodeInLast5Days() {
     if (!currentUser) return false;
     
     // Проверяем через нашу новую систему
-    if (promoCodeUsage[currentUser] && promoCodeUsage[currentUser].vip100) {
-        const lastUsed = promoCodeUsage[currentUser].vip100.lastUsed;
+    if (promoCodeLimits[currentUser] && promoCodeLimits[currentUser].vip100) {
+        const lastUsed = promoCodeLimits[currentUser].vip100.lastUsed;
         if (lastUsed) {
             const now = new Date();
             const usedDate = new Date(lastUsed);
@@ -2794,26 +2799,35 @@ function hasUsedPromoCodeInLast5Days() {
             
             // Проверка условий вывода
             function checkWithdrawConditions() {
-                confirmWithdrawBtn.disabled = true;
-                withdrawMessage.textContent = "Проверяем условия вывода...";
-                
-                setTimeout(() => {
-                    const balance = getCurrentBalance();
-                    const hasUsedPromo = hasUsedPromoCodeInLast5Days();
-                    
-                    if (balance < 25) {
-                        withdrawMessage.textContent = "❌ У вас недостаточно звезд для вывода (нужно 25 ⭐)";
-                        withdrawMessage.style.color = "#ff0000";
-                    } else if (!hasUsedPromo) {
-                        withdrawMessage.textContent = "❌ Вы не использовали промокод в течение последних 5 дней";
-                        withdrawMessage.style.color = "#ff0000";
-                    } else {
-                        withdrawMessage.textContent = "✅ Все условия выполнены! Можете выводить средства.";
-                        withdrawMessage.style.color = "#00ff00";
-                        confirmWithdrawBtn.disabled = false;
-                    }
-                }, 1000);
-            }
+    console.log('=== ПРОВЕРКА УСЛОВИЙ ВЫВОДА ===');
+    confirmWithdrawBtn.disabled = true;
+    withdrawMessage.textContent = "Проверяем условия вывода...";
+    
+    setTimeout(() => {
+        const balance = getCurrentBalance();
+        const hasUsedPromo = hasUsedPromoCodeInLast5Days();
+        
+        console.log('Баланс:', balance);
+        console.log('Использовал промокод в последние 5 дней:', hasUsedPromo);
+        
+        if (balance < 25) {
+            withdrawMessage.textContent = "❌ У вас недостаточно звезд для вывода (нужно 25 ⭐)";
+            withdrawMessage.style.color = "#ff0000";
+            console.log('❌ Недостаточно баланса');
+        } else if (!hasUsedPromo) {
+            withdrawMessage.textContent = "❌ Вы не использовали промокод в течение последних 5 дней";
+            withdrawMessage.style.color = "#ff0000";
+            console.log('❌ Не использовал промокод');
+        } else {
+            withdrawMessage.textContent = "✅ Все условия выполнены! Можете выводить средства.";
+            withdrawMessage.style.color = "#00ff00";
+            confirmWithdrawBtn.disabled = false;
+            console.log('✅ Условия выполнены, кнопка разблокирована');
+        }
+        
+        console.log('Кнопка заблокирована?', confirmWithdrawBtn.disabled);
+    }, 1000);
+}
             
             // Подтверждение вывода
             confirmWithdrawBtn.addEventListener('click', function() {
@@ -3892,6 +3906,7 @@ function hasUsedPromoCodeInLast5Days() {
                 // Ничего не делаем, обработчики на самих модальных окнах закроют их
             }
         });
+
     </script>
 </body>
 </html>
