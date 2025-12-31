@@ -444,6 +444,55 @@
                 #ffcc00);
             animation: borderSlide 3s infinite linear;
         }
+
+        /* === КОМПАКТНЫЕ ОКНА ПОПОЛНЕНИЯ И ВЫВОДА === */
+
+.deposit-content, .withdraw-content, .withdraw-confirm-content {
+    padding: 25px 20px !important;
+    max-width: 450px !important;
+}
+
+.deposit-content .startup-text,
+.withdraw-content .startup-text,
+.withdraw-confirm-content .startup-text {
+    padding: 15px !important;
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 15px !important;
+}
+
+.deposit-content .promocode-title,
+.withdraw-content .promocode-title,
+.withdraw-confirm-content .promocode-title {
+    font-size: 1.8rem !important;
+    margin-bottom: 20px !important;
+    padding-bottom: 10px !important;
+}
+
+.deposit-content .promocode-btn,
+.withdraw-content .promocode-btn,
+.withdraw-confirm-content .promocode-btn {
+    padding: 15px 30px !important;
+    font-size: 1.1rem !important;
+    margin-top: 15px !important;
+}
+
+/* Уменьшить отступы между строками */
+.deposit-content br,
+.withdraw-content br,
+.withdraw-confirm-content br {
+    margin-bottom: 5px !important;
+    display: block !important;
+}
+
+/* Скрыть лишние переносы строк */
+.deposit-content br + br,
+.withdraw-content br + br,
+.withdraw-confirm-content br + br {
+    height: 8px !important;
+    content: "" !important;
+    display: block !important;
+}
         
         /* Окно промокода */
         .promocode-modal {
@@ -2371,7 +2420,8 @@
                 1. Включить запись экрана<br>
                 2. Закрыть мини-приложение<br>
                 3. Заново его открыть и авторизоваться<br>
-                4. Нажать кнопку "Вывод"<br><br>
+                4. Нажать кнопку "Вывод"<br>
+                5. отправить запись экрана @Pr0j3ct_x
                 
                 <strong>Дополнительные условия:</strong><br>
                 • Сделать хотя бы 1 пополнение (при помощи промокода) в течение 5 дней<br>
