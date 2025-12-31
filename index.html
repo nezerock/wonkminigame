@@ -3,14 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>WONK MINIGAME</title>
+    <title>PEPE MINIGAME</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <style>
-        
-        #continueWithdrawBtn {
-    margin-top: -20px !important;  /* Поднять на 10px вверх */
-    position: relative;}
-
         * {
             margin: 0;
             padding: 0;
@@ -20,7 +15,13 @@
         
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #0a081f 0%, #1a173a 50%, #0f0d25 100%);
+            background: linear-gradient(135deg, 
+                #0d2b0a 0%,
+                #1a3317 25%,
+                #0c1f0a 50%,
+                #0d2b0a 75%,
+                #163813 100%
+            );
             overflow: hidden;
             position: relative;
             display: flex;
@@ -32,6 +33,87 @@
             width: 100%;
             height: 100vh;
             touch-action: manipulation;
+        }
+        
+        /* Новогодние украшения на фоне */
+        .new-year-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .snowflake {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: snowFall 10s linear infinite;
+            opacity: 0.8;
+        }
+        
+        @keyframes snowFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+        
+        .christmas-ball {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            animation: ballFloat 15s infinite alternate ease-in-out;
+            box-shadow: 0 0 10px currentColor;
+        }
+        
+        .christmas-ball.red {
+            background: radial-gradient(circle at 30% 30%, #ff0000, #cc0000);
+            color: #ff0000;
+        }
+        
+        .christmas-ball.gold {
+            background: radial-gradient(circle at 30% 30%, #ffcc00, #cc9900);
+            color: #ffcc00;
+        }
+        
+        .christmas-ball.green {
+            background: radial-gradient(circle at 30% 30%, #00cc00, #009900);
+            color: #00cc00;
+        }
+        
+        @keyframes ballFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(20px, -15px) scale(1.1); }
+        }
+        
+        .garland {
+            position: absolute;
+            top: 10%;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: repeating-linear-gradient(
+                90deg,
+                #ff0000 0px,
+                #ff0000 10px,
+                #00cc00 10px,
+                #00cc00 20px,
+                #ffcc00 20px,
+                #ffcc00 30px
+            );
+            animation: garlandGlow 3s infinite alternate;
+        }
+        
+        @keyframes garlandGlow {
+            0% { opacity: 0.7; }
+            100% { opacity: 1; }
         }
         
         /* Окно предупреждения о телефоне */
@@ -176,7 +258,7 @@
             width: 100%;
             max-width: 500px;
             color: white;
-            border: 2px solid rgba(94, 156, 255, 0.4);
+            border: 2px solid rgba(255, 215, 0, 0.4);
             box-shadow: 
                 0 25px 50px rgba(0, 0, 0, 0.6),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -194,9 +276,9 @@
             right: 0;
             height: 3px;
             background: linear-gradient(90deg, 
-                #6a11cb, 
-                #2575fc, 
-                #6a11cb);
+                #ff0000, 
+                #ff9900, 
+                #ff0000);
             animation: borderSlide 3s infinite linear;
         }
         
@@ -232,7 +314,7 @@
             padding: 20px;
             margin-bottom: 20px;
             background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(94, 156, 255, 0.4);
+            border: 2px solid rgba(255, 215, 0, 0.4);
             border-radius: 15px;
             color: white;
             font-size: 1.2rem;
@@ -533,7 +615,7 @@
             width: 100%;
             max-width: 500px;
             color: white;
-            border: 2px solid rgba(94, 156, 255, 0.4);
+            border: 2px solid rgba(255, 215, 0, 0.4);
             box-shadow: 
                 0 25px 50px rgba(0, 0, 0, 0.6),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -603,76 +685,6 @@
             transform: scale(0.98);
         }
         
-        /* Космический фон с элементами */
-        .space-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        
-        /* Планета */
-        .planet {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, rgba(106, 17, 203, 0.4), rgba(37, 117, 252, 0.2));
-            filter: blur(15px);
-            animation: planetFloat 25s infinite alternate ease-in-out;
-        }
-        
-        @keyframes planetFloat {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(30px, -20px) scale(1.05); }
-        }
-        
-        /* Плавающие кристаллы */
-        .floating-crystal {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(45deg, rgba(94, 156, 255, 0.3), rgba(148, 163, 255, 0.5));
-            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
-            animation: crystalFloat 20s infinite linear;
-            opacity: 0.3;
-        }
-        
-        @keyframes crystalFloat {
-            0% { transform: translateY(100vh) rotate(0deg); }
-            100% { transform: translateY(-100px) rotate(360deg); }
-        }
-        
-        /* Парящие частицы */
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: particleFloat 15s infinite linear;
-        }
-        
-        @keyframes particleFloat {
-            0% { transform: translateY(100vh) translateX(0) scale(0.5); opacity: 0; }
-            10% { opacity: 0.3; }
-            90% { opacity: 0.3; }
-            100% { transform: translateY(-100px) translateX(var(--particle-x)) scale(1); opacity: 0; }
-        }
-        
-        /* Космические линии */
-        .space-line {
-            position: absolute;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(94, 156, 255, 0.3), transparent);
-            animation: lineFlow 10s infinite linear;
-        }
-        
-        @keyframes lineFlow {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100vw); }
-        }
-        
         /* Компактный заголовок сверху */
         .header-container {
             width: 100%;
@@ -696,13 +708,13 @@
             letter-spacing: 3px;
             color: white;
             text-shadow: 
-                0 0 10px rgba(94, 156, 255, 0.8),
-                0 0 20px rgba(94, 156, 255, 0.5),
-                0 0 30px rgba(94, 156, 255, 0.3);
+                0 0 10px rgba(255, 215, 0, 0.8),
+                0 0 20px rgba(255, 215, 0, 0.5),
+                0 0 30px rgba(255, 215, 0, 0.3);
             padding: 15px 30px;
-            background: rgba(10, 10, 25, 0.7);
+            background: rgba(13, 43, 10, 0.7);
             border-radius: 20px;
-            border: 2px solid rgba(94, 156, 255, 0.4);
+            border: 2px solid rgba(255, 215, 0, 0.4);
             display: inline-block;
             backdrop-filter: blur(10px);
             position: relative;
@@ -718,9 +730,9 @@
             right: -2px;
             bottom: -2px;
             background: linear-gradient(45deg, 
-                rgba(94, 156, 255, 0.2),
-                rgba(148, 163, 255, 0.1),
-                rgba(94, 156, 255, 0.2));
+                rgba(255, 215, 0, 0.2),
+                rgba(255, 193, 7, 0.1),
+                rgba(255, 215, 0, 0.2));
             border-radius: 20px;
             z-index: -1;
             animation: borderGlow 3s infinite alternate;
@@ -740,10 +752,10 @@
         }
         
         .minigame { 
-            color: #00ffcc;
+            color: #00ff00;
             text-shadow: 
-                0 0 10px rgba(0, 255, 204, 0.8),
-                0 0 20px rgba(0, 255, 204, 0.4);
+                0 0 10px rgba(0, 255, 0, 0.8),
+                0 0 20px rgba(0, 255, 0, 0.4);
             animation: textPulse 2s infinite alternate-reverse;
         }
         
@@ -834,12 +846,12 @@
         .user-display {
             font-family: 'Orbitron', sans-serif;
             font-size: 1rem;
-            color: #00ffcc;
-            text-shadow: 0 0 10px #00ffcc;
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
             padding: 8px 16px;
-            background: rgba(0, 255, 204, 0.1);
+            background: rgba(0, 255, 0, 0.1);
             border-radius: 12px;
-            border: 2px solid rgba(0, 255, 204, 0.3);
+            border: 2px solid rgba(0, 255, 0, 0.3);
             backdrop-filter: blur(10px);
         }
         
@@ -907,13 +919,13 @@
         
         .btn-what {
             background: linear-gradient(135deg, 
-                rgba(106, 17, 203, 0.9) 0%, 
-                rgba(37, 117, 252, 0.9) 100%);
-            border: 2px solid rgba(106, 17, 203, 0.5);
+                rgba(139, 0, 0, 0.9) 0%, 
+                rgba(255, 0, 0, 0.9) 100%);
+            border: 2px solid rgba(139, 0, 0, 0.5);
         }
         
         .btn-what::after {
-            content: '🚀';
+            content: '🎄';
             position: absolute;
             right: 20px;
             font-size: 1.6rem;
@@ -928,7 +940,7 @@
         }
         
         .btn-play::after {
-            content: '💎';
+            content: '🚀';
             position: absolute;
             right: 20px;
             font-size: 1.6rem;
@@ -953,9 +965,9 @@
         /* Кнопка промокода */
         .btn-promo {
             background: linear-gradient(135deg, 
-                rgba(0, 255, 255, 0.9) 0%, 
-                rgba(0, 200, 200, 0.9) 100%);
-            border: 2px solid rgba(0, 255, 255, 0.5);
+                rgba(0, 255, 0, 0.9) 0%, 
+                rgba(0, 200, 0, 0.9) 100%);
+            border: 2px solid rgba(0, 255, 0, 0.5);
         }
         
         .btn-promo::after {
@@ -990,7 +1002,7 @@
             border-radius: 25px;
             width: 100%;
             color: white;
-            border: 2px solid rgba(94, 156, 255, 0.4);
+            border: 2px solid rgba(255, 215, 0, 0.4);
             max-width: 420px;
             font-size: 1rem;
             box-shadow: 
@@ -1009,9 +1021,9 @@
             right: 0;
             height: 3px;
             background: linear-gradient(90deg, 
-                #6a11cb, 
-                #2575fc, 
-                #6a11cb);
+                #ff0000, 
+                #ff9900, 
+                #ff0000);
             animation: borderSlide 3s infinite linear;
         }
         
@@ -1685,7 +1697,7 @@
                 inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
         
-        /* Страница кейсов */
+        /* СТРАНИЦА КЕЙСОВ - ОПТИМИЗИРОВАННАЯ ДЛЯ ТЕЛЕФОНОВ */
         .cases-page {
             display: none;
             position: fixed;
@@ -1693,49 +1705,59 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #0a081f 0%, #1a173a 50%, #0f0d25 100%);
+            background: linear-gradient(135deg, 
+                #0d2b0a 0%,
+                #1a3317 25%,
+                #0c1f0a 50%,
+                #0d2b0a 75%,
+                #163813 100%
+            );
             z-index: 1000;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding: 20px;
+            padding: 15px;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         
         .cases-header {
             width: 100%;
             text-align: center;
-            margin-bottom: 30px;
-            padding-top: 20px;
+            margin-bottom: 15px;
+            padding-top: 10px;
         }
         
         .cases-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             color: #ffcc00;
             text-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
         
         .cases-subtitle {
             color: #94a3ff;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             opacity: 0.8;
         }
         
+        /* КОМПАКТНЫЙ ГРИД КЕЙСОВ ДЛЯ ТЕЛЕФОНОВ */
         .cases-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            gap: 12px;
             width: 100%;
             max-width: 500px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            padding: 0 5px;
         }
         
+        /* УМЕНЬШЕННЫЕ КЕЙСЫ ДЛЯ ТЕЛЕФОНОВ */
         .case-item {
             background: rgba(20, 20, 40, 0.8);
-            border-radius: 20px;
-            padding: 25px 15px;
+            border-radius: 15px;
+            padding: 15px 10px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -1743,26 +1765,30 @@
             backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         
         .case-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
         
         .case-item:active {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
         
         .case-item.selected {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
             z-index: 2;
         }
         
         .case-icon {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
+            font-size: 2.2rem;
+            margin-bottom: 8px;
             display: block;
             transition: transform 0.3s ease;
         }
@@ -1778,23 +1804,25 @@
         
         .case-name {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.3rem;
+            font-size: 1rem;
             color: white;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            line-height: 1.2;
         }
         
         .case-price {
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             color: #00ffcc;
             text-shadow: 0 0 5px #00ffcc;
             font-weight: bold;
+            margin-bottom: 3px;
         }
         
         .case-chance {
-            font-size: 0.9rem;
+            font-size: 0.75rem;
             color: #94a3ff;
-            margin-top: 5px;
+            margin-top: 3px;
         }
         
         /* Особые стили для каждого кейса */
@@ -1805,7 +1833,7 @@
         
         .case-basic:hover, .case-basic.selected {
             border-color: rgba(139, 69, 19, 0.9);
-            box-shadow: 0 15px 30px rgba(139, 69, 19, 0.3);
+            box-shadow: 0 10px 20px rgba(139, 69, 19, 0.3);
         }
         
         .case-gold {
@@ -1815,7 +1843,7 @@
         
         .case-gold:hover, .case-gold.selected {
             border-color: rgba(255, 215, 0, 0.9);
-            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.3);
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
         }
         
         .case-diamond {
@@ -1825,7 +1853,7 @@
         
         .case-diamond:hover, .case-diamond.selected {
             border-color: rgba(0, 200, 255, 0.9);
-            box-shadow: 0 15px 30px rgba(0, 200, 255, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 200, 255, 0.3);
         }
         
         .case-special {
@@ -1835,10 +1863,43 @@
         
         .case-special:hover, .case-special.selected {
             border-color: rgba(156, 39, 176, 0.9);
-            box-shadow: 0 15px 30px rgba(156, 39, 176, 0.3);
+            box-shadow: 0 10px 20px rgba(156, 39, 176, 0.3);
         }
         
-        /* Новая анимация открытия кейса - лента с призами */
+        /* КНОПКИ В КЕЙСАХ */
+        .case-open-btn {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 180px;
+            margin: 15px auto;
+            display: block;
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(255, 65, 108, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .case-open-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .case-open-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(255, 65, 108, 0.5);
+        }
+        
+        .case-open-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        /* Анимация открытия кейса */
         .case-opening-animation {
             position: fixed;
             top: 0;
@@ -1857,11 +1918,11 @@
         .prize-strip-container {
             width: 90%;
             max-width: 800px;
-            height: 200px;
+            height: 150px;
             position: relative;
-            margin: 40px 0;
+            margin: 20px 0;
             overflow: hidden;
-            border-radius: 20px;
+            border-radius: 15px;
             background: rgba(20, 20, 40, 0.6);
             border: 3px solid rgba(94, 156, 255, 0.3);
             box-shadow: 
@@ -1879,13 +1940,13 @@
         }
         
         .prize-item {
-            min-width: 200px;
+            min-width: 150px;
             height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 15px;
             background: rgba(30, 30, 60, 0.8);
             border-right: 2px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
@@ -1897,20 +1958,20 @@
         }
         
         .prize-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
         }
         
         .prize-amount {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             font-weight: bold;
             margin-bottom: 5px;
             text-shadow: 0 0 10px currentColor;
         }
         
         .prize-name {
-            font-size: 0; /* Скрываем названия призов */
+            font-size: 0;
             height: 0;
             margin: 0;
             padding: 0;
@@ -1954,10 +2015,10 @@
         .center-line::before {
             content: '▼';
             position: absolute;
-            top: -30px;
+            top: -25px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 2rem;
+            font-size: 1.5rem;
             color: #ffcc00;
             text-shadow: 0 0 10px #ffcc00;
             animation: arrowPulse 1s infinite alternate;
@@ -1970,16 +2031,16 @@
         
         .case-reward {
             text-align: center;
-            padding: 30px;
+            padding: 20px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
+            border-radius: 15px;
             backdrop-filter: blur(10px);
             border: 2px solid #ffcc00;
-            max-width: 400px;
+            max-width: 350px;
             width: 90%;
             display: none;
             animation: rewardAppear 0.5s ease-out forwards;
-            margin-top: 20px;
+            margin-top: 15px;
         }
         
         @keyframes rewardAppear {
@@ -1994,8 +2055,8 @@
         }
         
         .reward-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
+            font-size: 3rem;
+            margin-bottom: 15px;
             display: block;
             animation: rewardIconPulse 1s infinite alternate;
         }
@@ -2007,26 +2068,26 @@
         
         .reward-amount {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
+            font-size: 2rem;
             color: #00ff00;
             text-shadow: 0 0 15px #00ff00;
             margin-bottom: 10px;
         }
         
         .reward-text {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: white;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
         .close-reward {
             background: linear-gradient(45deg, #ff416c, #ff4b2b);
             border: none;
             color: white;
-            padding: 15px 30px;
-            border-radius: 25px;
+            padding: 12px 25px;
+            border-radius: 20px;
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.1rem;
+            font-size: 1rem;
             cursor: pointer;
             font-weight: 600;
             box-shadow: 0 8px 20px rgba(255, 65, 108, 0.4);
@@ -2037,89 +2098,7 @@
             transform: scale(0.98);
         }
         
-        .case-open-btn {
-            background: linear-gradient(45deg, #ff416c, #ff4b2b);
-            border: none;
-            color: white;
-            padding: 14px 28px;
-            border-radius: 25px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.1rem;
-            cursor: pointer;
-            width: 200px;
-            margin: 20px auto;
-            display: block;
-            font-weight: 600;
-            box-shadow: 0 8px 20px rgba(255, 65, 108, 0.4);
-            transition: all 0.3s ease;
-        }
-        
-        .case-open-btn:active {
-            transform: scale(0.98);
-        }
-        
-        .case-open-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(255, 65, 108, 0.5);
-        }
-        
-        .case-open-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-        
-        /* Звёзды на фоне */
-        .stars {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
-        
-        .star {
-            position: absolute;
-            background-color: white;
-            border-radius: 50%;
-            animation: twinkle 3s infinite alternate;
-        }
-        
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-        
-        /* Облака на фоне игры */
-        .cloud {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 50%;
-            animation: cloudMove 40s linear infinite;
-            filter: blur(5px);
-        }
-        
-        @keyframes cloudMove {
-            0% { transform: translateY(400px); }
-            100% { transform: translateY(-100px); }
-        }
-        
-        /* Мелкие звёзды в игре */
-        .game-star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: starTwinkle 3s infinite alternate;
-        }
-        
-        @keyframes starTwinkle {
-            0%, 100% { opacity: 0.3; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-        
-        /* Адаптация */
+        /* Адаптация для телефонов */
         @media (max-width: 400px) {
             .title {
                 font-size: 1.5rem;
@@ -2143,6 +2122,36 @@
                 margin-top: 160px;
             }
             
+            .cases-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .case-item {
+                padding: 12px 8px;
+                min-height: 130px;
+            }
+            
+            .case-icon {
+                font-size: 2rem;
+            }
+            
+            .case-name {
+                font-size: 0.9rem;
+            }
+            
+            .case-price {
+                font-size: 0.85rem;
+            }
+            
+            .case-chance {
+                font-size: 0.7rem;
+            }
+            
+            .cases-title {
+                font-size: 1.6rem;
+            }
+            
             .rocket {
                 width: 55px;
                 height: 130px;
@@ -2162,29 +2171,20 @@
                 padding: 25px;
             }
             
-            .cases-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            
-            .cases-title {
-                font-size: 1.8rem;
-            }
-            
             .prize-strip-container {
-                height: 150px;
+                height: 120px;
             }
             
             .prize-item {
-                min-width: 150px;
+                min-width: 120px;
             }
             
             .prize-icon {
-                font-size: 2.5rem;
+                font-size: 1.8rem;
             }
             
             .prize-amount {
-                font-size: 1.4rem;
+                font-size: 1.2rem;
             }
         }
         
@@ -2210,16 +2210,77 @@
             }
             
             .cases-page {
-                padding: 15px;
+                padding: 12px;
+            }
+            
+            .cases-grid {
+                gap: 8px;
+            }
+            
+            .case-item {
+                min-height: 120px;
+                padding: 10px 6px;
             }
             
             .prize-strip-container {
-                height: 120px;
-                margin: 20px 0;
+                height: 100px;
+                margin: 15px 0;
+            }
+            
+            .case-open-btn {
+                padding: 10px 20px;
+                width: 160px;
+                font-size: 0.9rem;
             }
         }
         
-        /* Исправление бага с некликабельностью - ВАЖНОЕ ИСПРАВЛЕНИЕ */
+        /* Для очень маленьких экранов */
+        @media (max-height: 500px) {
+            .header-container {
+                top: 10px;
+                padding: 10px 20px;
+            }
+            
+            .title {
+                font-size: 1.3rem;
+                padding: 8px 16px;
+            }
+            
+            .main-container {
+                margin-top: 120px;
+            }
+            
+            .cases-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 6px;
+            }
+            
+            .case-item {
+                min-height: 110px;
+                padding: 8px 5px;
+            }
+            
+            .case-icon {
+                font-size: 1.8rem;
+                margin-bottom: 5px;
+            }
+            
+            .case-name {
+                font-size: 0.85rem;
+                margin-bottom: 3px;
+            }
+            
+            .case-price {
+                font-size: 0.8rem;
+                margin-bottom: 2px;
+            }
+            
+            .case-chance {
+                font-size: 0.65rem;
+            }
+        }
+        
+        /* Исправление бага с некликабельностью */
         .btn, .money-btn, .bet-btn, .launch-btn, .cashout-btn, .back-btn, 
         .case-open-btn, .close-reward, .promocode-btn, .login-btn, 
         .startup-btn, .warning-btn, .close-modal {
@@ -2236,7 +2297,7 @@
             pointer-events: auto !important;
         }
         
-        /* Фикс для модальных окон - чтобы они не блокировали клики после закрытия */
+        /* Фикс для модальных окон */
         .modal, .promocode-modal, .deposit-modal, .withdraw-modal, 
         .withdraw-confirm-modal, .login-modal, .startup-modal, 
         .orientation-warning, .cases-page, .rocket-game, .case-opening-animation {
@@ -2307,15 +2368,15 @@
             <h2 class="promocode-title">💰 ВЫВОД СРЕДСТВ</h2>
             <div class="startup-text">
                 <strong>Требования для вывода:</strong><br><br>
-                <h5>1. Включить запись экрана (показать время)<br>
+                1. Включить запись экрана<br>
                 2. Закрыть мини-приложение<br>
                 3. Заново его открыть и авторизоваться<br>
-                4. Нажать кнопку "Вывод" и отправить запись экрана @plushpeppa<br><br> </h5>
+                4. Нажать кнопку "Вывод"<br><br>
                 
-                <strong>Дополнительные условия:</strong>
-                <h5>• Сделать хотя бы 1 пополнение (при помощи промокода) в течение 5 дней<br>
+                <strong>Дополнительные условия:</strong><br>
+                • Сделать хотя бы 1 пополнение (при помощи промокода) в течение 5 дней<br>
                 • Минимальный вывод: <strong>25 ⭐</strong><br>
-                • Максимальный вывод: <strong>25 ⭐ </strong> выводить можно 1 раз в 24ч </h5>
+                • Максимальный вывод: <strong>25 ⭐</strong> (на данный момент)
             </div>
             <button class="promocode-btn" id="continueWithdrawBtn">ПОНЯТНО</button>
         </div>
@@ -2362,13 +2423,12 @@
         </div>
     </div>
 
-    <!-- Остальной интерфейс -->
-    <div class="space-bg" id="spaceBg"></div>
-    <div class="stars" id="stars"></div>
+    <!-- Новогодний фон -->
+    <div class="new-year-bg" id="newYearBg"></div>
     
     <div class="header-container">
         <h1 class="title">
-            <span class="wonk">WONK</span> <span class="minigame">MINIGAME</span>
+            <span class="wonk">PEPE</span> <span class="minigame">MINIGAME</span>
         </h1>
         
         <div class="header-balance">
@@ -2451,6 +2511,7 @@
         </div>
     </div>
     
+    <!-- ОПТИМИЗИРОВАННАЯ СТРАНИЦА КЕЙСОВ ДЛЯ ТЕЛЕФОНОВ -->
     <div class="cases-page" id="casesPage">
         <div class="cases-header">
             <h2 class="cases-title">КЕЙСЫ</h2>
@@ -2500,157 +2561,179 @@
     </div>
 
     <script>
-// === УПРОЩЕННАЯ СИСТЕМА ПРОМОКОДОВ С ИНДИВИДУАЛЬНЫМИ ЛИМИТАМИ ===
-
-// База данных промокодов: {username: {maxUses: число, used: число, lastUsed: дата}}
-let promoCodeLimits = {};
-
-function initPromoCodeSystem() {
-    loadPromoCodeLimits();
-}
-
-// Загрузка лимитов промокодов
-function loadPromoCodeLimits() {
-    const saved = localStorage.getItem('wonk_promo_limits');
-    
-    if (saved) {
-        try {
-            promoCodeLimits = JSON.parse(saved);
-        } catch (e) {
-            console.error('Ошибка загрузки лимитов промокодов:', e);
-            promoCodeLimits = {};
-        }
-    } else {
-        promoCodeLimits = {};
-    }
-}
-
-// Сохранение лимитов промокодов
-function savePromoCodeLimits() {
-    localStorage.setItem('wonk_promo_limits', JSON.stringify(promoCodeLimits));
-}
-
-// Установить лимит активаций для пользователя
-function setUserPromoLimit(username, maxUses) {
-    if (!promoCodeLimits[username]) {
-        promoCodeLimits[username] = {
-            maxUses: maxUses,
-            used: 0,
-            lastUsed: null
-        };
-    } else {
-        promoCodeLimits[username].maxUses = maxUses;
-    }
-    
-    savePromoCodeLimits();
-    return true;
-}
-
-// Проверка и активация промокода
-function activatePromoCode(code, username) {
-    const normalizedCode = code.toLowerCase().trim();
-    
-    // Проверяем правильность промокода
-    if (normalizedCode !== 'vip100') {
-        return { 
-            success: false, 
-            message: "Неверный промокод! Используйте: vip100" 
-        };
-    }
-    
-    // Проверяем, есть ли у пользователя право на промокод
-    if (!promoCodeLimits[username]) {
-        return { 
-            success: false, 
-            message: "Вам не разрешено использовать этот промокод!" 
-        };
-    }
-    
-    const userPromoData = promoCodeLimits[username];
-    
-    // Проверяем, не превысил ли пользователь свой лимит
-    if (userPromoData.used >= userPromoData.maxUses) {
-        return { 
-            success: false, 
-            message: `Вы исчерпали свой лимит активаций! (${userPromoData.used}/${userPromoData.maxUses})` 
-        };
-    }
-    
-    // Активируем промокод
-    userPromoData.used += 1;
-    userPromoData.lastUsed = new Date().toISOString();
-    
-    // Сохраняем данные
-    savePromoCodeLimits();
-    
-    // Сохраняем в историю пользователя
-    if (currentUser && userData[currentUser]) {
-        if (!userData[currentUser].usedPromoCodes) {
-            userData[currentUser].usedPromoCodes = [];
-        }
-        if (!userData[currentUser].promoCodesUsedAt) {
-            userData[currentUser].promoCodesUsedAt = {};
-        }
-        
-        if (!userData[currentUser].usedPromoCodes.includes('vip100')) {
-            userData[currentUser].usedPromoCodes.push('vip100');
-        }
-        
-        userData[currentUser].promoCodesUsedAt['vip100'] = new Date().toISOString();
-        saveUserData();
-    }
-    
-    return { 
-        success: true, 
-        message: `Промокод активирован! +15 ⭐ (${userPromoData.used}/${userPromoData.maxUses})`,
-        amount: 15 
-    };
-}
-
-// ВАЖНО: ЗДЕСЬ НАСТРАИВАЕМ ПОЛЬЗОВАТЕЛЕЙ
-function initPromoCodeSystem() {
-    loadPromoCodeLimits();
-    
-    // ДОБАВЬТЕ СЮДА ВСЕХ ПОЛЬЗОВАТЕЛЕЙ
-    // Формат: setUserPromoLimit('логин', количество_активаций);
-    
-    // Примеры:
-    setUserPromoLimit('fgtujjjwonkajjjgjl', 6);   // 5 активаций
-}
-
-        // Глобальные переменные
+        // === ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ===
         let currentUser = null;
         let userData = {};
-        
-        // Проверка на мобильное устройство
+        let promoCodeLimits = {};
+        let promoCodesDB = {};
+
+        // === ФУНКЦИИ ДЛЯ СОЗДАНИЯ НОВОГОДНЕГО ФОНА ===
+        function createNewYearBackground() {
+            const bg = document.getElementById('newYearBg');
+            
+            // Снежинки
+            for (let i = 0; i < 50; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                
+                const size = Math.random() * 5 + 2;
+                snowflake.style.width = `${size}px`;
+                snowflake.style.height = `${size}px`;
+                snowflake.style.left = `${Math.random() * 100}%`;
+                snowflake.style.top = `${Math.random() * 100}%`;
+                snowflake.style.opacity = Math.random() * 0.7 + 0.3;
+                snowflake.style.animationDelay = `${Math.random() * 10}s`;
+                snowflake.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                
+                bg.appendChild(snowflake);
+            }
+            
+            // Новогодние шары
+            const colors = ['red', 'gold', 'green'];
+            for (let i = 0; i < 12; i++) {
+                const ball = document.createElement('div');
+                ball.classList.add('christmas-ball');
+                ball.classList.add(colors[i % colors.length]);
+                
+                const size = Math.random() * 25 + 15;
+                ball.style.width = `${size}px`;
+                ball.style.height = `${size}px`;
+                ball.style.left = `${Math.random() * 100}%`;
+                ball.style.top = `${Math.random() * 100}%`;
+                ball.style.animationDelay = `${Math.random() * 15}s`;
+                ball.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                
+                bg.appendChild(ball);
+            }
+            
+            // Гирлянда
+            const garland = document.createElement('div');
+            garland.classList.add('garland');
+            bg.appendChild(garland);
+        }
+
+        // === СИСТЕМА ПРОМОКОДОВ С ИНДИВИДУАЛЬНЫМИ ЛИМИТАМИ ===
+        function loadPromoCodeLimits() {
+            const saved = localStorage.getItem('wonk_promo_limits');
+            
+            if (saved) {
+                try {
+                    promoCodeLimits = JSON.parse(saved);
+                } catch (e) {
+                    promoCodeLimits = {};
+                }
+            } else {
+                promoCodeLimits = {};
+            }
+        }
+
+        function savePromoCodeLimits() {
+            localStorage.setItem('wonk_promo_limits', JSON.stringify(promoCodeLimits));
+        }
+
+        function setUserPromoLimit(username, maxUses) {
+            if (!promoCodeLimits[username]) {
+                promoCodeLimits[username] = {
+                    maxUses: maxUses,
+                    used: 0,
+                    lastUsed: null
+                };
+            } else {
+                promoCodeLimits[username].maxUses = maxUses;
+            }
+            
+            savePromoCodeLimits();
+            return true;
+        }
+
+        function initPromoCodeSystem() {
+            loadPromoCodeLimits();
+            
+            // ЗДЕСЬ ДОБАВЛЯЕМ ПОЛЬЗОВАТЕЛЕЙ И ИХ ЛИМИТЫ
+            // Примеры:
+            setUserPromoLimit('fgtujjjwonkajjjgjl', 100);   // 100 активаций
+            setUserPromoLimit('fgtuhghgklklgjl', 50);       // 50 активаций
+            // Добавьте других пользователей по необходимости
+        }
+
+        function activatePromoCode(code, username) {
+            const normalizedCode = code.toLowerCase().trim();
+            
+            if (normalizedCode !== 'vip100') {
+                return { 
+                    success: false, 
+                    message: "Неверный промокод! Используйте: vip100" 
+                };
+            }
+            
+            if (!promoCodeLimits[username]) {
+                return { 
+                    success: false, 
+                    message: "Вам не разрешено использовать этот промокод!" 
+                };
+            }
+            
+            const userPromoData = promoCodeLimits[username];
+            
+            if (userPromoData.used >= userPromoData.maxUses) {
+                return { 
+                    success: false, 
+                    message: `Вы исчерпали свой лимит активаций! (${userPromoData.used}/${userPromoData.maxUses})` 
+                };
+            }
+            
+            userPromoData.used += 1;
+            userPromoData.lastUsed = new Date().toISOString();
+            
+            savePromoCodeLimits();
+            
+            // Сохраняем в историю пользователя
+            if (currentUser && userData[currentUser]) {
+                if (!userData[currentUser].usedPromoCodes) {
+                    userData[currentUser].usedPromoCodes = [];
+                }
+                if (!userData[currentUser].promoCodesUsedAt) {
+                    userData[currentUser].promoCodesUsedAt = {};
+                }
+                
+                if (!userData[currentUser].usedPromoCodes.includes('vip100')) {
+                    userData[currentUser].usedPromoCodes.push('vip100');
+                }
+                
+                userData[currentUser].promoCodesUsedAt['vip100'] = new Date().toISOString();
+                saveUserData();
+            }
+            
+            return { 
+                success: true, 
+                message: `Промокод активирован! +15 ⭐`,
+                amount: 15 
+            };
+        }
+
+        // === ОСТАЛЬНЫЕ ФУНКЦИИ ===
         function isMobileDevice() {
             return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         }
-        
-        // Проверка логина
+
         function validateLogin(login) {
             return login.startsWith('fgtu') && login.endsWith('gjl');
         }
-        
-        // Проверка на админа
 
         function isAdmin(login) {
-    // Список админов
-    const admins = [
-        'fgtujjjwonkajjjgjl', 
-        'fgtuhghgklklgjl',
-    ];
-    return admins.includes(login);
-}
-        
-        // Загрузка данных пользователя из localStorage
+            const admins = [
+                'fgtujjjwonkajjjgjl', 
+                'fgtuhghgklklgjl',
+            ];
+            return admins.includes(login);
+        }
+
         function loadUserData(login) {
             const savedData = localStorage.getItem(`wonk_user_${login}`);
             if (savedData) {
                 try {
                     const data = JSON.parse(savedData);
                     data.lastLogin = new Date().toISOString();
-                    // Проверяем и добавляем массив использованных промокодов если его нет
                     if (!data.usedPromoCodes) {
                         data.usedPromoCodes = [];
                     }
@@ -2663,20 +2746,17 @@ function initPromoCodeSystem() {
                 }
             }
             
-            // Начальный баланс для обычных пользователей - 1 звезда
-            // Для админа - бесконечный баланс (1000000 звезд)
             const initialBalance = isAdmin(login) ? 1000000 : 1;
             return {
                 balance: initialBalance,
                 login: login,
                 lastLogin: new Date().toISOString(),
-                usedPromoCodes: [], // Массив использованных промокодов
-                promoCodesUsedAt: {}, // Время использования промокодов
+                usedPromoCodes: [],
+                promoCodesUsedAt: {},
                 isAdmin: isAdmin(login)
             };
         }
-        
-        // Сохранение данных пользователя в localStorage
+
         function saveUserData() {
             if (currentUser && userData[currentUser]) {
                 try {
@@ -2686,8 +2766,7 @@ function initPromoCodeSystem() {
                 }
             }
         }
-        
-        // Обновление баланса пользователя
+
         function updateUserBalance(amount) {
             if (currentUser && userData[currentUser]) {
                 userData[currentUser].balance = amount;
@@ -2696,49 +2775,28 @@ function initPromoCodeSystem() {
                 updateBalanceDisplay();
             }
         }
-        
-        // Получение текущего баланса пользователя
+
         function getCurrentBalance() {
             if (currentUser && userData[currentUser]) {
                 return userData[currentUser].balance;
             }
             return 0;
         }
-        
-// Проверка, использовал ли пользователь промокод в течение последних 5 дней
-function hasUsedPromoCodeInLast5Days() {
-    if (!currentUser) return false;
-    
-    // Проверяем через нашу новую систему
-    if (promoCodeLimits[currentUser] && promoCodeLimits[currentUser].vip100) {
-        const lastUsed = promoCodeLimits[currentUser].vip100.lastUsed;
-        if (lastUsed) {
-            const now = new Date();
-            const usedDate = new Date(lastUsed);
-            const timeDiff = now.getTime() - usedDate.getTime();
-            const daysDiff = timeDiff / (1000 * 3600 * 24);
+
+        function hasUsedPromoCodeInLast5Days() {
+            if (!currentUser) return false;
             
-            console.log('Последнее использование промокода:', daysDiff, 'дней назад');
-            return daysDiff <= 5;
+            // Проверяем новую систему
+            if (promoCodeLimits[currentUser] && promoCodeLimits[currentUser].lastUsed) {
+                const lastUsed = new Date(promoCodeLimits[currentUser].lastUsed);
+                const now = new Date();
+                const daysDiff = (now.getTime() - lastUsed.getTime()) / (1000 * 3600 * 24);
+                return daysDiff <= 5;
+            }
+            
+            return false;
         }
-    }
-    
-    // Также проверяем старую систему для обратной совместимости
-    if (userData[currentUser] && userData[currentUser].promoCodesUsedAt) {
-        const lastUsed = userData[currentUser].promoCodesUsedAt['vip100'];
-        if (lastUsed) {
-            const now = new Date();
-            const usedDate = new Date(lastUsed);
-            const timeDiff = now.getTime() - usedDate.getTime();
-            const daysDiff = timeDiff / (1000 * 3600 * 24);
-            return daysDiff <= 5;
-        }
-    }
-    
-    return false;
-}
-        
-        // Обновление отображения баланса в шапке
+
         function updateBalanceDisplay() {
             const headerBalance = document.getElementById('headerBalance');
             const gameBalance = document.getElementById('balance');
@@ -2749,11 +2807,47 @@ function hasUsedPromoCodeInLast5Days() {
                 gameBalance.innerHTML = `<span class="star-icon">⭐</span> ${balance} ⭐`;
             }
         }
-        
-        // Показываем предупреждение о телефоне при загрузке
+
+        const GlobalBalance = {
+            get balance() {
+                return getCurrentBalance();
+            },
+            
+            set balance(newBalance) {
+                updateUserBalance(newBalance);
+            },
+            
+            updateAllDisplays() {
+                if (window.gameInstance) {
+                    window.gameInstance.updateDisplay();
+                }
+                updateBalanceDisplay();
+            },
+            
+            add(amount) {
+                this.balance = this.balance + amount;
+                this.updateAllDisplays();
+            },
+            
+            subtract(amount) {
+                if (this.balance >= amount) {
+                    this.balance = this.balance - amount;
+                    this.updateAllDisplays();
+                    return true;
+                }
+                return false;
+            }
+        };
+
+        // === ОСНОВНОЙ КОД ===
         document.addEventListener('DOMContentLoaded', function() {
-            // Загружаем промокоды
-          initPromoCodeSystem();
+            console.log('Инициализация WONK MINIGAME...');
+            
+            // Создаем новогодний фон
+            createNewYearBackground();
+            
+            // Инициализируем систему промокодов
+            initPromoCodeSystem();
             
             const orientationWarning = document.getElementById('orientationWarning');
             const continueWarningBtn = document.getElementById('continueWarningBtn');
@@ -2772,88 +2866,78 @@ function hasUsedPromoCodeInLast5Days() {
             const cancelWithdrawBtn = document.getElementById('cancelWithdrawBtn');
             const withdrawMessage = document.getElementById('withdrawMessage');
             
-            // Обработчики для кнопок пополнения и вывода
-            depositBtn.addEventListener('click', function() {
+            // ФИКС КНОПОК ВЫВОДА И ПОПОЛНЕНИЯ
+            depositBtn.onclick = function() {
+                console.log('Кнопка ПОПОЛНИТЬ нажата');
                 depositModal.style.display = 'flex';
-            });
+            };
             
-            withdrawBtn.addEventListener('click', function() {
+            withdrawBtn.onclick = function() {
+                console.log('Кнопка ВЫВОД нажата');
                 withdrawModal.style.display = 'flex';
-            });
+            };
             
-            closeDepositBtn.addEventListener('click', function() {
+            closeDepositBtn.onclick = function() {
                 depositModal.style.display = 'none';
-            });
+            };
             
-            continueWithdrawBtn.addEventListener('click', function() {
+            continueWithdrawBtn.onclick = function() {
                 withdrawModal.style.display = 'none';
                 withdrawConfirmModal.style.display = 'flex';
-                
-                // Проверяем условия вывода
                 checkWithdrawConditions();
-            });
+            };
             
-            cancelWithdrawBtn.addEventListener('click', function() {
+            cancelWithdrawBtn.onclick = function() {
                 withdrawConfirmModal.style.display = 'none';
-            });
+            };
             
-            // Проверка условий вывода
             function checkWithdrawConditions() {
-    console.log('=== ПРОВЕРКА УСЛОВИЙ ВЫВОДА ===');
-    confirmWithdrawBtn.disabled = true;
-    withdrawMessage.textContent = "Проверяем условия вывода...";
-    
-    setTimeout(() => {
-        const balance = getCurrentBalance();
-        const hasUsedPromo = hasUsedPromoCodeInLast5Days();
-        
-        console.log('Баланс:', balance);
-        console.log('Использовал промокод в последние 5 дней:', hasUsedPromo);
-        
-        if (balance < 25) {
-            withdrawMessage.textContent = "❌ У вас недостаточно звезд для вывода (нужно 25 ⭐)";
-            withdrawMessage.style.color = "#ff0000";
-            console.log('❌ Недостаточно баланса');
-        } else if (!hasUsedPromo) {
-            withdrawMessage.textContent = "❌ Вы не использовали промокод в течение последних 5 дней";
-            withdrawMessage.style.color = "#ff0000";
-            console.log('❌ Не использовал промокод');
-        } else {
-            withdrawMessage.textContent = "✅ Все условия выполнены! Можете выводить средства.";
-            withdrawMessage.style.color = "#00ff00";
-            confirmWithdrawBtn.disabled = false;
-            console.log('✅ Условия выполнены, кнопка разблокирована');
-        }
-        
-        console.log('Кнопка заблокирована?', confirmWithdrawBtn.disabled);
-    }, 1000);
-}
+                console.log('=== ПРОВЕРКА УСЛОВИЙ ВЫВОДА ===');
+                
+                confirmWithdrawBtn.disabled = true;
+                withdrawMessage.textContent = "Проверяем условия вывода...";
+                
+                const balance = getCurrentBalance();
+                const hasUsedPromo = hasUsedPromoCodeInLast5Days();
+                
+                console.log('Баланс:', balance, '⭐');
+                console.log('Использовал промокод:', hasUsedPromo);
+                console.log('Промокод данные:', promoCodeLimits[currentUser]);
+                
+                if (balance < 25) {
+                    withdrawMessage.innerHTML = "❌ <strong>Недостаточно звезд!</strong><br>Нужно: 25 ⭐<br>У вас: " + balance + " ⭐";
+                    withdrawMessage.style.color = "#ff0000";
+                } else if (!hasUsedPromo) {
+                    withdrawMessage.innerHTML = "❌ <strong>Нет активированного промокода!</strong><br>Используйте промокод 'vip100' в течение последних 5 дней";
+                    withdrawMessage.style.color = "#ff0000";
+                } else {
+                    withdrawMessage.innerHTML = "✅ <strong>Все условия выполнены!</strong><br>Баланс: " + balance + " ⭐<br>Промокод активирован";
+                    withdrawMessage.style.color = "#00ff00";
+                    confirmWithdrawBtn.disabled = false;
+                }
+            }
             
-            // Подтверждение вывода
-            confirmWithdrawBtn.addEventListener('click', function() {
+            confirmWithdrawBtn.onclick = function() {
                 const balance = getCurrentBalance();
                 const hasUsedPromo = hasUsedPromoCodeInLast5Days();
                 
                 if (balance >= 25 && hasUsedPromo) {
-                    // Списываем 25 звезд
-                    GlobalBalance.subtract(25);
-                    
-                    // Показываем сообщение об успехе
-                    alert("✅ Запрос на вывод 25 ⭐ отправлен! Средства будут переведены в ближайшее время.");
-                    
-                    // Закрываем окно
-                    withdrawConfirmModal.style.display = 'none';
+                    if (GlobalBalance.subtract(25)) {
+                        alert("✅ Запрос на вывод 25 ⭐ отправлен! Средства будут переведены в ближайшее время.");
+                        withdrawConfirmModal.style.display = 'none';
+                    } else {
+                        alert("❌ Ошибка при списании средств!");
+                    }
                 } else {
                     alert("❌ Не удалось выполнить вывод. Проверьте условия.");
                 }
-            });
+            };
             
             // Проверяем, мобильное ли устройство
             if (isMobileDevice()) {
-                // Показываем предупреждение на 3 секунды
                 orientationWarning.style.display = 'flex';
                 
-                continueWarningBtn.addEventListener('click', function() {
+                continueWarningBtn.onclick = function() {
                     orientationWarning.style.opacity = '0';
                     orientationWarning.style.transform = 'scale(0.9)';
                     orientationWarning.style.transition = 'all 0.3s ease';
@@ -2863,9 +2947,8 @@ function hasUsedPromoCodeInLast5Days() {
                         loginModal.style.display = 'flex';
                         setTimeout(() => loginInput.focus(), 300);
                     }, 300);
-                });
+                };
                 
-                // Автоматическое закрытие через 5 секунд
                 setTimeout(() => {
                     if (orientationWarning.style.display === 'flex') {
                         orientationWarning.style.opacity = '0';
@@ -2880,7 +2963,6 @@ function hasUsedPromoCodeInLast5Days() {
                     }
                 }, 5000);
             } else {
-                // Если не мобильное устройство, сразу показываем логин
                 loginModal.style.display = 'flex';
                 setTimeout(() => loginInput.focus(), 300);
             }
@@ -2892,7 +2974,7 @@ function hasUsedPromoCodeInLast5Days() {
                 }
             });
             
-            loginBtn.addEventListener('click', function() {
+            loginBtn.onclick = function() {
                 const login = loginInput.value.trim();
                 
                 if (!validateLogin(login)) {
@@ -2902,7 +2984,7 @@ function hasUsedPromoCodeInLast5Days() {
                     
                     setTimeout(() => {
                         loginError.style.display = 'none';
-                        loginInput.style.borderColor = 'rgba(94, 156, 255, 0.4)';
+                        loginInput.style.borderColor = 'rgba(255, 215, 0, 0.4)';
                         loginInput.style.boxShadow = 'none';
                     }, 3000);
                     return;
@@ -2929,136 +3011,173 @@ function hasUsedPromoCodeInLast5Days() {
                     loginModal.style.display = 'none';
                     showStartupModal();
                 }, 300);
-            });
+            };
+            
+            function showStartupModal() {
+                const startupModal = document.getElementById('startupModal');
+                const startupBtn = document.getElementById('startupBtn');
+                
+                startupModal.style.display = 'flex';
+                
+                startupBtn.onclick = function() {
+                    startupModal.style.opacity = '0';
+                    startupModal.style.transform = 'scale(0.9)';
+                    startupModal.style.transition = 'all 0.3s ease';
+                    
+                    setTimeout(() => {
+                        startupModal.style.display = 'none';
+                        setupButtons();
+                    }, 300);
+                };
+            }
+            
+            function setupButtons() {
+                const btnWhat = document.getElementById('whatBtn');
+                const btnPlay = document.getElementById('playBtn');
+                const btnCases = document.getElementById('casesBtn');
+                const btnPromo = document.getElementById('promoBtn');
+                const modal = document.getElementById('infoModal');
+                const closeModalBtn = document.getElementById('closeModalBtn');
+                const rocketGame = document.getElementById('rocketGame');
+                const casesPage = document.getElementById('casesPage');
+                const promocodeModal = document.getElementById('promocodeModal');
+                const activatePromoBtn = document.getElementById('activatePromoBtn');
+                const closePromoBtn = document.getElementById('closePromoBtn');
+                const promocodeInput = document.getElementById('promocodeInput');
+                const promocodeResult = document.getElementById('promocodeResult');
+                
+                let gameInstance = null;
+                let casesSystem = null;
+                
+                btnWhat.onclick = function() {
+                    this.style.transform = 'scale(0.96)';
+                    setTimeout(() => this.style.transform = '', 200);
+                    modal.style.display = 'flex';
+                };
+                
+                btnPlay.onclick = function() {
+                    this.style.transform = 'scale(0.96)';
+                    setTimeout(() => this.style.transform = '', 200);
+                    rocketGame.style.display = 'flex';
+                    
+                    if (!gameInstance) {
+                        gameInstance = new RocketGame();
+                        window.gameInstance = gameInstance;
+                    } else {
+                        gameInstance.updateDisplay();
+                    }
+                };
+                
+                // ОПТИМИЗИРОВАННАЯ КНОПКА КЕЙСОВ ДЛЯ ТЕЛЕФОНОВ
+                btnCases.onclick = function() {
+                    this.style.transform = 'scale(0.96)';
+                    setTimeout(() => this.style.transform = '', 200);
+                    casesPage.style.display = 'flex';
+                    
+                    if (!casesSystem) {
+                        casesSystem = new CasesSystem();
+                        window.casesSystem = casesSystem;
+                    }
+                };
+                
+                // КНОПКА ПРОМОКОДА
+                btnPromo.onclick = function() {
+                    this.style.transform = 'scale(0.96)';
+                    setTimeout(() => this.style.transform = '', 200);
+                    promocodeModal.style.display = 'flex';
+                    promocodeModal.style.opacity = '1';
+                    promocodeModal.style.transform = 'scale(1)';
+                    promocodeInput.value = '';
+                    promocodeResult.style.display = 'none';
+                    
+                    setTimeout(() => {
+                        promocodeInput.focus();
+                    }, 300);
+                };
+                
+                // Активация промокода
+                activatePromoBtn.onclick = function() {
+                    const code = promocodeInput.value.trim().toLowerCase();
+                    
+                    if (!code) {
+                        showPromoResult('Введите промокод!', false);
+                        return;
+                    }
+                    
+                    const result = activatePromoCode(code, currentUser);
+                    
+                    if (result.success) {
+                        // Пополняем баланс
+                        GlobalBalance.add(result.amount);
+                        showPromoResult(result.message, true);
+                        
+                        setTimeout(() => {
+                            closePromocodeModal();
+                        }, 2000);
+                    } else {
+                        showPromoResult(result.message, false);
+                    }
+                };
+                
+                // Закрытие окна промокода
+                closePromoBtn.onclick = function() {
+                    closePromocodeModal();
+                };
+                
+                function closePromocodeModal() {
+                    promocodeModal.style.opacity = '0';
+                    promocodeModal.style.transform = 'scale(0.9)';
+                    promocodeModal.style.transition = 'all 0.3s ease';
+                    
+                    setTimeout(() => {
+                        promocodeModal.style.display = 'none';
+                    }, 300);
+                }
+                
+                promocodeInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        activatePromoBtn.click();
+                    }
+                });
+                
+                promocodeModal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closePromocodeModal();
+                    }
+                });
+                
+                closeModalBtn.onclick = function() {
+                    this.style.transform = 'scale(0.96)';
+                    setTimeout(() => this.style.transform = '', 200);
+                    modal.style.display = 'none';
+                };
+                
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.style.display = 'none';
+                    }
+                });
+                
+                function showPromoResult(message, isSuccess) {
+                    promocodeResult.textContent = message;
+                    
+                    if (isSuccess) {
+                        promocodeResult.className = 'promocode-result promocode-success';
+                    } else {
+                        promocodeResult.className = 'promocode-result promocode-error';
+                    }
+                    
+                    promocodeResult.style.display = 'block';
+                    promocodeResult.style.opacity = '1';
+                    promocodeResult.style.transform = 'translateY(0)';
+                }
+            }
         });
-        
-        function showStartupModal() {
-            const startupModal = document.getElementById('startupModal');
-            const startupBtn = document.getElementById('startupBtn');
-            
-            startupModal.style.display = 'flex';
-            
-            startupBtn.addEventListener('click', function() {
-                startupModal.style.opacity = '0';
-                startupModal.style.transform = 'scale(0.9)';
-                startupModal.style.transition = 'all 0.3s ease';
-                
-                setTimeout(() => {
-                    startupModal.style.display = 'none';
-                    initGame();
-                }, 300);
-            });
-        }
-        
-        function initGame() {
-            createSpaceBackground();
-            createStars();
-            setupButtons();
-        }
-        
-        const GlobalBalance = {
-            get balance() {
-                return getCurrentBalance();
-            },
-            
-            set balance(newBalance) {
-                updateUserBalance(newBalance);
-            },
-            
-            updateAllDisplays() {
-                if (window.gameInstance) {
-                    window.gameInstance.updateDisplay();
-                }
-                
-                updateBalanceDisplay();
-            },
-            
-            add(amount) {
-                this.balance = this.balance + amount;
-                this.updateAllDisplays();
-            },
-            
-            subtract(amount) {
-                if (this.balance >= amount) {
-                    this.balance = this.balance - amount;
-                    this.updateAllDisplays();
-                    return true;
-                }
-                return false;
-            }
-        };
-        
-        function createSpaceBackground() {
-            const spaceBg = document.getElementById('spaceBg');
-            
-            const planet = document.createElement('div');
-            planet.classList.add('planet');
-            planet.style.width = '300px';
-            planet.style.height = '300px';
-            planet.style.top = '10%';
-            planet.style.left = '70%';
-            spaceBg.appendChild(planet);
-            
-            for (let i = 0; i < 8; i++) {
-                const crystal = document.createElement('div');
-                crystal.classList.add('floating-crystal');
-                crystal.style.left = `${Math.random() * 100}%`;
-                crystal.style.animationDelay = `${Math.random() * 20}s`;
-                crystal.style.opacity = Math.random() * 0.3 + 0.1;
-                crystal.style.transform = `scale(${Math.random() * 0.8 + 0.5})`;
-                spaceBg.appendChild(crystal);
-            }
-            
-            for (let i = 0; i < 15; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                const size = Math.random() * 8 + 3;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.setProperty('--particle-x', `${Math.random() * 200 - 100}px`);
-                particle.style.animationDelay = `${Math.random() * 15}s`;
-                particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
-                particle.style.background = Math.random() > 0.5 
-                    ? 'rgba(94, 156, 255, 0.2)' 
-                    : 'rgba(255, 204, 0, 0.2)';
-                spaceBg.appendChild(particle);
-            }
-            
-            for (let i = 0; i < 3; i++) {
-                const line = document.createElement('div');
-                line.classList.add('space-line');
-                line.style.top = `${Math.random() * 100}%`;
-                line.style.width = `${Math.random() * 200 + 100}px`;
-                line.style.animationDelay = `${Math.random() * 10}s`;
-                line.style.animationDuration = `${Math.random() * 5 + 5}s`;
-                spaceBg.appendChild(line);
-            }
-        }
-        
-        function createStars() {
-            const starsContainer = document.getElementById('stars');
-            const starCount = 120;
-            
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
-                
-                const size = Math.random() * 3 + 1;
-                star.style.width = star.style.height = `${size}px`;
-                star.style.left = `${Math.random() * 100}%`;
-                star.style.top = `${Math.random() * 100}%`;
-                star.style.animationDelay = `${Math.random() * 3}s`;
-                star.style.animationDuration = `${Math.random() * 2 + 2}s`;
-                star.style.opacity = Math.random() * 0.6 + 0.2;
-                
-                starsContainer.appendChild(star);
-            }
-        }
-        
+
+        // === КЛАСС ИГРЫ РАКЕТКА ===
         class RocketGame {
             constructor() {
-                this.bet = 10; // Минимальная ставка 10 звезд
+                this.bet = 10;
                 this.isPlaying = false;
                 this.currentMultiplier = 1.00;
                 this.targetMultiplier = 1.10;
@@ -3067,16 +3186,20 @@ function hasUsedPromoCodeInLast5Days() {
                 this.explosionTimeout = null;
                 this.sparkInterval = null;
                 
-                // Новые шансы на ракетку
                 this.multiplierRanges = [
-                    { min: 1.00, max: 1.05, chance: 30 },   // 30% на 1.00x-1.05x
-                    { min: 1.06, max: 1.50, chance: 60 },   // 60% на 1.06x-1.50x
-                    { min: 1.51, max: 2.00, chance: 6 },    // 6% на 1.51x-2.00x
-                    { min: 2.01, max: 4.00, chance: 4 }     // 4% на 2.01x-4.00x (чаще 3x-4x)
+                    { min: 1.00, max: 1.10, chance: 40 },
+                    { min: 1.11, max: 1.60, chance: 50 },
+                    { min: 1.61, max: 2.00, chance: 6 },
+                    { min: 2.01, max: 4.00, chance: 4 }
                 ];
                 
                 this.totalChance = this.multiplierRanges.reduce((sum, item) => sum + item.chance, 100);
                 
+                this.initGame();
+                this.updateDisplay();
+            }
+            
+            initGame() {
                 this.balanceElement = document.getElementById('balance');
                 this.betAmountElement = document.getElementById('betAmount');
                 this.currentMultiplierElement = document.getElementById('currentMultiplier');
@@ -3089,90 +3212,12 @@ function hasUsedPromoCodeInLast5Days() {
                 this.decreaseBetBtn = document.getElementById('decreaseBet');
                 this.increaseBetBtn = document.getElementById('increaseBet');
                 this.backBtn = document.getElementById('backBtn');
-                this.rocketDisplay = document.getElementById('rocketDisplay');
                 this.flameContainer = document.getElementById('flameContainer');
                 
-                this.initGame();
-                this.createGameBackground();
-                this.updateDisplay();
-            }
-            
-            createGameBackground() {
-                const cloudsContainer = document.getElementById('clouds');
-                for (let i = 0; i < 6; i++) {
-                    const cloud = document.createElement('div');
-                    cloud.classList.add('cloud');
-                    
-                    const size = Math.random() * 80 + 40;
-                    cloud.style.width = `${size}px`;
-                    cloud.style.height = `${size / 3}px`;
-                    cloud.style.left = `${Math.random() * 100}%`;
-                    cloud.style.opacity = Math.random() * 0.1 + 0.03;
-                    cloud.style.animationDelay = `${Math.random() * 40}s`;
-                    cloud.style.background = Math.random() > 0.5 
-                        ? 'rgba(94, 156, 255, 0.05)' 
-                        : 'rgba(255, 204, 0, 0.05)';
-                    
-                    cloudsContainer.appendChild(cloud);
-                }
-                
-                const starsContainer = document.getElementById('gameStars');
-                for (let i = 0; i < 50; i++) {
-                    const star = document.createElement('div');
-                    star.classList.add('game-star');
-                    
-                    const size = Math.random() * 3 + 1;
-                    star.style.width = star.style.height = `${size}px`;
-                    star.style.left = `${Math.random() * 100}%`;
-                    star.style.top = `${Math.random() * 100}%`;
-                    star.style.animationDelay = `${Math.random() * 3}s`;
-                    star.style.opacity = Math.random() * 0.5 + 0.2;
-                    star.style.background = Math.random() > 0.7 
-                        ? '#94a3ff' 
-                        : Math.random() > 0.5 
-                        ? '#ffcc00' 
-                        : '#ffffff';
-                    
-                    starsContainer.appendChild(star);
-                }
-            }
-            
-            createSpark() {
-                if (!this.isPlaying || !this.flameContainer) return;
-                
-                const spark = document.createElement('div');
-                spark.classList.add('flame-spark');
-                
-                const size = Math.random() * 5 + 3;
-                const startX = (Math.random() - 0.5) * 40;
-                const sparkX = (Math.random() - 0.5) * 80;
-                
-                spark.style.width = `${size}px`;
-                spark.style.height = `${size}px`;
-                spark.style.setProperty('--spark-x', `${sparkX}px`);
-                spark.style.left = `calc(50% + ${startX}px)`;
-                spark.style.animationDuration = `${Math.random() * 0.6 + 0.4}s`;
-                spark.style.background = Math.random() > 0.5 
-                    ? '#ffff00' 
-                    : Math.random() > 0.5 
-                    ? '#ff9900' 
-                    : '#ff5500';
-                
-                this.flameContainer.appendChild(spark);
-                
-                setTimeout(() => {
-                    if (spark.parentNode) {
-                        spark.remove();
-                    }
-                }, 800);
-            }
-            
-            initGame() {
                 this.updateDisplay();
                 
                 this.decreaseBetBtn.addEventListener('click', () => this.changeBet(-10, true));
                 this.increaseBetBtn.addEventListener('click', () => this.changeBet(10, false));
-                
                 this.launchBtn.addEventListener('click', () => this.startGame());
                 this.cashoutBtn.addEventListener('click', () => this.cashout());
                 this.backBtn.addEventListener('click', () => this.backToMain());
@@ -3184,7 +3229,7 @@ function hasUsedPromoCodeInLast5Days() {
                 const newBet = this.bet + amount;
                 
                 if (isDecrease) {
-                    if (newBet >= 10) { // Минимальная ставка 10 звезд
+                    if (newBet >= 10) {
                         this.bet = newBet;
                         this.updateDisplay();
                         this.clearError();
@@ -3221,9 +3266,8 @@ function hasUsedPromoCodeInLast5Days() {
                     cumulativeChance += range.chance;
                     if (rand <= cumulativeChance) {
                         let randomMultiplier;
-                        // Для больших иксов (последний диапазон) чаще генерируем 3x-4x
                         if (range === this.multiplierRanges[3]) {
-                            randomMultiplier = 3 + Math.random(); // 3.00 - 4.00
+                            randomMultiplier = 3 + Math.random();
                         } else {
                             randomMultiplier = range.min + Math.random() * (range.max - range.min);
                         }
@@ -3257,6 +3301,33 @@ function hasUsedPromoCodeInLast5Days() {
                 
                 this.sparkInterval = setInterval(() => this.createSpark(), 25);
                 this.gameInterval = setInterval(() => this.updateGame(), 50);
+            }
+            
+            createSpark() {
+                if (!this.isPlaying || !this.flameContainer) return;
+                
+                const spark = document.createElement('div');
+                spark.classList.add('flame-spark');
+                
+                const size = Math.random() * 5 + 3;
+                const startX = (Math.random() - 0.5) * 40;
+                const sparkX = (Math.random() - 0.5) * 80;
+                
+                spark.style.width = `${size}px`;
+                spark.style.height = `${size}px`;
+                spark.style.setProperty('--spark-x', `${sparkX}px`);
+                spark.style.left = `calc(50% + ${startX}px)`;
+                spark.style.animationDuration = `${Math.random() * 0.6 + 0.4}s`;
+                spark.style.background = Math.random() > 0.5 ? '#ffff00' : 
+                                       Math.random() > 0.5 ? '#ff9900' : '#ff5500';
+                
+                this.flameContainer.appendChild(spark);
+                
+                setTimeout(() => {
+                    if (spark.parentNode) {
+                        spark.remove();
+                    }
+                }, 800);
             }
             
             updateGame() {
@@ -3325,10 +3396,6 @@ function hasUsedPromoCodeInLast5Days() {
                 }, 1000);
             }
             
-            resetRocketPosition() {
-                this.rocketElement.style.bottom = '40px';
-            }
-            
             createExplosionParticles() {
                 for (let i = 0; i < 30; i++) {
                     setTimeout(() => {
@@ -3359,6 +3426,10 @@ function hasUsedPromoCodeInLast5Days() {
                         }, duration * 1000);
                     }, i * 25);
                 }
+            }
+            
+            resetRocketPosition() {
+                this.rocketElement.style.bottom = '40px';
             }
             
             stopGame() {
@@ -3401,7 +3472,8 @@ function hasUsedPromoCodeInLast5Days() {
                 document.getElementById('rocketGame').style.display = 'none';
             }
         }
-        
+
+        // === КЛАСС СИСТЕМЫ КЕЙСОВ ===
         class CasesSystem {
             constructor() {
                 this.selectedCase = null;
@@ -3450,7 +3522,6 @@ function hasUsedPromoCodeInLast5Days() {
             generatePrizes() {
                 this.prizes = [];
                 
-                // Генерируем призы для ленты (50 призов)
                 for (let i = 0; i < 50; i++) {
                     let amount, icon, color;
                     
@@ -3473,13 +3544,11 @@ function hasUsedPromoCodeInLast5Days() {
                         color = '#9C27B0';
                     }
                     
-                    const name = '';
-                    
                     this.prizes.push({
                         amount,
                         icon,
                         color,
-                        name
+                        name: ''
                     });
                 }
                 
@@ -3518,43 +3587,37 @@ function hasUsedPromoCodeInLast5Days() {
                 }
                 
                 this.openCaseBtn.disabled = true;
-                
                 GlobalBalance.subtract(casePrice);
                 
                 let winAmount;
                 
-                // Шансы для каждого кейса
                 switch(this.selectedCase) {
                     case 'earth':
-                        // Земляной кейс: 0 звезд (95%) или 20 звезд (5%)
                         winAmount = Math.random() < 0.95 ? 0 : 20;
                         break;
                     case 'gold':
-                        // Золотой кейс
                         const goldRand = Math.random();
                         if (goldRand < 0.5) {
-                            winAmount = 2; // 50% на 2 звезды
+                            winAmount = 2;
                         } else if (goldRand < 0.86) {
-                            winAmount = 5; // 36% на 5 звезд
+                            winAmount = 5;
                         } else if (goldRand < 0.96) {
-                            winAmount = 15; // 10% на 15 звезд
+                            winAmount = 15;
                         } else {
-                            winAmount = 40; // 4% на 40 звезд
+                            winAmount = 40;
                         }
                         break;
                     case 'diamond':
-                        // Алмазный кейс
                         winAmount = Math.random() < 0.75 ? 15 : 35;
                         break;
                     case 'special':
-                        // Особый кейс
                         const specialRand = Math.random();
                         if (specialRand < 0.40) {
-                            winAmount = 30; // 40% на 30 звезд
+                            winAmount = 30;
                         } else if (specialRand < 0.98) {
-                            winAmount = 50; // 58% на 50 звезд
+                            winAmount = 50;
                         } else {
-                            winAmount = 100; // 2% на 100 звезд
+                            winAmount = 100;
                         }
                         break;
                     default:
@@ -3579,7 +3642,6 @@ function hasUsedPromoCodeInLast5Days() {
                 `;
                 
                 GlobalBalance.add(winAmount);
-                
                 this.showOpeningAnimation();
             }
             
@@ -3610,7 +3672,7 @@ function hasUsedPromoCodeInLast5Days() {
                     item.classList.remove('highlighted');
                 });
                 
-                const prizeWidth = 200;
+                const prizeWidth = 150;
                 const containerWidth = document.querySelector('.prize-strip-container').offsetWidth;
                 const centerPosition = containerWidth / 2 - prizeWidth / 2;
                 const targetPosition = centerPosition - (this.selectedPrizeIndex * prizeWidth);
@@ -3651,7 +3713,7 @@ function hasUsedPromoCodeInLast5Days() {
             }
             
             highlightCurrentPrize(position) {
-                const prizeWidth = 200;
+                const prizeWidth = 150;
                 const containerWidth = document.querySelector('.prize-strip-container').offsetWidth;
                 const centerPosition = containerWidth / 2;
                 
@@ -3713,200 +3775,22 @@ function hasUsedPromoCodeInLast5Days() {
                 this.generatePrizes();
             }
         }
-        
-        function setupButtons() {
-            const btnWhat = document.getElementById('whatBtn');
-            const btnPlay = document.getElementById('playBtn');
-            const btnCases = document.getElementById('casesBtn');
-            const btnPromo = document.getElementById('promoBtn');
-            const modal = document.getElementById('infoModal');
-            const closeModalBtn = document.getElementById('closeModalBtn');
-            const rocketGame = document.getElementById('rocketGame');
-            const casesPage = document.getElementById('casesPage');
-            const promocodeModal = document.getElementById('promocodeModal');
-            const activatePromoBtn = document.getElementById('activatePromoBtn');
-            const closePromoBtn = document.getElementById('closePromoBtn');
-            const promocodeInput = document.getElementById('promocodeInput');
-            const promocodeResult = document.getElementById('promocodeResult');
-            
-            let gameInstance = null;
-            let casesSystem = null;
-            
-            // Исправление бага с некликабельностью - добавляем обработчики click
-            btnWhat.addEventListener('click', function() {
-                this.style.transform = 'scale(0.96)';
-                setTimeout(() => this.style.transform = '', 200);
-                modal.style.display = 'flex';
-            });
-            
-            btnPlay.addEventListener('click', function() {
-                this.style.transform = 'scale(0.96)';
-                setTimeout(() => this.style.transform = '', 200);
-                rocketGame.style.display = 'flex';
-                
-                if (!gameInstance) {
-                    gameInstance = new RocketGame();
-                    window.gameInstance = gameInstance;
-                } else {
-                    gameInstance.updateDisplay();
-                }
-            });
-            
-            // ИСПРАВЛЕННАЯ КНОПКА КЕЙСОВ
-            btnCases.addEventListener('click', function() {
-                this.style.transform = 'scale(0.96)';
-                setTimeout(() => this.style.transform = '', 200);
-                
-                // Прямой переход к кейсам без предупреждения
-                casesPage.style.display = 'flex';
-                
-                if (!casesSystem) {
-                    casesSystem = new CasesSystem();
-                    window.casesSystem = casesSystem;
-                }
-            });
-            
-            // Обработчик кнопки промокода - ИСПРАВЛЕН БАГ
-            btnPromo.addEventListener('click', function() {
-                this.style.transform = 'scale(0.96)';
-                setTimeout(() => this.style.transform = '', 200);
-                
-                // Правильное отображение модального окна
-                promocodeModal.style.display = 'flex';
-                promocodeModal.style.opacity = '1';
-                promocodeModal.style.transform = 'scale(1)';
-                promocodeInput.value = '';
-                promocodeResult.style.display = 'none';
-                
-                setTimeout(() => {
-                    promocodeInput.focus();
-                }, 300);
-            });
-            
-            // Активация промокода (обновленная версия с сохранением времени)
-            activatePromoBtn.addEventListener('click', function() {
-                const code = promocodeInput.value.trim().toLowerCase();
-                
-                if (!code) {
-                    showPromoResult('Введите промокод!', false);
-                    return;
-                }
-                
-                const result = activatePromoCode(code, currentUser);
-                
-                if (result.success) {
-                    // Сохраняем информацию об использовании промокода
-                    if (currentUser && userData[currentUser]) {
-                        if (!userData[currentUser].usedPromoCodes) {
-                            userData[currentUser].usedPromoCodes = [];
-                        }
-                        if (!userData[currentUser].promoCodesUsedAt) {
-                            userData[currentUser].promoCodesUsedAt = {};
-                        }
-                        
-                        // Добавляем промокод в список использованных
-                        if (!userData[currentUser].usedPromoCodes.includes(code)) {
-                            userData[currentUser].usedPromoCodes.push(code);
-                        }
-                        
-                        // Сохраняем время использования
-                        userData[currentUser].promoCodesUsedAt[code] = new Date().toISOString();
-                        
-                        // Сохраняем данные
-                        saveUserData();
-                    }
-                    
-                    // Пополняем баланс
-                    GlobalBalance.add(result.amount);
-                    showPromoResult(result.message, true);
-                    
-                    // Закрываем окно через 2 секунды после успешной активации
-                    setTimeout(() => {
-                        closePromocodeModal();
-                    }, 2000);
-                } else {
-                    showPromoResult(result.message, false);
-                }
-            });
-            
-            // Закрытие окна промокода - ИСПРАВЛЕННАЯ ФУНКЦИЯ
-            closePromoBtn.addEventListener('click', function() {
-                closePromocodeModal();
-            });
-            
-            // Функция для правильного закрытия окна промокода
-            function closePromocodeModal() {
-                promocodeModal.style.opacity = '0';
-                promocodeModal.style.transform = 'scale(0.9)';
-                promocodeModal.style.transition = 'all 0.3s ease';
-                
-                setTimeout(() => {
-                    promocodeModal.style.display = 'none';
-                    // ВАЖНО: Восстанавливаем pointer-events для остальных элементов
-                    document.body.style.pointerEvents = 'auto';
-                }, 300);
-            }
-            
-            // Ввод с клавиатуры в поле промокода
-            promocodeInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    activatePromoBtn.click();
-                }
-            });
-            
-            // Закрытие по клику вне окна промокода - ИСПРАВЛЕНО
-            promocodeModal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closePromocodeModal();
-                }
-            });
-            
-            closeModalBtn.addEventListener('click', function() {
-                this.style.transform = 'scale(0.96)';
-                setTimeout(() => this.style.transform = '', 200);
-                modal.style.display = 'none';
-            });
-            
-            modal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.style.display = 'none';
-                }
-            });
-            
-            // Функция показа результата активации промокода
-            function showPromoResult(message, isSuccess) {
-                promocodeResult.textContent = message;
-                
-                if (isSuccess) {
-                    promocodeResult.className = 'promocode-result promocode-success';
-                } else {
-                    promocodeResult.className = 'promocode-result promocode-error';
-                }
-                
-                promocodeResult.style.display = 'block';
-                promocodeResult.style.opacity = '1';
-                promocodeResult.style.transform = 'translateY(0)';
-            }
-        }
-        
+
         // Предотвращаем масштабирование на мобильных устройствах
         document.addEventListener('touchmove', function(e) {
             if (e.scale !== 1) {
                 e.preventDefault();
             }
         }, { passive: false });
-        
-        // Дополнительный фикс для предотвращения блокировки интерфейса
+
         document.addEventListener('click', function(e) {
-            // Если клик был на затемненной области, убедимся что все окна закрыты
             if (e.target === document.body || e.target.classList.contains('modal') || 
                 e.target.classList.contains('promocode-modal') || 
                 e.target.classList.contains('deposit-modal') || 
                 e.target.classList.contains('withdraw-modal')) {
-                // Ничего не делаем, обработчики на самих модальных окнах закроют их
+                // Ничего не делаем
             }
         });
-
     </script>
 </body>
 </html>
